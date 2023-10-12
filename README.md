@@ -2,6 +2,7 @@
 
 # Nome do projeto
 
+
 Devido a escassez de vagas de estacionamento no Brasil, uma empresa contratou a gente para desenvolver um sistema de software para controlar a entrada, a saída e a organização de carros dentro dos estacionamentos.
 Juntamente com isso, o sistema mantêm um histórico que pode ser acessado pelo usuário e desde da entrada contabiliza o valor a ser pago pelas horas gastas.
 
