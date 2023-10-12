@@ -1,5 +1,4 @@
 
-
 public class Estacionamento {
 
 	private String nome;
@@ -9,7 +8,10 @@ public class Estacionamento {
 	private int vagasPorFileira;
 
 	public Estacionamento(String nome, int fileiras, int vagasPorFila) {
-		
+		this.nome = nome;
+        this.quantFileiras = fileiras;
+        this.vagasPorFileira = vagasPorFila;
+        this.vagas = new Vaga[fileiras * vagasPorFila];	
 	}
 
 	public void addVeiculo(Veiculo veiculo, String idCli) {
