@@ -1,3 +1,4 @@
+package codigo;
 import java.time.LocalDateTime;
 
 public class UsoDeVaga {
@@ -20,25 +21,21 @@ public class UsoDeVaga {
 		this.entrada = LocalDateTime.now();
 	}
 
-	/**
-	 * Registra a saída do veículo da vaga e calcula o valor a ser pago com base no
-	 * tempo de uso.
-	 *
-	 * @return O valor a ser pago pelo uso da vaga.
-	 */
-	public double sair() {
-		if (vaga.sair()) {
-			this.saida = LocalDateTime.now();
-			// Calcule o tempo de uso em horas
-			long tempoEmHoras = entrada.until(saida, java.time.temporal.ChronoUnit.HOURS);
-
-			// Calcule o valor a ser pago, limitado ao valor máximo
-			valorPago = Math.min(tempoEmHoras * VALOR_FRACAO, VALOR_MAXIMO);
-			return valorPago;
-		} else {
-			return 0;
-		}
-	}
+/**
+ * Registra a saída do veículo da vaga e calcula o valor a ser pago com base no tempo de uso.
+ *
+ * @return O valor a ser pago pelo uso da vaga.
+ */
+public double sair() {
+    if (vaga.sair()) {
+        this.saida = LocalDateTime.now();
+        long tempoEmHoras = entrada.until(saida, java.time.temporal.ChronoUnit.HOURS);
+        valorPago = Math.min(tempoEmHoras * VALOR_FRACAO, VALOR_MAXIMO);
+        return valorPago;
+    } else {
+        return 0;
+    }
+}
 
 	/**
 	 * Verifica se o uso da vaga ocorreu no mês especificado.
