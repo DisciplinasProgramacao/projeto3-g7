@@ -1,5 +1,3 @@
-package codigo;
-
 public class Cliente {
 
 	private String nome;
@@ -97,5 +95,13 @@ public class Cliente {
 		}
 		return arrecadadoNoMes;
 	}
+
+    public Object getNome() {
+        return null;
+    }
+
+    public Object getId() {
+        return null;
+    }
 
 }

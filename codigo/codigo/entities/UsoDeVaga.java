@@ -1,5 +1,3 @@
-package codigo;
-
 import java.time.LocalDateTime;
 
 public class UsoDeVaga {
@@ -11,7 +9,6 @@ public class UsoDeVaga {
 	private LocalDateTime entrada;
 	private LocalDateTime saida;
 	private double valorPago;
-	private double valorServicos;
 
 	/**
 	 * Construtor da classe UsoDeVaga.
@@ -32,7 +29,10 @@ public class UsoDeVaga {
 	public double sair() {
 		if (vaga.sair()) {
 			this.saida = LocalDateTime.now();
+			// Calcule o tempo de uso em horas
 			long tempoEmHoras = entrada.until(saida, java.time.temporal.ChronoUnit.HOURS);
+
+			// Calcule o valor a ser pago, limitado ao valor máximo
 			valorPago = Math.min(tempoEmHoras * VALOR_FRACAO, VALOR_MAXIMO);
 			return valorPago;
 		} else {
@@ -58,24 +58,5 @@ public class UsoDeVaga {
 	 */
 	public double getValorPago() {
 		return valorPago;
-	}
-
-	/**
-	 * Calcula o custo de um serviço levando em consideração o serviço e a duração
-	 * da estadia.
-	 *
-	 * @param servico          O objeto de serviço contendo informações sobre o
-	 *                         serviço
-	 * @param tempoPermanencia duração de tempo em minutos
-	 * @return o preço total do serviço escolhido
-	 */
-	public static double servico(servicos servico, double tempoPermanencia) {
-		double valorAdicional = 0.0;
-
-		if (tempoPermanencia < servico.getMinPermanencia()) {
-			valorAdicional = (servico.getMinPermanencia() - tempoPermanencia) * 10.0;
-		}
-
-		return servico.getValue() + valorAdicional;
 	}
 }

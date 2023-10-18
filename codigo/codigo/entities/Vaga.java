@@ -1,9 +1,7 @@
-package codigo;
-
 public class Vaga {
 
-	private String id;
-	private boolean disponivel;
+	String id;
+	boolean disponivel;
 	private String filas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	/**
