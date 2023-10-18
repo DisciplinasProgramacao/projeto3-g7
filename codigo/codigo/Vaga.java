@@ -1,3 +1,5 @@
+package codigo;
+
 public class Vaga {
 
 	private String id;

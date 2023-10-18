@@ -1,15 +1,17 @@
+package codigo;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Classe que representa um estacionamento com várias funcionalidades, como adição de clientes, veículos,
+ * Classe que representa um estacionamento com várias funcionalidades, como
+ * adição de clientes, veículos,
  * estacionamento e cálculos relacionados a arrecadação.
  */
 public class Estacionamento {
 
-  
     private String nome;
     private Cliente[] clientes;
     private Vaga[] vagas;
@@ -19,8 +21,8 @@ public class Estacionamento {
     /**
      * Construtor da classe Estacionamento.
      *
-     * @param nome Nome do estacionamento.
-     * @param fileiras Quantidade de fileiras de vagas.
+     * @param nome         Nome do estacionamento.
+     * @param fileiras     Quantidade de fileiras de vagas.
      * @param vagasPorFila Quantidade de vagas por fileira.
      */
     public Estacionamento(String nome, int fileiras, int vagasPorFila) {
@@ -36,7 +38,7 @@ public class Estacionamento {
      * Adiciona um veículo a um cliente com base no ID do cliente.
      *
      * @param veiculo Veículo a ser adicionado.
-     * @param idCli ID do cliente.
+     * @param idCli   ID do cliente.
      */
     public void addVeiculo(Veiculo veiculo, String idCli) {
         for (Cliente cliente : clientes) {
@@ -94,7 +96,8 @@ public class Estacionamento {
     }
 
     /**
-     * Remove um veículo do estacionamento com base na placa e calcula o valor a ser pago.
+     * Remove um veículo do estacionamento com base na placa e calcula o valor a ser
+     * pago.
      *
      * @param placa Placa do veículo a ser removido.
      * @return Valor a ser pago pelo uso da vaga.
@@ -109,7 +112,8 @@ public class Estacionamento {
     }
 
     /**
-     * Calcula o total arrecadado pelo estacionamento com base nas transações dos clientes.
+     * Calcula o total arrecadado pelo estacionamento com base nas transações dos
+     * clientes.
      *
      * @return Total arrecadado pelo estacionamento.
      */
@@ -124,7 +128,8 @@ public class Estacionamento {
     }
 
     /**
-     * Calcula a arrecadação em um determinado mês com base nas transações dos clientes.
+     * Calcula a arrecadação em um determinado mês com base nas transações dos
+     * clientes.
      *
      * @param mes Número do mês.
      * @return Arrecadação no mês especificado.
@@ -140,7 +145,8 @@ public class Estacionamento {
     }
 
     /**
-     * Calcula o valor médio por uso do estacionamento com base nas transações dos clientes.
+     * Calcula o valor médio por uso do estacionamento com base nas transações dos
+     * clientes.
      *
      * @return Valor médio por uso do estacionamento.
      */
@@ -155,7 +161,8 @@ public class Estacionamento {
     }
 
     /**
-     * Retorna os cinco principais clientes que geraram a maior receita em um determinado mês.
+     * Retorna os cinco principais clientes que geraram a maior receita em um
+     * determinado mês.
      *
      * @param mes Número do mês.
      * @return Nomes dos cinco principais clientes separados por vírgula.
