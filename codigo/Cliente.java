@@ -11,6 +11,10 @@ public class Cliente {
 		this.qtdVeiculo = 0;
 	}
 
+	public String getNome(){
+		return nome;
+	}
+
 	/**
 	 * Classe addVeiculo que adicionará um veiculo ao cliente
 	 * 

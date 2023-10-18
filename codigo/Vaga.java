@@ -51,6 +51,7 @@ public class Vaga {
 	 * @return true se estiver disponivel e false se não estiver disponivel
 	 */
 	public boolean disponivel() {
+		boolean disponivel = true;
 		return disponivel;
 	}
 

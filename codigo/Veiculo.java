@@ -1,3 +1,4 @@
+
 /**
  * A classe Veiculo representa um veículo que pode estacionar em vagas de
  * estacionamento.
