@@ -1,4 +1,5 @@
 package entities;
+
 import java.time.LocalDateTime;
 
 public class UsoDeVaga {
@@ -6,10 +7,12 @@ public class UsoDeVaga {
 	private static final double FRACAO_USO = 0.25;
 	private static final double VALOR_FRACAO = 4.0;
 	private static final double VALOR_MAXIMO = 50.0;
+	private double valorServicos;
 	private Vaga vaga;
 	private LocalDateTime entrada;
 	private LocalDateTime saida;
 	private double valorPago;
+	private Servicos servicos;
 
 	/**
 	 * Construtor da classe UsoDeVaga.
@@ -32,9 +35,14 @@ public class UsoDeVaga {
 			this.saida = LocalDateTime.now();
 			// Calcule o tempo de uso em horas
 			long tempoEmHoras = entrada.until(saida, java.time.temporal.ChronoUnit.HOURS);
-
+			if (tempoEmHoras >= servicos.getMinPermanencia()) {
+				valorServicos = servicos.getValor();
+			} else {
+				return 0;
+			}
 			// Calcule o valor a ser pago, limitado ao valor máximo
-			valorPago = Math.min(tempoEmHoras * VALOR_FRACAO, VALOR_MAXIMO);
+			valorPago = (Math.min(tempoEmHoras * VALOR_FRACAO, VALOR_MAXIMO)) + valorServicos;
+
 			return valorPago;
 		} else {
 			return 0;
@@ -61,7 +69,12 @@ public class UsoDeVaga {
 		return valorPago;
 	}
 
-	public boolean adicionarServico(Servicos servicos){
-		return false;
+	public boolean adicionarServico(Servicos servicos) {
+		if (this.servicos == null) {
+			this.servicos = servicos;
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
