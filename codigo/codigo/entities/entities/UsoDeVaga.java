@@ -1,3 +1,4 @@
+package entities;
 import java.time.LocalDateTime;
 
 public class UsoDeVaga {
@@ -56,7 +57,7 @@ public class UsoDeVaga {
 	 *
 	 * @return O valor pago pelo uso da vaga.
 	 */
-	public double getValorPago() {
+	public double valorPago() {
 		return valorPago;
 	}
 }

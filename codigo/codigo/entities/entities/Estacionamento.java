@@ -1,3 +1,4 @@
+package entities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +64,7 @@ public class Estacionamento {
     /**
      * Método privado para gerar as vagas disponíveis no estacionamento.
      */
-    private void gerarVagas() {
+    public void gerarVagas() {
         int vagaId = 0;
         for (int i = 0; i < this.quantFileiras; i++) {
             for (int j = 0; j < this.vagasPorFileira; j++) {

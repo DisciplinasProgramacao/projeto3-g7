@@ -1,3 +1,5 @@
+package entities;
+
 /**
  * A classe Veiculo representa um veículo que pode estacionar em vagas de
  * estacionamento.
@@ -6,26 +8,24 @@
 public class Veiculo {
 
 	private String placa; // A placa do veículo
-	private UsoDeVaga[] usos; // Array de usos de vagas associado ao veículo
+	private UsoDeVaga[] usos = new UsoDeVaga[10]; // Array de usos de vagas associado ao veículo
 	private int mes = 0; // Mês atual para cálculos
 	private int totalDeUsos = 0; // Total de usos de vagas registrados para o veículo
 	private double arrecadadoNoMes = 0; // Valor arrecadado no mês atual
 	private double totalArrecadado = 0; // Valor total arrecadado pelo veículo
+	private int indiceDeVaga = 0;
 
 	/**
 	 * Construtor da classe Veiculo.
 	 *
 	 * @param placa A placa do veículo.
-	 * @param string
 	 */
-	public Veiculo(String placa, String string) {
+	public Veiculo(String placa) {
 		this.placa = placa;
+
 	}
 
-	public Veiculo(String string) {
-    }
-
-    /**
+	/**
 	 * Estaciona o veículo em uma vaga especificada.
 	 *
 	 * @param vaga A vaga em que o veículo será estacionado.
@@ -45,7 +45,7 @@ public class Veiculo {
 	 * @return O valor pago pelo uso da vaga.
 	 */
 	public double sair() {
-		return usos[indiceDeVaga].sair();
+		return usos[indiceDeVaga - 1].sair();
 	}
 
 	/**
@@ -55,9 +55,10 @@ public class Veiculo {
 	 */
 	public double totalArrecadado() {
 
-		totalArrecadado += usos[indiceDeVaga].valorPago();
+		for (int i = 0; i < indiceDeVaga; i++) {
+			totalArrecadado += usos[i].valorPago();
+		}
 		return totalArrecadado;
-
 	}
 
 	/**
@@ -70,9 +71,10 @@ public class Veiculo {
 
 		this.mes = mes;
 
-		if (usos[indiceDeVaga].ehDoMes(mes) == true) {
-			return arrecadadoNoMes += usos[indiceDeVaga].valorPago();
+		if (usos[indiceDeVaga].ehDoMes(mes)) {
+			arrecadadoNoMes += usos[indiceDeVaga].valorPago();
 		}
+		return arrecadadoNoMes;
 	}
 
 	/**
@@ -82,8 +84,10 @@ public class Veiculo {
 	 */
 	public int totalDeUsos() {
 
-		if (usos[indiceDeVaga] != null) {
-			totalDeUsos++;
+		for (int i = 0; i < indiceDeVaga; i++) {
+			if (usos[indiceDeVaga] != null) {
+				totalDeUsos++;
+			}
 		}
 		return totalDeUsos;
 	}

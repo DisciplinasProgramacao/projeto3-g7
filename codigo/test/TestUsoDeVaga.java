@@ -2,13 +2,8 @@ package test;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import codigo.UsoDeVaga;
-import codigo.Vaga;
-
 import static org.junit.Assert.*;
-
-import java.time.LocalDateTime;
+import entities.*;
 
 public class TestUsoDeVaga {
 
@@ -23,7 +18,7 @@ public class TestUsoDeVaga {
 
     @Test
     public void testGetValorPagoShouldReturnZeroIfVagaIsEmpty() {
-        double result = usoDeVaga.getValorPago();
+        double result = usoDeVaga.valorPago();
         assertEquals(0.0, result, 0.01);
     }
 
@@ -32,7 +27,7 @@ public class TestUsoDeVaga {
         vaga.disponivel();
 
         double valorPago = usoDeVaga.sair();
-        double result = usoDeVaga.getValorPago();
+        double result = usoDeVaga.valorPago();
         assertEquals(valorPago, result, 0.01);
     }
 
