@@ -60,4 +60,8 @@ public class UsoDeVaga {
 	public double valorPago() {
 		return valorPago;
 	}
+
+	public boolean adicionarServico(Servicos servicos){
+		return false;
+	}
 }
