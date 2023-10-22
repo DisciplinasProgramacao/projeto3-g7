@@ -32,7 +32,7 @@ public class Cliente {
 	public Veiculo possuiVeiculo(String placa) {
 		Veiculo busca = new Veiculo(placa);
 		for (int i = 0; i < veiculos.length; i++) {
-			if (busca.equals(veiculos[i]))
+			if (busca.getPlaca().equals(veiculos[i].getPlaca()))
 				return veiculos[i];
 		}
 		return busca;
@@ -46,8 +46,8 @@ public class Cliente {
 	public int totalDeUsos() {
 		int totalDeUsos = 0;
 		for (int i = 0; i < veiculos.length; i++) {
-			totalDeUsos += veiculos[i].totalDeUsos();
-		}
+				totalDeUsos += veiculos[i].totalDeUsos();
+			}
 		return totalDeUsos;
 	}
 
@@ -61,7 +61,7 @@ public class Cliente {
 		double valorArrecadado = 0;
 		Veiculo busca = new Veiculo(placa);
 		for (int i = 0; i < veiculos.length; i++) {
-			if (busca.equals(veiculos[i])) {
+			if (busca.getPlaca().equals(veiculos[i].getPlaca())) {
 				valorArrecadado = busca.totalArrecadado();
 			}
 		}
@@ -97,12 +97,16 @@ public class Cliente {
 		return arrecadadoNoMes;
 	}
 
-    public Object getNome() {
-        return null;
-    }
+	public Object getNome() {
+		return nome;
+	}
 
-    public Object getId() {
-        return null;
-    }
+	public Object getId() {
+		return id;
+	}
+
+	public Object[] getVeiculos() {
+		return veiculos;
+	}
 
 }

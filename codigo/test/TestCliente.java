@@ -5,56 +5,71 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import entities.*;
 
-import static org.junit.Assert.*;
-
 public class TestCliente {
 
-    @Test
-    public void testPossuiVeiculo() {
-        Cliente cliente = new Cliente("Maria", "67890");
-        Veiculo veiculo = new Veiculo("XYZ789");
-        cliente.addVeiculo(veiculo);
-        assertTrue(cliente.possuiVeiculo("XYZ789").equals(veiculo));
+    private Cliente cliente;
+    private Veiculo veiculo;
+    private Object[] veiculos;
+
+    @Before
+    public void setup() {
+        cliente = new Cliente("Joao", "333");
+        veiculo = new Veiculo("31314");
     }
 
     @Test
-    public void testTotalDeUsos() {
-        Cliente cliente = new Cliente("Pedro", "54321");
-        Veiculo veiculo1 = new Veiculo("DEF456");
-        Veiculo veiculo2 = new Veiculo("GHI789");
-        cliente.addVeiculo(veiculo1);
-        cliente.addVeiculo(veiculo2);
-        assertEquals(veiculo1.totalDeUsos() + veiculo2.totalDeUsos(), cliente.totalDeUsos());
+    public void testCliente() {
+        assertNotNull(null, cliente.getNome());
+        assertNotNull(null, cliente.getId());
+    }
+
+    @Test
+    public void testAddVeiculo() {
+        cliente.addVeiculo(veiculo);
+        veiculos = cliente.getVeiculos();
+        assertNotNull(null, veiculos[0]);
+    }
+
+    @Test
+    public void testPossuiVeiculo() {
+        veiculos = cliente.getVeiculos();
+        cliente.addVeiculo(veiculo);
+        Veiculo veiculoBusca = cliente.possuiVeiculo("31314");
+        assertEquals(veiculoBusca, veiculos[0]);
+    }
+
+
+    //Nao terminado
+    @Test
+    public void testTotalUsos() {
+
+        cliente.addVeiculo(veiculo);
+        System.out.println(cliente.totalDeUsos());
+        assertNotEquals(0, cliente.totalDeUsos());
     }
 
     @Test
     public void testArrecadadoPorVeiculo() {
-        Cliente cliente = new Cliente("Ana", "98765");
-        Veiculo veiculo = new Veiculo(
-            "JKL012");
-        cliente.addVeiculo(veiculo);
-        double valorEsperado = veiculo.totalArrecadado();
-        assertEquals(valorEsperado, cliente.arrecadadoPorVeiculo("JKL012"), 0.001);
+        double result;
+        result = cliente.arrecadadoPorVeiculo("31314");
+        assertNotEquals(0, result);
     }
 
     @Test
     public void testArrecadadoTotal() {
-        Cliente cliente = new Cliente("Carlos", "13579");
-        Veiculo veiculo1 = new Veiculo("MNO345");
-        Veiculo veiculo2 = new Veiculo("PQR678");
-        cliente.addVeiculo(veiculo1);
-        cliente.addVeiculo(veiculo2);
-        double valorEsperado = veiculo1.totalArrecadado() + veiculo2.totalArrecadado();
-        assertEquals(valorEsperado, cliente.arrecadadoTotal(), 0.001);
+        double result;
+        result = cliente.arrecadadoTotal();
+        assertNotEquals(0, result);
     }
 
     @Test
-    public void testArrecadadoNoMes() {
-        Cliente cliente = new Cliente("Laura", "86420");
-        Veiculo veiculo = new Veiculo("STU901");
-        cliente.addVeiculo(veiculo);
-        int mes = 10; // Exemplo de mês
-        double valorEsperado = veiculo.arrecadadoNoMes(mes);
-        assertEquals(valorEsperado, cliente.arrecadadoNoMes(mes), 0.001);
+    public void TestArrecadadoNoMes() {
+        double result;
+        result = cliente.arrecadadoNoMes(10);
+        assertNotEquals(0, result);
     }
+
+
+
+
 }

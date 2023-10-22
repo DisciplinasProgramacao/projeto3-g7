@@ -91,4 +91,8 @@ public class Veiculo {
 		}
 		return totalDeUsos;
 	}
+
+	public String getPlaca(){
+		return placa;
+	}
 }
