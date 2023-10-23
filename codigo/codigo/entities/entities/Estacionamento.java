@@ -145,7 +145,7 @@ public class Estacionamento {
      * @return Valor médio por uso do estacionamento.
      */
     public double valorMedioPorUso() {
-        int totalDeUsos = 0;
+        int totalDeUsos = 1;
         for (Cliente cliente : clientes) {
             if (cliente != null) {
                 totalDeUsos += cliente.totalDeUsos();

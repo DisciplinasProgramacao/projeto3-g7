@@ -7,15 +7,9 @@ import entities.*;
 
 public class TestCliente {
 
-    private Cliente cliente;
-    private Veiculo veiculo;
+    private Cliente cliente = new Cliente("Joao", "333");
+    private Veiculo veiculo = new Veiculo("31314");
     private Object[] veiculos;
-
-    @Before
-    public void setup() {
-        cliente = new Cliente("Joao", "333");
-        veiculo = new Veiculo("31314");
-    }
 
     @Test
     public void testCliente() {
@@ -42,10 +36,10 @@ public class TestCliente {
     //Nao terminado
     @Test
     public void testTotalUsos() {
-
+        Veiculo veiculo2 = new Veiculo("31314");
+        cliente.addVeiculo(veiculo2);
         cliente.addVeiculo(veiculo);
-        System.out.println(cliente.totalDeUsos());
-        assertNotEquals(0, cliente.totalDeUsos());
+        assertEquals(0, cliente.totalDeUsos());
     }
 
     @Test

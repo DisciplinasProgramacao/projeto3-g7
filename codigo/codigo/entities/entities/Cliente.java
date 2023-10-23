@@ -19,8 +19,10 @@ public class Cliente {
 	 *                cliente
 	 */
 	public void addVeiculo(Veiculo veiculo) {
-		this.veiculos[qtdVeiculo] = veiculo;
-		qtdVeiculo++;
+		if (qtdVeiculo < veiculos.length) {
+			veiculos[qtdVeiculo] = veiculo;
+			qtdVeiculo++;
+		}
 	}
 
 	/**
@@ -31,7 +33,7 @@ public class Cliente {
 	 */
 	public Veiculo possuiVeiculo(String placa) {
 		Veiculo busca = new Veiculo(placa);
-		for (int i = 0; i < veiculos.length; i++) {
+		for (int i = 0; i < qtdVeiculo; i++) {
 			if (busca.getPlaca().equals(veiculos[i].getPlaca()))
 				return veiculos[i];
 		}
@@ -45,7 +47,7 @@ public class Cliente {
 	 */
 	public int totalDeUsos() {
 		int totalDeUsos = 0;
-		for (int i = 0; i < veiculos.length; i++) {
+		for (int i = 0; i < qtdVeiculo; i++) {
 				totalDeUsos += veiculos[i].totalDeUsos();
 			}
 		return totalDeUsos;
@@ -60,7 +62,7 @@ public class Cliente {
 	public double arrecadadoPorVeiculo(String placa) {
 		double valorArrecadado = 0;
 		Veiculo busca = new Veiculo(placa);
-		for (int i = 0; i < veiculos.length; i++) {
+		for (int i = 0; i < qtdVeiculo; i++) {
 			if (busca.getPlaca().equals(veiculos[i].getPlaca())) {
 				valorArrecadado = busca.totalArrecadado();
 			}
@@ -77,7 +79,7 @@ public class Cliente {
 	 */
 	public double arrecadadoTotal() {
 		int arrecadadoTotal = 0;
-		for (int i = 0; i < veiculos.length; i++) {
+		for (int i = 0; i < qtdVeiculo; i++) {
 			arrecadadoTotal += veiculos[i].totalArrecadado();
 		}
 		return arrecadadoTotal;
@@ -91,7 +93,7 @@ public class Cliente {
 	 */
 	public double arrecadadoNoMes(int mes) {
 		int arrecadadoNoMes = 0;
-		for (int i = 0; i < veiculos.length; i++) {
+		for (int i = 0; i < qtdVeiculo; i++) {
 			arrecadadoNoMes += veiculos[i].arrecadadoNoMes(mes);
 		}
 		return arrecadadoNoMes;
