@@ -99,6 +99,23 @@ public class Cliente {
 		return arrecadadoNoMes;
 	}
 
+	public String historicoCliente() {
+		StringBuilder historico = new StringBuilder();
+		historico.append("Histórico do Cliente: ").append(nome).append(" (ID: ").append(id).append(")\n");
+		historico.append("Veículos do Cliente e Valores Gastos:\n");
+		for (int i = 0; i < qtdVeiculo; i++) {
+			historico.append("Veículo ").append(i + 1).append(": R$ ").append(veiculos[i].totalArrecadado()).append("\n");
+		}
+		historico.append("Valor Gasto por Mês:\n");
+		for (int mes = 1; mes <= 12; mes++) {
+			double valorMes = arrecadadoNoMes(mes);
+			historico.append("Mês ").append(mes).append(": R$ ").append(valorMes).append("\n");
+		}
+		double valorTotal = arrecadadoTotal();
+		historico.append("Valor Total Arrecadado: R$ ").append(valorTotal).append("\n");
+		return historico.toString();
+	}
+
 	public Object getNome() {
 		return nome;
 	}
