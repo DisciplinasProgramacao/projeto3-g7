@@ -1,5 +1,6 @@
 package entities;
-public class Cliente {
+
+public abstract class Cliente implements IDataToText {
 
 	private String nome;
 	private String id;
@@ -48,8 +49,8 @@ public class Cliente {
 	public int totalDeUsos() {
 		int totalDeUsos = 0;
 		for (int i = 0; i < qtdVeiculo; i++) {
-				totalDeUsos += veiculos[i].totalDeUsos();
-			}
+			totalDeUsos += veiculos[i].totalDeUsos();
+		}
 		return totalDeUsos;
 	}
 
@@ -104,7 +105,8 @@ public class Cliente {
 		historico.append("Histórico do Cliente: ").append(nome).append(" (ID: ").append(id).append(")\n");
 		historico.append("Veículos do Cliente e Valores Gastos:\n");
 		for (int i = 0; i < qtdVeiculo; i++) {
-			historico.append("Veículo ").append(i + 1).append(": R$ ").append(veiculos[i].totalArrecadado()).append("\n");
+			historico.append("Veículo ").append(i + 1).append(": R$ ").append(veiculos[i].totalArrecadado())
+					.append("\n");
 		}
 		historico.append("Valor Gasto por Mês:\n");
 		for (int mes = 1; mes <= 12; mes++) {
