@@ -5,7 +5,7 @@ package entities;
  * estacionamento.
  * Cada veículo é identificado por sua placa e pode registrar seu uso de vagas.
  */
-public class Veiculo {
+public class Veiculo implements IDataToText{
 
 	private String placa; // A placa do veículo
 	private UsoDeVaga[] usos = new UsoDeVaga[10]; // Array de usos de vagas associado ao veículo
@@ -94,5 +94,11 @@ public class Veiculo {
 
 	public String getPlaca(){
 		return placa;
+	}
+
+	@Override
+	public String dataToText() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'dataToText'");
 	}
 }
