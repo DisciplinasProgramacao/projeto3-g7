@@ -1,3 +1,0 @@
-        Estacionamento estacionamento1 = new Estacionamento("Sergio", 5, 5);
-        Estacionamento estacionamento2 = new Estacionamento("Maria", 10, 10);
-        Estacionamento estacionamento3 = new Estacionamento("João", 8, 6);

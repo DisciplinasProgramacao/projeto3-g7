@@ -22,7 +22,6 @@ public class Veiculo {
 	 */
 	public Veiculo(String placa) {
 		this.placa = placa;
-
 	}
 
 	/**
