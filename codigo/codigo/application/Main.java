@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -87,50 +90,36 @@ public class Main {
         sc.close();
     }
 
-    //Gerar aleatoriamente um mínimo de 50 usos de vagas distribuídas para clientes e estacionamentos;
-   
-public void gerarDados() {
-    int numVagas = 50;
-    int numClientes = 10;
-    int numVeiculos = 3;
-    String[] nomesClientes = {"João", "Maria", "José", "Ana", "Pedro", "Mariana", "Carlos", "Lucas", "Fernanda", "Rafael"};
-    String[] placasVeiculos = {"ABC-1234", "DEF-5678", "GHI-9012"};
+    // Gerar aleatoriamente um mínimo de 50 usos de vagas distribuídas para clientes
+    // e estacionamentos;
 
-    Cliente[] clientes = new Cliente[numClientes];
-    Vaga[] vagas = new Vaga[numVagas];
-
-    // Cria os clientes
-    for (int i = 0; i < numClientes; i++) {
-        Cliente cliente = new Cliente(nomesClientes[i]);
-        clientes[i] = cliente;
-
-        // Adiciona os veículos dos clientes
-        for (int j = 0; j < numVeiculos; j++) {
-            Veiculo veiculo = new Veiculo(placasVeiculos[j]);
-            cliente.addVeiculo(veiculo);
-        }
-    }
-
-    // Distribui as vagas aleatoriamente
-    List<Integer> vagasDisponiveis = new ArrayList<>();
-    for (int i = 0; i < numVagas; i++) {
-        vagasDisponiveis.add(i);
-    }
-
-    for (int i = 0; i < numVagas; i++) {
-        if (vagasDisponiveis.isEmpty()) {
-            // Lidar com a situação em que não há mais vagas disponíveis
-            break;
+public static void carregarDados() throws IOException{
+        BufferedReader bre = new BufferedReader(new FileReader("estacionamentos.txt"));
+        String linhae = "";
+        
+        while((linhae = bre.readLine()) != null){
+            String[] linhas = linhae.split(";", 0);
+            Estacionamento e = new Estacionamento(linhas[0], Integer.parseInt(linhas[1]), Integer.parseInt(linhas[2]));
+             estacionamentos.add(e);	
         }
 
-        int indexVaga = (int) (Math.random() * vagasDisponiveis.size());
-        int indexCliente = (int) (Math.random() * numClientes);
+        BufferedReader brv = new BufferedReader(new FileReader("veiculos.txt"));
+        String linhav = "";
+        
+        while((linhav = brv.readLine()) != null){
+            String[] linhas = linhav.split(";", 0);
+            Veiculo v = new Veiculo(linhas[0]);
+            veiculos.add(v);
+        }
 
-        Vaga vaga = new Vaga(vagasDisponiveis.get(indexVaga), clientes[indexCliente]);
-        vagas[vagasDisponiveis.get(indexVaga)] = vaga;
-        vagasDisponiveis.remove(indexVaga);
-    }
+        BufferedReader brc = new BufferedReader(new FileReader("clientes.txt"));
+        String linhac = "";
+        
+        while((linhac = brc.readLine()) != null){
+            String[] linhas = linhac.split(";", 0);
+            Cliente c = new Cliente(linhas[0], linhas[1]);
+            clientes.add(c);
+        }
+    
 }
-
 }
-

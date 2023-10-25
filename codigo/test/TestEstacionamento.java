@@ -1,6 +1,5 @@
 package test;
 
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import entities.*;
@@ -32,7 +31,7 @@ public class TestEstacionamento {
             vagas[i] = new Vaga();
         }
         estacionamento.gerarVagas();
-        assertTrue(vagas[0].disponivel());
+        assertTrue(vagas[0].sair());
     }
 
     @Test

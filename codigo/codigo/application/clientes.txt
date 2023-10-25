@@ -1,0 +1,10 @@
+        Cliente cliente1 = new Cliente("Cliente1", 1);
+        Cliente cliente2 = new Cliente("Cliente2", 2);
+        Cliente cliente3 = new Cliente("Cliente3", 3);
+        Cliente cliente4 = new Cliente("Cliente4", 4);
+        Cliente cliente5 = new Cliente("Cliente5", 5);
+        Cliente cliente6 = new Cliente("Cliente6", 6);
+        Cliente cliente7 = new Cliente("Cliente7", 7);
+        Cliente cliente8 = new Cliente("Cliente8", 8);
+        Cliente cliente9 = new Cliente("Cliente9", 9);
+        Cliente cliente10 = new Cliente("Cliente10", 10);
