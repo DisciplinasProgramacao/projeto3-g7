@@ -1,4 +1,5 @@
 package entities;
+
 public class Vaga {
 
 	String id;
@@ -13,15 +14,15 @@ public class Vaga {
 	 * * @return uma string contendo o valor gerado da Vaga.
 	 * +
 	 */
-	public String Vaga(int fila, int numero) {
+	public Vaga(int fila, int numero) {
+		String vagaFinal;
 		String letraVaga = "";
 		letraVaga += filas.charAt(fila - 1);
-		String vagaFinal = letraVaga + numero;
-		return vagaFinal;
+		vagaFinal = letraVaga + numero;
 	}
 
 	/**
-	 * Valida se o carro pode ser estacionado na vaga 
+	 * Valida se o carro pode ser estacionado na vaga
 	 *
 	 * @return true se ele pode estacionar ou false se ele não pode estacionar
 	 */
