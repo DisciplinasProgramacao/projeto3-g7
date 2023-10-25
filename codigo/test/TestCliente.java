@@ -7,9 +7,15 @@ import entities.*;
 
 public class TestCliente {
 
-    private Cliente cliente = new Cliente("Joao", "333");
-    private Veiculo veiculo = new Veiculo("31314");
+    private Cliente cliente;
+    private Veiculo veiculo;
     private Object[] veiculos;
+
+    @Before
+    public void setup() {
+        cliente = new Cliente("Joao", "333");
+        veiculo = new Veiculo("31314");
+    }
 
     @Test
     public void testCliente() {
@@ -32,8 +38,6 @@ public class TestCliente {
         assertEquals(veiculoBusca, veiculos[0]);
     }
 
-
-    //Nao terminado
     @Test
     public void testTotalUsos() {
         Veiculo veiculo2 = new Veiculo("31314");
