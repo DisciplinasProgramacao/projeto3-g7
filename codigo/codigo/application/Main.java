@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import entities.Estacionamento;
+import entities.Vaga;
 import entities.Veiculo;
 import entities.Cliente;
 
@@ -83,4 +86,51 @@ public class Main {
 
         sc.close();
     }
+
+    //Gerar aleatoriamente um mínimo de 50 usos de vagas distribuídas para clientes e estacionamentos;
+   
+public void gerarDados() {
+    int numVagas = 50;
+    int numClientes = 10;
+    int numVeiculos = 3;
+    String[] nomesClientes = {"João", "Maria", "José", "Ana", "Pedro", "Mariana", "Carlos", "Lucas", "Fernanda", "Rafael"};
+    String[] placasVeiculos = {"ABC-1234", "DEF-5678", "GHI-9012"};
+
+    Cliente[] clientes = new Cliente[numClientes];
+    Vaga[] vagas = new Vaga[numVagas];
+
+    // Cria os clientes
+    for (int i = 0; i < numClientes; i++) {
+        Cliente cliente = new Cliente(nomesClientes[i]);
+        clientes[i] = cliente;
+
+        // Adiciona os veículos dos clientes
+        for (int j = 0; j < numVeiculos; j++) {
+            Veiculo veiculo = new Veiculo(placasVeiculos[j]);
+            cliente.addVeiculo(veiculo);
+        }
+    }
+
+    // Distribui as vagas aleatoriamente
+    List<Integer> vagasDisponiveis = new ArrayList<>();
+    for (int i = 0; i < numVagas; i++) {
+        vagasDisponiveis.add(i);
+    }
+
+    for (int i = 0; i < numVagas; i++) {
+        if (vagasDisponiveis.isEmpty()) {
+            // Lidar com a situação em que não há mais vagas disponíveis
+            break;
+        }
+
+        int indexVaga = (int) (Math.random() * vagasDisponiveis.size());
+        int indexCliente = (int) (Math.random() * numClientes);
+
+        Vaga vaga = new Vaga(vagasDisponiveis.get(indexVaga), clientes[indexCliente]);
+        vagas[vagasDisponiveis.get(indexVaga)] = vaga;
+        vagasDisponiveis.remove(indexVaga);
+    }
 }
+
+}
+
