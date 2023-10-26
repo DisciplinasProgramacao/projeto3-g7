@@ -1,16 +1,9 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import entities.Estacionamento;
-import entities.Vaga;
-import entities.Veiculo;
-import entities.Cliente;
+import entities.*;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         Estacionamento estacionamento = new Estacionamento(null, 0, 0);
 
@@ -21,8 +14,7 @@ public class Main {
             System.out.println("1. Entrada de Veículo");
             System.out.println("2. Saída de Veículo");
             System.out.println("3. Consultar Cliente");
-            System.out.println("4. Consultar Arrecadação Total");
-            System.out.println("5. Sair");
+            System.out.println("4. Sair");
             System.out.print("Escolha uma opção: ");
 
             int opcao = sc.nextInt();
@@ -38,7 +30,7 @@ public class Main {
                     String idCliente = sc.nextLine();
 
                     Cliente cliente = new Cliente(nomeCliente, idCliente);
-                    Veiculo veiculo = new Veiculo(placa, placa);
+                    Veiculo veiculo = new Veiculo(placa);
 
                     cliente.addVeiculo(veiculo);
                     estacionamento.addVeiculo(veiculo, cliente);
@@ -66,18 +58,14 @@ public class Main {
                     Cliente clienteConsultado = estacionamento.consultarCliente(idConsulta);
 
                     if (clienteConsultado != null) {
-                        System.out.println("Cliente: " + clienteConsultado.getNome());
-                        System.out.println("Total de Veículos: " + clienteConsultado.getTotalVeiculos());
+                        System.out.println(clienteConsultado.historicoCliente());
                     } else {
-                        System.out.println("Cliente não encontrado.");
+                        System.out.println("Cliente não encontrado.");
                     }
                     break;
+                    
 
                 case 4:
-                    System.out.println("Arrecadação Total do Estacionamento: $" + estacionamento.getArrecadacaoTotal());
-                    break;
-
-                case 5:
                     sair = true;
                     break;
 
@@ -90,36 +78,40 @@ public class Main {
         sc.close();
     }
 
+
+
     // Gerar aleatoriamente um mínimo de 50 usos de vagas distribuídas para clientes
     // e estacionamentos;
-
-public static void carregarDados() throws IOException{
-        BufferedReader bre = new BufferedReader(new FileReader("estacionamentos.txt"));
-        String linhae = "";
+    public void carregarDados() {
         
-        while((linhae = bre.readLine()) != null){
-            String[] linhas = linhae.split(";", 0);
-            Estacionamento e = new Estacionamento(linhas[0], Integer.parseInt(linhas[1]), Integer.parseInt(linhas[2]));
-             estacionamentos.add(e);	
-        }
+        Estacionamento estacionamento = new Estacionamento("Estacionamento1", 4, 5);
+        Estacionamento estacionamento2 = new Estacionamento("Estacionamento2", 5, 6);
+        Estacionamento estacionamento3 = new Estacionamento("Estacionamento3", 4, 5);
 
-        BufferedReader brv = new BufferedReader(new FileReader("veiculos.txt"));
-        String linhav = "";
-        
-        while((linhav = brv.readLine()) != null){
-            String[] linhas = linhav.split(";", 0);
-            Veiculo v = new Veiculo(linhas[0]);
-            veiculos.add(v);
-        }
+        Cliente cliente1 = new Cliente("Cliente1", "1");
+        Cliente cliente2 = new Cliente("Cliente2", "2");
+        Cliente cliente3 = new Cliente("Cliente3", "3");
 
-        BufferedReader brc = new BufferedReader(new FileReader("clientes.txt"));
-        String linhac = "";
-        
-        while((linhac = brc.readLine()) != null){
-            String[] linhas = linhac.split(";", 0);
-            Cliente c = new Cliente(linhas[0], linhas[1]);
-            clientes.add(c);
+        Veiculo veiculo1 = new Veiculo("1");
+        Veiculo veiculo2 = new Veiculo("2");
+        Veiculo veiculo3 = new Veiculo("3");
+
+        estacionamento.addCliente(cliente3);
+        estacionamento.addCliente(cliente2);
+        estacionamento.addCliente(cliente1);
+
+        cliente1.addVeiculo(veiculo1);
+        cliente2.addVeiculo(veiculo2);
+        cliente3.addVeiculo(veiculo3);
+
+        estacionamento.addVeiculo(veiculo1, cliente1);
+        estacionamento.addVeiculo(veiculo2, cliente2);
+        estacionamento.addVeiculo(veiculo3, cliente3);
+
+        for(int i = 0; i<50; i++){
+            estacionamento.gerarVagas();
         }
     
 }
 }
+

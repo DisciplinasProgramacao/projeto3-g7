@@ -182,4 +182,12 @@ public class Estacionamento {
 
         return sb.toString();
     }
+
+    public double saidaVeiculo(String placaSaida) {
+        return 0;
+    }
+
+    public Cliente consultarCliente(String idConsulta) {
+        return null;
+    }
 }

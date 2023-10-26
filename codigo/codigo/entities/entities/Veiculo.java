@@ -22,7 +22,6 @@ public class Veiculo implements IDataToText{
 	 */
 	public Veiculo(String placa) {
 		this.placa = placa;
-
 	}
 
 	/**
