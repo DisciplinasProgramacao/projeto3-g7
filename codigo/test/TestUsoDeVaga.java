@@ -9,10 +9,13 @@ public class TestUsoDeVaga {
 
     private UsoDeVaga usoDeVaga;
     private Vaga vaga;
+    private int n1 = 3;
+    private int n2 = 4;
 
     @Before
     public void setup() {
-        vaga = new Vaga();
+
+        vaga = new Vaga(n1, n2);
         usoDeVaga = new UsoDeVaga(vaga);
     }
 

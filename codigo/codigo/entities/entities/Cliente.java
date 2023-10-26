@@ -1,6 +1,6 @@
 package entities;
 
-public abstract class Cliente implements IDataToText {
+public class Cliente implements IDataToText{
 
 	private String nome;
 	private String id;
@@ -128,6 +128,12 @@ public abstract class Cliente implements IDataToText {
 
 	public Object[] getVeiculos() {
 		return veiculos;
+	}
+
+	@Override
+	public String dataToText() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'dataToText'");
 	}
 
 }
