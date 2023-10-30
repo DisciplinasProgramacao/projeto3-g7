@@ -51,7 +51,7 @@ public class DAOCliente implements DAO<Cliente> {
         int adic = Integer.parseInt(linha[1]);
 
         if (tipo.equals("cliente")) {
-            return new Cliente();
+            return new Cliente(linha[0], linha[1]);
         }
 
         return null;
