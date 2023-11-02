@@ -44,7 +44,7 @@ public class Veiculo implements IDataToText{
 	 * @return O valor pago pelo uso da vaga.
 	 */
 	public double sair() {
-		return usos[indiceDeVaga - 1].sair();
+		return usos[indiceDeVaga].sair();
 	}
 
 	/**
@@ -96,8 +96,9 @@ public class Veiculo implements IDataToText{
 	}
 
 	@Override
-	public String dataToText() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'dataToText'");
+	public String dataToText() { 
+		StringBuilder string = new StringBuilder();
+		string.append("Placa: ").append(placa).append("\n").append("Total de Usos: ").append(totalDeUsos).append("\n");
+		return string.toString();
 	}
-}
+}	
