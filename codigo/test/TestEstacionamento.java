@@ -28,30 +28,29 @@ public class TestEstacionamento {
     public void gerarVagas() {
         Vaga vagas[] = new Vaga[5];
         for (int i = 0; i < 5; i++) {
-            vagas[i] = new Vaga();
+            vagas[i] = new Vaga(i,5);
         }
         estacionamento.gerarVagas();
         assertTrue(vagas[0].sair());
     }
 
     @Test
-    public void estacionar() {
+    public void testEstacionar() {
+        Cliente cliente = new Cliente("Andre", "5556");
         Veiculo veiculo = new Veiculo("555");
-        Cliente cliente = new Cliente("Teste", "666");
-        Vaga vaga = new Vaga();
-        estacionamento.gerarVagas();
-        estacionamento.addCliente(cliente);
-        estacionamento.addVeiculo(veiculo, cliente);
+        cliente.addVeiculo(veiculo);
         estacionamento.estacionar("555");
+        assertEquals(1, veiculo.totalDeUsos());         
     }
 
     @Test
     public void sair() {
         Cliente cliente = new Cliente("Teste", "666");
         Veiculo veiculo = new Veiculo("555");
+        estacionamento.addCliente(cliente);
         cliente.addVeiculo(veiculo);
-        estacionamento.sair("555");
-        assertEquals(veiculo, cliente.possuiVeiculo("555"));
+        double valor = estacionamento.sair("555");
+        assertTrue(valor > 0.0);
     }
 
     @Test
@@ -77,28 +76,29 @@ public class TestEstacionamento {
     }
 
     @Test
-    public void top5Clientes() {
-        Cliente cliente = new Cliente("Vitor", "666");
-        Cliente cliente1 = new Cliente("Vitor", "665");
-        Cliente cliente2 = new Cliente("Vitor", "664");
-        Cliente cliente3 = new Cliente("Vitor", "663");
-        Cliente cliente4 = new Cliente("Vitor", "662");
-        estacionamento.addCliente(cliente);
-        estacionamento.addCliente(cliente1);
-        estacionamento.addCliente(cliente2);
-        estacionamento.addCliente(cliente3);
-        estacionamento.addCliente(cliente4);
-        Veiculo veiculo = new Veiculo("555");
-        Veiculo veiculo1 = new Veiculo("554");
-        Veiculo veiculo2 = new Veiculo("553");
-        Veiculo veiculo3 = new Veiculo("552");
-        Veiculo veiculo4 = new Veiculo("551");
-        estacionamento.addVeiculo(veiculo1, cliente);
-        estacionamento.addVeiculo(veiculo2, cliente1);
-        estacionamento.addVeiculo(veiculo3, cliente2);
-        estacionamento.addVeiculo(veiculo4, cliente3);
-        estacionamento.addVeiculo(veiculo, cliente4);
-
-        assertEquals("Vitor", estacionamento.top5Clientes(1));
-    }
+    public void testTop5Clientes(){
+    Cliente cliente1 = new Cliente("Andre", "555");
+    estacionamento.addCliente(cliente1);
+    estacionamento.estacionar("555");
+    estacionamento.sair("555");
+    Cliente cliente2 = new Cliente("Miguel", "554");
+    estacionamento.addCliente(cliente2);
+    estacionamento.estacionar("554");
+    estacionamento.sair("554");  
+    Cliente cliente3 = new Cliente("Segiao", "553");
+    estacionamento.addCliente(cliente3);
+    estacionamento.estacionar("553");
+    estacionamento.sair("553");
+    Cliente cliente4 = new Cliente("Dudao", "552");
+    estacionamento.addCliente(cliente4);
+    estacionamento.estacionar("552");
+    estacionamento.sair("552");
+    Cliente cliente5 = new Cliente("Fael", "551");
+    estacionamento.addCliente(cliente5);
+    estacionamento.estacionar("551");
+    estacionamento.sair("551");
+    
+    assertEquals("Andre, Miguel, Segiao, Dudao, Fael", estacionamento.top5Clientes(1));
+    
+}
 }
