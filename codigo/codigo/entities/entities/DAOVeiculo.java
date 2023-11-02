@@ -47,12 +47,9 @@ public class DAOVeiculo implements DAO<Veiculo> {
 
     public Veiculo getNext() {
         String[] linha = arqLeitura.nextLine().split(";");
-
         String tipo = linha[0].toLowerCase();
         
-        if (tipo.equals(tipo)) {
-            return new Veiculo(tipo);
-        }return new Veiculo(tipo);
+        return new Veiculo(tipo);
 
     }
 
