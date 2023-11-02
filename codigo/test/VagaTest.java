@@ -4,7 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import entities.Vaga;
 
-public class TestVaga {
+public class VagaTest {
     @Test
     public void testEstacionarDisponivelTrue() {
         Vaga vaga = new Vaga(4, 7);

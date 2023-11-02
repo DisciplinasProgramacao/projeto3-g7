@@ -46,7 +46,16 @@ public class Estacionamento {
     public void addVeiculo(Veiculo veiculo, Object object) {
         for (Cliente c : clientes) {
             if (c != null && c.equals(object)) {
-                c.addVeiculo(veiculo);
+                boolean veiculoJaExiste = false;
+                for (Object v : c.getVeiculos()) {
+                    if (v != null && v.equals(veiculo)) {
+                        veiculoJaExiste = true;
+                        break;
+                    }
+                }
+                if (!veiculoJaExiste) {
+                    c.addVeiculo(veiculo);
+                }
                 break;
             }
         }
@@ -59,6 +68,9 @@ public class Estacionamento {
      */
     public void addCliente(Cliente cliente) {
         for (int i = 0; i < clientes.length; i++) {
+            if (clientes[i] != null && clientes[i].equals(cliente)) {
+                return;
+            }
             if (clientes[i] == null) {
                 clientes[i] = cliente;
                 break;

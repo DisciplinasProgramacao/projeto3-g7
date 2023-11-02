@@ -3,7 +3,7 @@ package entities;
 public class Vaga {
 
 	String id;
-	boolean disponivel;
+	public boolean disponivel;
 	private String filas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	/**

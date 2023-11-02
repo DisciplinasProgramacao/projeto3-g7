@@ -68,12 +68,12 @@ public class UsoDeVaga {
 		return valorPago;
 	}
 
-	public boolean adicionarServico(Servicos servicos) {
+	public Servicos adicionarServico(Servicos servicos) {
 		if (this.servicos == null) {
 			this.servicos = servicos;
-			return true;
+			return this.servicos;
 		} else {
-			return false;
+			return servicos;
 		}
 	}
 }

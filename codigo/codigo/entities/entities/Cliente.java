@@ -1,6 +1,6 @@
 package entities;
 
-public class Cliente implements IDataToText{
+public class Cliente implements IDataToText {
 
 	private String nome;
 	private String id;
@@ -132,8 +132,7 @@ public class Cliente implements IDataToText{
 
 	@Override
 	public String dataToText() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'dataToText'");
+		return this.nome + ";" + this.qtdVeiculo;
 	}
 
 }

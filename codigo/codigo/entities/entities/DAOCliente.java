@@ -48,7 +48,6 @@ public class DAOCliente implements DAO<Cliente> {
     public Cliente getNext() {
         String[] linha = arqLeitura.nextLine().split(";");
         String tipo = linha[0].toLowerCase();
-        int adic = Integer.parseInt(linha[1]);
 
         if (tipo.equals("cliente")) {
             return new Cliente(linha[0], linha[1]);
