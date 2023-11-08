@@ -24,6 +24,8 @@ public class Veiculo implements IDataToText{
 		this.placa = placa;
 	}
 
+
+
 	/**
 	 * Estaciona o veículo em uma vaga especificada.
 	 *
@@ -33,7 +35,7 @@ public class Veiculo implements IDataToText{
 
 		if (vaga.disponivel() == true) {
 			vaga.estacionar();
-			usos[indiceDeVaga] = new UsoDeVaga(vaga);
+			usos[indiceDeVaga] = new UsoDeVaga(vaga, null);
 			indiceDeVaga++;
 		}
 	}

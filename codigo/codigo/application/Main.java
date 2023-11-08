@@ -121,6 +121,8 @@ public class Main {
             estacionamentos[i].addVeiculo(veiculo, cliente);
         }
     }
+
+    
     
     
 }
