@@ -1,11 +1,13 @@
 package entities;
 
+import java.util.LinkedList;
+
 /**
  * A classe Veiculo representa um veículo que pode estacionar em vagas de
  * estacionamento.
  * Cada veículo é identificado por sua placa e pode registrar seu uso de vagas.
  */
-public class Veiculo implements IDataToText{
+public class Veiculo implements IDataToText {
 
 	private String placa; // A placa do veículo
 	private UsoDeVaga[] usos = new UsoDeVaga[10]; // Array de usos de vagas associado ao veículo
@@ -22,9 +24,8 @@ public class Veiculo implements IDataToText{
 	 */
 	public Veiculo(String placa) {
 		this.placa = placa;
+
 	}
-
-
 
 	/**
 	 * Estaciona o veículo em uma vaga especificada.
@@ -35,7 +36,7 @@ public class Veiculo implements IDataToText{
 
 		if (vaga.disponivel() == true) {
 			vaga.estacionar();
-			usos[indiceDeVaga] = new UsoDeVaga(vaga, null);
+			usos[indiceDeVaga] = new UsoDeVaga(vaga);
 			indiceDeVaga++;
 		}
 	}
@@ -71,9 +72,11 @@ public class Veiculo implements IDataToText{
 	public double arrecadadoNoMes(int mes) {
 
 		this.mes = mes;
-
-		if (usos[indiceDeVaga].ehDoMes(mes)) {
-			arrecadadoNoMes += usos[indiceDeVaga].valorPago();
+		
+		for (int i = 0; i < indiceDeVaga; i++) {
+			if (usos[indiceDeVaga].ehDoMes(mes)) {
+				arrecadadoNoMes += usos[indiceDeVaga].valorPago();
+			}
 		}
 		return arrecadadoNoMes;
 	}
@@ -93,14 +96,21 @@ public class Veiculo implements IDataToText{
 		return totalDeUsos;
 	}
 
-	public String getPlaca(){
+	public String getPlaca() {
 		return placa;
 	}
 
+
+	LinkedList<Veiculo> veiculos = new LinkedList<>();
 	@Override
-	public String dataToText() { 
+	public String dataToText() {
+		double totalArrecadado =  veiculos.stream()
+		.mapToDouble(veiculo -> veiculo.totalArrecadado())
+		.sum();
+
+		
 		StringBuilder string = new StringBuilder();
 		string.append("Placa: ").append(placa).append("\n").append("Total de Usos: ").append(totalDeUsos).append("\n");
 		return string.toString();
 	}
-}	
+}
