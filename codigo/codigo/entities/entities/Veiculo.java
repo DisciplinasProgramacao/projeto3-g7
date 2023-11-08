@@ -108,7 +108,10 @@ public class Veiculo implements IDataToText {
 		.mapToDouble(veiculo -> veiculo.totalArrecadado())
 		.sum();
 
-		
+		double totalDeUsos = veiculos.stream()
+		.mapToDouble(veiculo -> veiculo.totalDeUsos())
+		.sum();
+
 		StringBuilder string = new StringBuilder();
 		string.append("Placa: ").append(placa).append("\n").append("Total de Usos: ").append(totalDeUsos).append("\n");
 		return string.toString();
