@@ -1,7 +1,9 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ import java.util.Map;
 public class Estacionamento {
 
     private String nome;
-    private Cliente[] clientes;
+    private Cliente[] clientes; //mudar pra mapa
     private Vaga[] vagas;
     private int quantFileiras;
     private int vagasPorFileira;
@@ -184,6 +186,13 @@ public class Estacionamento {
      */
     public String top5Clientes(int mes) {
         Map<Cliente, Double> arrecadacaoPorCliente = new HashMap<>();
+  
+        Collections.sort(clientes.values(), 
+                                (c1, c2)-> 
+                                    c1.arrecadacaoNoMes(mes)>c2.arrecadadoNoMes(mes)?1:-1
+                        );
+
+
         for (Cliente cliente : clientes) {
             if (cliente != null) {
                 double arrecadacao = cliente.arrecadadoNoMes(mes);
@@ -196,20 +205,24 @@ public class Estacionamento {
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 5 && i < list.size(); i++) {
-            sb.append(list.get(i).getKey().getNome());
-            if (i < 4 && i < list.size() - 1) {
-                sb.append(", ");
-            }
+            sb.append(list.get(i).toString());
+            
+            // getKey().getNome());
+            // if (i < 4 && i < list.size() - 1) {
+            //     sb.append(", ");
+            // }
         }
 
         return sb.toString();
     }
 
-    public double saidaVeiculo(String placaSaida) {
-        return 0;
-    }
+    
 
-    public Cliente consultarCliente(String idConsulta) {
-        return null;
+    public String historicoCliente(String idConsulta) {
+        Cliente cli = clientes.get(idConsulta);
+        if(cli!=null)
+            return cli.historicoCliente();
+        else 
+            return "";
     }
 }

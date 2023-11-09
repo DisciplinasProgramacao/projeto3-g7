@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import entities.*;
-
+// USAR EQUALS
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -65,7 +65,7 @@ public class Main {
         sc.nextLine();
         System.out.print("Placa do Veículo que está saindo: ");
         String placaSaida = sc.nextLine();
-        double valorPago = estacionamento.saidaVeiculo(placaSaida);
+        double valorPago = estacionamento.sair(placaSaida);
 
         if (valorPago >= 0) {
             System.out.println("Veículo saiu. Valor a ser pago: $" + valorPago);
@@ -78,13 +78,7 @@ public class Main {
         sc.nextLine();
         System.out.print("ID do Cliente para consulta: ");
         String idConsulta = sc.nextLine();
-        Cliente clienteConsultado = estacionamento.consultarCliente(idConsulta);
-
-        if (clienteConsultado != null) {
-            System.out.println(clienteConsultado.historicoCliente());
-        } else {
-            System.out.println("Cliente não encontrado.");
-        }
+        System.out.println(estacionamento.historicoCliente(idConsulta));
     }
 
 
