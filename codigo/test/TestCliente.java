@@ -19,7 +19,9 @@ public class TestCliente {
 
     @Test
     public void testCliente() {
-        assertNotNull(null, cliente.getNome());
+        assertTrue(cliente.toString().contains("Joao"));
+
+        
         assertNotNull(null, cliente.getId());
     }
 
