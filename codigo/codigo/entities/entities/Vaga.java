@@ -17,7 +17,7 @@ public class Vaga {
 	public Vaga(int fila, int numero) {
 		String vagaFinal;
 		String letraVaga = "";
-		letraVaga += filas.charAt(fila - 1);
+		letraVaga += filas.charAt(fila);
 		vagaFinal = letraVaga + numero;
 	}
 

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/codigo/codigo.iml" filepath="$PROJECT_DIR$/codigo/codigo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/projeto3-g7.iml" filepath="$PROJECT_DIR$/projeto3-g7.iml" />
-    </modules>
-  </component>
-</project>
