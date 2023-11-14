@@ -117,22 +117,19 @@ public class Cliente implements IDataToText {
 		historico.append("Valor Total Arrecadado: R$ ").append(valorTotal).append("\n");
 		return historico.toString();
 	}
-
-	public Object getNome() {
-		return nome;
-	}
-
-	public Object getId() {
-		return id;
-	}
-
-	public Object[] getVeiculos() {
-		return veiculos;
-	}
-
 	@Override
 	public String dataToText() {
 		return this.nome + ";" + this.qtdVeiculo;
 	}
 
+
+	
+	public boolean equals(Cliente c){
+		boolean resp = false;
+		if (c.id == this.id){
+			resp = true;
+			return resp;
+		}
+		return resp;
+	}
 }

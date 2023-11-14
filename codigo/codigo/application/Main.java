@@ -1,32 +1,74 @@
 import java.util.Scanner;
 import entities.*;
-// USAR EQUALS
+
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Estacionamento estacionamento = new Estacionamento(null, 0, 0);
-
+        Scanner sc = new Scanner(System.in); 
+        Estacionamento estacionamento = new Estacionamento("Estacionamento", 3,5);
         boolean sair = false;
 
+
         while (!sair) {
-            exibirMenu();
+            System.out.println("===== MENU DO ESTACIONAMENTO =====");
+            System.out.println("1. Registrar Cliente");
+            System.out.println("2. Registrar Veiculo");
+            System.out.println("3. Estacionar carro");
+            System.out.println("4. Calcular valor de saida");
+            System.out.println("5. Total arrecadado do estacionamento");
+            System.out.println("6. Total arrecadado do estacionamento em um mes");
+            System.out.println("7. Media de gasto do publico");
+            System.out.println("8. Top 5 clientes do estacionamento ");
+            System.out.println("9. Sair");
+            System.out.print("Escolha uma opção: ");
             int opcao = sc.nextInt();
 
             switch (opcao) {
                 case 1:
-                    registrarVeiculo(sc, estacionamento);
+                    System.out.println("REGISTRAR CLIENTE");
+                    System.out.print("Nome do cliente?: ");
+                    sc.nextLine();
+                    String nome = sc.nextLine();
+                    System.out.print("ID do cliente: ");
+                    String id = sc.nextLine();
+                    Cliente cliente = new Cliente(nome, id);
+                    estacionamento.addCliente(cliente);
                     break;
                 case 2:
-                    realizarSaidaVeiculo(sc, estacionamento);
+                    System.out.print("Placa do Veiculo: ");
+                    String placa = sc.nextLine();
+                    sc.nextLine();
+                    Veiculo veiculo = new Veiculo(placa);
+                    System.out.print("ID DO CLIENTE: ");
+                    String idCliente = sc.nextLine();
+                    estacionamento.addVeiculo(veiculo, idCliente);
                     break;
                 case 3:
-                    consultarCliente(sc, estacionamento);
+                    System.out.print("Placa do carro: ");
+                    String placaVeiculo = sc.nextLine();
+                    sc.nextLine();
+                    estacionamento.estacionar(placaVeiculo);
                     break;
                 case 4:
-                    sair = true;
+                    System.out.print("Sair da Vaga: ");
+                    String placaVaga = sc.nextLine();
+                    System.out.print("Valor a ser pago: " + estacionamento.sair(placaVaga));
+                    break;
+                case 5:
+                    System.out.println("Total arrecadado: " + estacionamento.totalArrecadado());
+                    break;
+                case 6:
+                    System.out.println("Qual mes voce deseja?: ");
+                    int mes = sc.nextInt();
+                    System.out.print("Total arrecadado: " + estacionamento.arrecadacaoNoMes(mes));
+                    break;
+                case 7:
+                    System.out.println("Gastos medios: " + estacionamento.valorMedioPorUso());
+                    break;
+                case 9:
+                    sair = false;
                     break;
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.println("Opcao invalida. Tente novamente.");
                     break;
             }
         }
@@ -34,60 +76,9 @@ public class Main {
         sc.close();
     }
 
-    public static void exibirMenu() {
-        System.out.println("===== MENU DO ESTACIONAMENTO =====");
-        System.out.println("1. Entrada de Veículo");
-        System.out.println("2. Saída de Veículo");
-        System.out.println("3. Consultar Cliente");
-        System.out.println("4. Sair");
-        System.out.print("Escolha uma opção: ");
-    }
-
-    public static void registrarVeiculo(Scanner sc, Estacionamento estacionamento) {
-        sc.nextLine();
-        System.out.print("Placa do Veículo: ");
-        String placa = sc.nextLine();
-        System.out.print("Nome do Cliente: ");
-        String nomeCliente = sc.nextLine();
-        System.out.print("ID do Cliente: ");
-        String idCliente = sc.nextLine();
-
-        Cliente cliente = new Cliente(nomeCliente, idCliente);
-        Veiculo veiculo = new Veiculo(placa);
-
-        cliente.addVeiculo(veiculo);
-        estacionamento.addVeiculo(veiculo, cliente);
-
-        System.out.println("Veículo registrado no estacionamento.");
-    }
-
-    public static void realizarSaidaVeiculo(Scanner sc, Estacionamento estacionamento) {
-        sc.nextLine();
-        System.out.print("Placa do Veículo que está saindo: ");
-        String placaSaida = sc.nextLine();
-        double valorPago = estacionamento.sair(placaSaida);
-
-        if (valorPago >= 0) {
-            System.out.println("Veículo saiu. Valor a ser pago: $" + valorPago);
-        } else {
-            System.out.println("Veículo não encontrado no estacionamento.");
-        }
-    }
-
-    public static void consultarCliente(Scanner sc, Estacionamento estacionamento) {
-        sc.nextLine();
-        System.out.print("ID do Cliente para consulta: ");
-        String idConsulta = sc.nextLine();
-        System.out.println(estacionamento.historicoCliente(idConsulta));
-    }
-
-
-
-
-
     // Gerar aleatoriamente um mínimo de 50 usos de vagas distribuídas para clientes
     // e estacionamentos;
-    public void carregarDados() {
+     public void carregarDados() {
         Estacionamento[] estacionamentos = new Estacionamento[3];
         estacionamentos[0] = new Estacionamento("Estacionamento1", 4, 5);
         estacionamentos[1] = new Estacionamento("Estacionamento2", 5, 6);
@@ -112,7 +103,6 @@ public class Main {
             Cliente cliente = clientes[i];
             Veiculo veiculo = veiculos[i];
             cliente.addVeiculo(veiculo);
-            estacionamentos[i].addVeiculo(veiculo, cliente);
         }
     }
 
@@ -120,5 +110,4 @@ public class Main {
     
     
 }
-
 
