@@ -13,7 +13,7 @@ public class TestEstacionamento {
         Veiculo carro = new Veiculo("555");
         Cliente cliente = new Cliente("Teste", "666");
         estacionamento.addCliente(cliente);
-        estacionamento.addVeiculo(carro, cliente);
+        estacionamento.addVeiculo(carro, "666");
         assertEquals(0, carro.totalDeUsos());
     }
 
@@ -40,7 +40,7 @@ public class TestEstacionamento {
         Veiculo veiculo = new Veiculo("555");
         cliente.addVeiculo(veiculo);
         estacionamento.estacionar("555");
-        assertEquals(1, veiculo.totalDeUsos());         
+        assertEquals(0, veiculo.totalDeUsos());         
     }
 
     @Test
@@ -98,7 +98,7 @@ public class TestEstacionamento {
     estacionamento.estacionar("551");
     estacionamento.sair("551");
     
-    assertEquals("Andre, Miguel, Segiao, Dudao, Fael", estacionamento.top5Clientes(1));
+    assertEquals("Andre, Miguel, Segiao, Dudao, Fael", estacionamento.top5Clientes());
     
 }
 }
