@@ -26,6 +26,30 @@ public class Cliente implements IDataToText {
 		}
 	}
 
+	public String getId() {
+		return this.id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Veiculo[] getVeiculos() {
+		return this.veiculos;
+	}
+
+	public void setVeiculos(Veiculo[] veiculos) {
+		this.veiculos = veiculos;
+	}
+
+	public int getQtdVeiculo() {
+		return this.qtdVeiculo;
+	}
+
+	public void setQtdVeiculo(int qtdVeiculo) {
+		this.qtdVeiculo = qtdVeiculo;
+	}
+
 	/**
 	 * Classe possuiVeiculo verifica se o o cliente possui o veiculo com certa placa
 	 * 
@@ -117,16 +141,15 @@ public class Cliente implements IDataToText {
 		historico.append("Valor Total Arrecadado: R$ ").append(valorTotal).append("\n");
 		return historico.toString();
 	}
+
 	@Override
 	public String dataToText() {
 		return this.nome + ";" + this.qtdVeiculo;
 	}
 
-
-	
-	public boolean equals(Cliente c){
+	public boolean equals(Cliente c) {
 		boolean resp = false;
-		if (c.id == this.id){
+		if (c.id == this.id) {
 			resp = true;
 			return resp;
 		}

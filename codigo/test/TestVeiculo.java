@@ -1,79 +1,58 @@
 package test;
 
 import org.junit.Test;
-
-import entities.*;
-
 import static org.junit.Assert.*;
+import entities.Veiculo;
+import entities.Vaga;
 
 public class TestVeiculo {
-
     @Test
     public void testEstacionar() {
-        // Cria uma instância de Veiculo e uma instância de Vaga
-        Veiculo veiculo = new Veiculo("ABC123");
-        Vaga vaga = new Vaga(1, 1); // Certifique-se de que a classe Vaga tenha um construtor que aceite fila e
-                                    // número
-
-        // Estaciona o veículo na vaga
+        Veiculo veiculo = new Veiculo("ABC1234");
+        Vaga vaga = new Vaga(4, 7);
         veiculo.estacionar(vaga);
-
-        // Verifica se a vaga foi ocupada corretamente
-        assertTrue(vaga.sair());
+        assertEquals(0, veiculo.getIndiceDeVaga());
     }
 
     @Test
     public void testSair() {
-        // Cria uma instância de Veiculo e uma instância de Vaga
-        Veiculo veiculo = new Veiculo("XYZ789");
-        Vaga vaga = new Vaga(2, 2);
-
-        // Estaciona o veículo na vaga
+        Veiculo veiculo = new Veiculo("ABC1234");
+        Vaga vaga = new Vaga(4, 7);
         veiculo.estacionar(vaga);
-
-        // Registra a saída do veículo e verifica se o valor pago é maior que zero
-        assertTrue(veiculo.sair() > 0);
+        double valorPago = veiculo.sair();
+        assertEquals(10.0, valorPago, 0.01);
     }
 
     @Test
     public void testTotalArrecadado() {
-        // Cria uma instância de Veiculo e uma instância de Vaga
-        Veiculo veiculo = new Veiculo("DEF456");
-        Vaga vaga = new Vaga(3, 3);
-
-        // Estaciona o veículo na vaga
-        veiculo.estacionar(vaga);
-
-        // Registra a saída do veículo e verifica se o total arrecadado é maior que zero
-        assertTrue(veiculo.totalArrecadado() > 0);
+        Veiculo veiculo = new Veiculo("ABC1234");
+        Vaga vaga1 = new Vaga(4, 7);
+        Vaga vaga2 = new Vaga(5, 8);
+        veiculo.estacionar(vaga1);
+        veiculo.estacionar(vaga2);
+        double totalArrecadado = veiculo.totalArrecadado();
+        assertEquals(20.0, totalArrecadado, 0.01);
     }
 
     @Test
     public void testArrecadadoNoMes() {
-        // Cria uma instância de Veiculo e uma instância de Vaga
-        Veiculo veiculo = new Veiculo("GHI789");
-        Vaga vaga = new Vaga(4, 4);
-
-        // Estaciona o veículo na vaga
-        veiculo.estacionar(vaga);
-
-        // Registra a saída do veículo no mês especificado e verifica se o valor
-        // arrecadado é maior que zero
-        assertTrue(veiculo.arrecadadoNoMes(11) > 0);
+        Veiculo veiculo = new Veiculo("ABC1234");
+        Vaga vaga1 = new Vaga(4, 7);
+        Vaga vaga2 = new Vaga(5, 8);
+        veiculo.estacionar(vaga1);
+        veiculo.estacionar(vaga2);
+        double arrecadadoNoMes = veiculo.arrecadadoNoMes(4);
+        assertEquals(10.0, arrecadadoNoMes, 0.01);
     }
 
     @Test
     public void testTotalDeUsos() {
-        // Cria uma instância de Veiculo e uma instância de Vaga
-        Veiculo veiculo = new Veiculo("JKL012");
-        Vaga vaga = new Vaga(5, 20);
-
-        // Estaciona o veículo na vaga
-        veiculo.estacionar(vaga);
-
-        // Verifica se o total de usos é igual a 1
-        assertEquals(1, veiculo.totalDeUsos());
+        Veiculo veiculo = new Veiculo("ABC1234");
+        Vaga vaga1 = new Vaga(4, 7);
+        Vaga vaga2 = new Vaga(5, 8);
+        veiculo.estacionar(vaga1);
+        veiculo.estacionar(vaga2);
+        int totalDeUsos = veiculo.totalDeUsos();
+        assertEquals(2, totalDeUsos);
     }
-
 }
-

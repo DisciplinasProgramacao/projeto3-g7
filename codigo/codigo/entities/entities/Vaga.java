@@ -19,6 +19,9 @@ public class Vaga {
 		String letraVaga = "";
 		letraVaga += filas.charAt(fila);
 		vagaFinal = letraVaga + numero;
+
+		if(vagaFinal != null)
+			disponivel = false;
 	}
 
 	/**

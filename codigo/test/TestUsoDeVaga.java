@@ -1,33 +1,53 @@
 package test;
 
 import org.junit.Test;
+
+import entities.UsoDeVaga;
+
+import java.time.LocalDateTime;
 import static org.junit.Assert.*;
-import entities.*;
 
 public class TestUsoDeVaga {
+    private static final double DELTA = 0.001;
 
-    private UsoDeVaga usoDeVaga;
-    private Vaga vaga;
-    private int n1 = 3;
-    private int n2 = 4;
+    @Test
+    public void testValorPagoWithValidInput() {
+        LocalDateTime entrada = LocalDateTime.of(2022, 1, 1, 10, 0);
+        LocalDateTime saida = LocalDateTime.of(2022, 1, 1, 11, 30);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(entrada, saida);
+        double valorPago = usoDeVaga.valorPago();
+        assertEquals(24.0, valorPago, DELTA);
+    }
 
-    public void setup() {
+    @Test(expected = IllegalArgumentException.class)
+    public void testValorPagoWithNullEntrada() {
+        LocalDateTime saida = LocalDateTime.of(2022, 1, 1, 11, 30);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(null, saida);
+        usoDeVaga.valorPago();
+    }
 
-        vaga = new Vaga(n1, n2);
-        usoDeVaga = new UsoDeVaga(vaga);
+    @Test(expected = IllegalArgumentException.class)
+    public void testValorPagoWithNullSaida() {
+        LocalDateTime entrada = LocalDateTime.of(2022, 1, 1, 10, 0);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(entrada, null);
+        usoDeVaga.valorPago();
     }
 
     @Test
-    public void testGetValorPagoShouldReturnZeroIfVagaIsEmpty() {
-        double result = usoDeVaga.valorPago();
-        assertEquals(0.0, result, 0.01);
+    public void testValorPagoWithZeroMinutes() {
+        LocalDateTime entrada = LocalDateTime.of(2022, 1, 1, 10, 0);
+        LocalDateTime saida = LocalDateTime.of(2022, 1, 1, 10, 0);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(entrada, saida);
+        double valorPago = usoDeVaga.valorPago();
+        assertEquals(4.0, valorPago, DELTA);
     }
 
-    public void testGetValorPagoShouldReturnValorPago() {
-        vaga.disponivel();
-        usoDeVaga.sair();
-        double valorPago = usoDeVaga.sair();
-        double result = usoDeVaga.valorPago();
-        assertEquals(valorPago, result, 0.01);
+    @Test
+    public void testValorPagoWithMaxValue() {
+        LocalDateTime entrada = LocalDateTime.of(2022, 1, 1, 10, 0);
+        LocalDateTime saida = LocalDateTime.of(2022, 1, 1, 13, 7);
+        UsoDeVaga usoDeVaga = new UsoDeVaga(entrada, saida);
+        double valorPago = usoDeVaga.valorPago();
+        assertEquals(50.0, valorPago, DELTA);
     }
 }
