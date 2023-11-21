@@ -1,4 +1,4 @@
-package entities;
+package entities.DAO;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,6 +7,8 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Function;
+
+import entities.Cliente;
 
 public class DAOCliente implements DAO<Cliente> {
 

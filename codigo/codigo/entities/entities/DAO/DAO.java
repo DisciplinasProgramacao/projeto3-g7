@@ -1,6 +1,8 @@
-package entities;
+package entities.DAO;
 
 import java.io.IOException;
+
+import entities.IDataToText;
 
 public interface DAO<T extends IDataToText> {
 

@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import entities.Enums.Servicos;
+import entities.Enums.Turno;
+
 public class UsoDeVaga {
 
 	private static final double FRACAO_USO = 0.25;
@@ -61,4 +64,8 @@ public class UsoDeVaga {
 	public void contratarServico(Servicos servico) {
 		this.servicos = servico;
 	}
+
+	// public void setSaida(LocalDateTime saida) {
+	// 	this.saida = saida;
+	// }
 }

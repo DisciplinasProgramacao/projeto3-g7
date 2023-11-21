@@ -1,4 +1,4 @@
-package entities;
+package entities.Enums;
 public enum Servicos {
 
     MANOBRISTA("Manobrista",5.0,0),
