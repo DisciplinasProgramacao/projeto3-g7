@@ -1,37 +1,87 @@
 package entities;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import entities.Enums.Servicos;
 import entities.Enums.Turnos;
 
 /**
- * Representa o uso de uma vaga de estacionamento em um período de tempo
- * específico (turno).
- * Estende a classe UsoDeVaga.
+ * A classe UsoTurno representa o uso de uma vaga de estacionamento por um determinado período de tempo.
+ * Ela herda da classe UsoDeVaga e contém informações sobre a vaga, horário de entrada e saída, valor pago,
+ * serviços contratados, turno, cliente e status de saída.
  */
 public class UsoTurno extends UsoDeVaga {
-Turnos turno;
-    private static final double PRECO_MENSAL = 200.0;
+    private Vaga vaga;
+    private LocalDateTime entrada;
+    private LocalDateTime saida;
+    private double valorPago = 0;
+    private Servicos servicos;
+    private Turnos turno;
+    private Cliente cliente;
+    private boolean saiu;
 
     /**
-     * Constrói um objeto UsoTurno com a vaga de estacionamento especificada.
-     * 
-     * @param vaga A vaga de estacionamento a ser utilizada.
+     * Construtor da classe UsoTurno.
+     * @param vaga a vaga de estacionamento utilizada
      */
     public UsoTurno(Vaga vaga) {
         super(vaga);
+        saiu = false;
     }
 
     /**
-     * Calcula o valor a ser pago pelo uso do estacionamento.
-     * 
-     * @return O valor total a ser pago pelo Cliente do tipo Turno.
+     * Registra a saída do veículo e calcula o valor a ser pago.
+     * @return o valor a ser pago pelo uso da vaga
      */
-    @Override
-    public double valorPago() {
-        double valorPago = 0;
-        if (getTurno().toString() == turno.getNome()) {
-            valorPago = turno.getValor();
+    public double sair() {
+        this.saida = LocalDateTime.now();
+        int tempoPermanenciaMinutos = (int) entrada.until(saida, ChronoUnit.MINUTES);
+        if (servicos != null) {
+            if (tempoPermanenciaMinutos >= servicos.getTempo()) {
+                saiu = true;
+                return valorPago() + servicos.getValor();
+            }
         }
+        if (turno != null) {
+            if (tempoPermanenciaMinutos >= turno.getHoraInicio() && tempoPermanenciaMinutos <= turno.getHoraFim()
+                    && cliente.getTurno() == turno.getNome()) {
+                saiu = true;
+                return valorPago() + turno.getValor();
+            } else {
+                saiu = true;
+                return valorPago();
+            }
+        }
+        return valorPago();
+    }
+
+    /**
+     * Verifica se o uso da vaga ocorreu no mês especificado.
+     * @param mes o número do mês
+     * @return true se o uso da vaga ocorreu no mês especificado, false caso contrário
+     */
+    public boolean ehDoMes(int mes) {
+        return this.entrada.getMonthValue() == mes;
+    }
+
+    /**
+     * Calcula o valor total pago pelo uso da vaga.
+     * @return o valor total pago pelo uso da vaga
+     * @throws IllegalArgumentException se a entrada ou saída forem nulas
+     */
+    public double valorPago() {
+        if (entrada == null || saida == null) {
+            throw new IllegalArgumentException("Entrada and Saida cannot be null");
+        }
+
         return valorPago;
     }
 
+    /**
+     * Contrata um serviço adicional para o uso da vaga.
+     * @param servico o serviço a ser contratado
+     */
+    public void contratarServico(Servicos servico) {
+        this.servicos = servico;
+    }
 }

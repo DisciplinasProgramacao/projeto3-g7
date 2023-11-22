@@ -2,7 +2,6 @@ package entities;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 import entities.Enums.Servicos;
 import entities.Enums.Turnos;
