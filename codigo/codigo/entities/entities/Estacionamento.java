@@ -1,16 +1,12 @@
 package entities;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * Classe que representa um estacionamento com várias funcionalidades, como
- * adição de clientes, veículos,
- * estacionamento e cálculos relacionados a arrecadação.
- */
 public class Estacionamento {
 
     private String nome;
-    private ArrayList<Cliente> clientes; //mudar pra mapa
+    private Map<String, Cliente> clientes; 
     private Vaga[] vagas;
     private int quantFileiras;
     private int vagasPorFileira;
@@ -19,50 +15,26 @@ public class Estacionamento {
     private int nFileira;
     private int nVaga;
 
-    /**
-     * Construtor da classe Estacionamento.
-     *
-     * @param nome         Nome do estacionamento.
-     * @param fileiras     Quantidade de fileiras de vagas.
-     * @param vagasPorFila Quantidade de vagas por fileira.
-     */
     public Estacionamento(String nome, int fileiras, int vagasPorFila) {
         this.nome = nome;
         this.quantFileiras = fileiras;
         this.vagasPorFileira = vagasPorFila;
-        this.clientes = new ArrayList<>(); // Supondo um máximo de 100 clientes
+        this.clientes = new HashMap<>(); 
         this.vagas = new Vaga[fileiras * vagasPorFila];
-        gerarVagas(); // Método privado para gerar as vagas no estacionamento
+        gerarVagas();
     }
 
-    /**
-     * Adiciona um veículo a um cliente com base no ID do cliente.
-     *
-     * @param veiculo Veículo a ser adicionado.
-     * @param object  ID do cliente.
-     */
     public void addVeiculo(Veiculo veiculo, String idCliente) {
-        Cliente clientetest = new Cliente(nome, idCliente);
-
-        for (Cliente cliente : clientes) {
-            if (cliente.equals(clientetest)) {
-                cliente.addVeiculo(veiculo);
-                break;
-            }
+        Cliente cliente = clientes.get(idCliente);
+        if (cliente != null) {
+            cliente.addVeiculo(veiculo);
         }
     }
-    /**
-     * Adiciona um cliente ao estacionamento.
-     *
-     * @param cliente Cliente a ser adicionado.
-     */
+
     public void addCliente(Cliente cliente) {
-        clientes.add(cliente);
+        clientes.put(cliente.getId(), cliente); 
     }
 
-    /**
-     * Método privado para gerar as vagas disponíveis no estacionamento.
-     */
     private void gerarVagas() {
         int vagaId = 0;
         for (int i = 0; i < this.quantFileiras; i++) {
@@ -73,13 +45,8 @@ public class Estacionamento {
         }
     }
 
-    /**
-     * Estaciona um veículo no estacionamento com base na placa do veículo.
-     *
-     * @param placa Placa do veículo a ser estacionado.
-     */
     public void estacionar(String placa) {
-        for (Cliente cliente : clientes) {
+        for (Cliente cliente : clientes.values()) {
             if (cliente != null && cliente.possuiVeiculo(placa) != null) {
                 for (Vaga vaga : vagas) {
                     if (vaga != null && vaga.disponivel()) {
@@ -92,15 +59,8 @@ public class Estacionamento {
         }
     }
 
-    /**
-     * Remove um veículo do estacionamento com base na placa e calcula o valor a ser
-     * pago.
-     *
-     * @param placa Placa do veículo a ser removido.
-     * @return Valor a ser pago pelo uso da vaga.
-     */
     public double sair(String placa) {
-        for (Cliente cliente : clientes) {
+        for (Cliente cliente : clientes.values()) {
             if (cliente != null && cliente.possuiVeiculo(placa) != null) {
                 return cliente.possuiVeiculo(placa).sair();
             }
@@ -108,15 +68,9 @@ public class Estacionamento {
         return 0.0;
     }
 
-    /**
-     * Calcula o total arrecadado pelo estacionamento com base nas transações dos
-     * clientes.
-     *
-     * @return Total arrecadado pelo estacionamento.
-     */
     public double totalArrecadado() {
         double totalArrecadado = 0.0;
-        for (Cliente cliente : clientes) {
+        for (Cliente cliente : clientes.values()) {
             if (cliente != null) {
                 totalArrecadado += cliente.arrecadadoTotal();
             }
@@ -124,16 +78,9 @@ public class Estacionamento {
         return totalArrecadado;
     }
 
-    /**
-     * Calcula a arrecadação em um determinado mês com base nas transações dos
-     * clientes.
-     *
-     * @param mes Número do mês.
-     * @return Arrecadação no mês especificado.
-     */
     public double arrecadacaoNoMes(int mes) {
         double arrecadacaoNoMes = 0.0;
-        for (Cliente cliente : clientes) {
+        for (Cliente cliente : clientes.values()) {
             if (cliente != null) {
                 arrecadacaoNoMes += cliente.arrecadadoNoMes(mes);
             }
@@ -141,22 +88,16 @@ public class Estacionamento {
         return arrecadacaoNoMes;
     }
 
-    /**
-     * Calcula o valor médio por uso do estacionamento com base nas transações dos
-     * clientes.
-     *
-     * @return Valor médio por uso do estacionamento.
-     */
     public double valorMedioPorUso() {
         int totalDeUsos = 1;
-        for (Cliente cliente : clientes) {
+        for (Cliente cliente : clientes.values()) {
             if (cliente != null) {
                 totalDeUsos += cliente.totalDeUsos();
             }
         }
         return totalArrecadado() / totalDeUsos;
     }
-}
+
     /**
      * Retorna os cinco principais clientes que geraram a maior receita em um
      * determinado mês.
@@ -164,46 +105,22 @@ public class Estacionamento {
      * @param mes Número do mês.
      * @return Nomes dos cinco principais clientes separados por vírgula.
      */
-//     public String top5Clientes(int mes) {
-//         Map<Cliente, Double> arrecadacaoPorCliente = new HashMap<>();
-  
-//         Collections.sort(clientes.values(), 
-//                                 (c1, c2)-> 
-//                                     c1.arrecadacaoNoMes(mes)>c2.arrecadadoNoMes(mes)?1:-1
-//                         );
+  //   public String top5Clientes(int mes) {
+  //       Map<Cliente, Double> arrecadacaoPorCliente = new HashMap<>();
+  //
+  //       Collections.sort(clientes.values(), 
+  //                               (c1, c2)-> 
+  //                                   c1.arrecadacaoNoMes(mes)>c2.arrecadadoNoMes(mes)?1:-1
+  //                       );
+//
+//
+  //      for (Cliente cliente : clientes) {
+    //        if (cliente != null) {
+      //          double arrecadacao = cliente.arrecadadoNoMes(mes);
+        //         arrecadacaoPorCliente.put(cliente, arrecadacao);
+          //   }
+         //}
 
+        //}
 
-//         for (Cliente cliente : clientes) {
-//             if (cliente != null) {
-//                 double arrecadacao = cliente.arrecadadoNoMes(mes);
-//                 arrecadacaoPorCliente.put(cliente, arrecadacao);
-//             }
-//         }
-
-//         List<Map.Entry<Cliente, Double>> list = new ArrayList<>(arrecadacaoPorCliente.entrySet());
-//         list.sort(Map.Entry.comparingByValue());
-
-//         StringBuilder sb = new StringBuilder();
-//         for (int i = 0; i < 5 && i < list.size(); i++) {
-//             sb.append(list.get(i).toString());
-            
-//             // getKey().getNome());
-//             // if (i < 4 && i < list.size() - 1) {
-//             //     sb.append(", ");
-//             // }
-//         }
-
-//         return sb.toString();
-//     }
-
-    
-
-//     public String historicoCliente(String idConsulta) {}
-//         Cliente cli = new Cliente(nome, nome);
-//          cli = clientes.get(idConsulta);
-//         if(cli!=null)
-//             return cli.historicoCliente();
-//         else 
-//             return "";
-//     }
-// }
+    }
