@@ -1,16 +1,26 @@
 package entities;
 
+enum Modalidade{
+	HORISTA, DE_TURNO, MENSALISTA
+}
+
 public class Cliente implements IDataToText {
 
 	private String nome;
 	private String id;
 	private Veiculo[] veiculos = new Veiculo[100];
 	private int qtdVeiculo;
+	private Modalidade modalidade; 
 
-	public Cliente(String nome, String id) {
+	public Cliente(String nome, String id, Modalidade modalidade) {
 		this.nome = nome;
 		this.id = id;
 		this.qtdVeiculo = 0;
+		this.modalidade = modalidade; 
+	}
+
+	public Modalidade getModalidade(){
+		return modalidade; 
 	}
 
 	/**
@@ -25,6 +35,27 @@ public class Cliente implements IDataToText {
 			qtdVeiculo++;
 		}
 	}
+
+	public double calcularCobranca() {
+        switch (modalidade) {
+            case HORISTA:
+                return calcularCobrancaHorista();
+            case DE_TURNO:
+                return 200; // Mensalidade fixa de R$200;
+            case MENSALISTA:
+                return 500; // Mensalidade fixa de R$500;
+            default:
+                throw new IllegalArgumentException("Modalidade inválida");
+        }
+    }
+
+	private double calcularCobrancaHorista() {
+        double totalArrecadado = 0;
+        for (Veiculo veiculo : veiculos.values()) {
+            totalArrecadado += veiculo.totalArrecadado();
+        }
+        return totalArrecadado;
+    }
 
 	public String getId() {
 		return this.id;
