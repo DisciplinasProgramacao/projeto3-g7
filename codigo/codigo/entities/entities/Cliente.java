@@ -1,11 +1,14 @@
 package entities;
 
+import entities.Enums.Turnos;
+
 public class Cliente implements IDataToText {
 
 	private String nome;
 	private String id;
 	private Veiculo[] veiculos = new Veiculo[100];
 	private int qtdVeiculo;
+	private Turnos turno;
 
 	public Cliente(String nome, String id) {
 		this.nome = nome;
@@ -154,5 +157,9 @@ public class Cliente implements IDataToText {
 			return resp;
 		}
 		return resp;
+	}
+
+	public String getTurno() {
+		return turno.getNome();
 	}
 }
