@@ -1,12 +1,19 @@
 package entities;
 
-import static entities.UsoDeVaga.VALOR_FRACAO;
-import static entities.UsoDeVaga.VALOR_MAXIMO;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class UsoHorista extends UsoDeVaga {
+
+	private static final double FRACAO_USO = 0.25;
+	private static final double VALOR_FRACAO = 4.0;
+	private static final double VALOR_MAXIMO = 50.0;
+	private Vaga vaga;
+	private LocalDateTime entrada;
+	private LocalDateTime saida;
+	private double valorPago;
+	private Servicos servicos;
+	private boolean saiu;
 
     public UsoHorista(Vaga vaga) {
         super(vaga);
@@ -49,9 +56,3 @@ public class UsoHorista extends UsoDeVaga {
 	}
 }
     
-
-    
-
-
-
-}
