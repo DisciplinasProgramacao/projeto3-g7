@@ -20,7 +20,7 @@ public class Vaga {
 		letraVaga += filas.charAt(fila);
 		vagaFinal = letraVaga + numero;
 
-		if(vagaFinal != null)
+		if (vagaFinal != null)
 			disponivel = false;
 	}
 
@@ -30,11 +30,11 @@ public class Vaga {
 	 * @return true se ele pode estacionar ou false se ele não pode estacionar
 	 */
 	public boolean estacionar() {
-		if (disponivel == false) {
-			return false;
-		} else {
+		if (disponivel) {
+			disponivel = false;
 			return true;
 		}
+		return false;
 	}
 
 	/**
@@ -43,11 +43,11 @@ public class Vaga {
 	 * @return true se ele puder sair ou false se a vaga estiver vazia
 	 */
 	public boolean sair() {
-		if (disponivel == false) {
-			return true;
-		} else {
+		if (disponivel) {
 			return false;
 		}
+		disponivel = true;
+		return true;
 	}
 
 	/**

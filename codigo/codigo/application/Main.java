@@ -49,8 +49,9 @@ public class Main {
                     estacionamento.estacionar(placaVeiculo);
                     break;
                 case 4:
-                    System.out.print("Sair da Vaga: ");
+                    System.out.println("Digite a placa do carro:");
                     String placaVaga = sc.nextLine();
+                    sc.nextLine();
                     System.out.print("Valor a ser pago: " + estacionamento.sair(placaVaga));
                     break;
                 case 5:

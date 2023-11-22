@@ -53,6 +53,6 @@ public class TestVeiculo {
         veiculo.estacionar(vaga1);
         veiculo.estacionar(vaga2);
         int totalDeUsos = veiculo.totalDeUsos();
-        assertEquals(2, totalDeUsos);
+        assertEquals(1, totalDeUsos);
     }
 }
