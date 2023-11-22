@@ -77,6 +77,16 @@ public class Estacionamento {
         }
         return totalArrecadado;
     }
+    
+    public double totalArrecadadoHorista() {
+        double totalArrecadadoClienteHorista = 0.0;
+        for (Cliente clienteHorista : clientes.values()) {
+            if (clienteHorista != null) {
+                totalArrecadadoClienteHorista += clienteHorista.arrecadadoTotal();
+            }
+        }
+        return totalArrecadadoClienteHorista;
+    }
 
     public double arrecadacaoNoMes(int mes) {
         double arrecadacaoNoMes = 0.0;
@@ -86,6 +96,16 @@ public class Estacionamento {
             }
         }
         return arrecadacaoNoMes;
+    }
+
+        public double arrecadacaoNoMesClienteHorista(int mes) {
+        double arrecadacaoNoMesClienteHorista = 0.0;
+        for (Cliente cliente : clientes.values()) {
+            if (cliente != null) {
+                arrecadacaoNoMesClienteHorista += cliente.arrecadadoNoMes(mes);
+            }
+        }
+        return arrecadacaoNoMesClienteHorista;
     }
 
     public double valorMedioPorUso() {

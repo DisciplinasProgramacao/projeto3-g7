@@ -19,6 +19,10 @@ public class Veiculo implements IDataToText {
 	public void setPlaca(String placa) {
 		this.placa = placa;
 	}
+	
+	public String getPlaca() {
+		return placa;
+	}
 
 	public int getIndiceDeVaga() {
 		return this.indiceDeVaga;
@@ -108,9 +112,7 @@ public class Veiculo implements IDataToText {
 		return totalDeUsos;
 	}
 
-	public String getPlaca() {
-		return placa;
-	}
+	
 
 
 	LinkedList<Veiculo> veiculos = new LinkedList<>();
