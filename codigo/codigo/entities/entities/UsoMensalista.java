@@ -3,6 +3,8 @@ package entities;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import entities.Enums.Servicos;
+
 public class UsoMensalista extends UsoDeVaga {
 
 

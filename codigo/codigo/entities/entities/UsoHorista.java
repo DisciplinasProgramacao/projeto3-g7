@@ -3,6 +3,8 @@ package entities;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import entities.Enums.Servicos;
+
 public class UsoHorista extends UsoDeVaga {
 
 	private static final double FRACAO_USO = 0.25;
