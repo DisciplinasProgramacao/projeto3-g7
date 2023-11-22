@@ -1,4 +1,3 @@
 # Diagramas de classe
-![image](![image](https://github.com/DisciplinasProgramacao/projeto3-g7/assets/125704966/60d1e76c-8794-478a-b606-b27989e81576)
-)
+![image](https://github.com/DisciplinasProgramacao/projeto3-g7/assets/125704966/6ffd83d5-89b0-47d3-a7dc-555fe1a531e7)
 
