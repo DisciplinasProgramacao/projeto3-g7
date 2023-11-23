@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.chrono.ChronoLocalDateTime;
 
-public enum Turnos {
+public enum ETurnos {
 
 
 //     lDate a = LocalDateTime.of(2012, 6, 30, 12, 00);
@@ -20,7 +20,7 @@ public enum Turnos {
     private LocalDateTime horaInicio;
     private LocalDateTime horaFim;
 
-    Turnos(String nome, LocalDateTime horaInicio, LocalDateTime horaFim) {
+    ETurnos(String nome, LocalDateTime horaInicio, LocalDateTime horaFim) {
         this.nome = nome;
         this.horaInicio = horaInicio;
         this.horaFim = horaFim;
