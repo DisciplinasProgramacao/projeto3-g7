@@ -86,15 +86,15 @@ public class Veiculo implements IDataToText {
 	 */
 	public double arrecadadoNoMes(int mes) {
 
-		this.mes = mes;
-		
-		for (int i = 0; i < indiceDeVaga; i++) {
-			if (usos[indiceDeVaga].ehDoMes(mes)) {
-				arrecadadoNoMes += usos[indiceDeVaga].valorPago();
-			}
-		}
-		return arrecadadoNoMes;
-	}
+        this.mes = mes;
+
+        for (int i = 0; i < indiceDeVaga; i++) {
+            if (usos[indiceDeVaga - 1].ehDoMes(mes)) {
+                arrecadadoNoMes += usos[indiceDeVaga - 1].valorPago();
+            }
+        }
+        return arrecadadoNoMes;
+    }
 
 	/**
 	 * Obtém o número total de usos de vagas registrados para o veículo.
