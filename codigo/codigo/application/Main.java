@@ -1,6 +1,7 @@
 package application;
 import java.util.Scanner;
 import entities.*;
+import entities.Enums.ECliente;
 
 public class Main {
     public static void main(String[] args) {
@@ -76,21 +77,32 @@ class MenuHandler {
         System.out.println("5. Total arrecadado do estacionamento");
         System.out.println("6. Total arrecadado do estacionamento em um mes");
         System.out.println("7. Media de gasto do publico");
-        System.out.println("8. Top 5 clientes do estacionamento ");
-        System.out.println("8. Total arrecadado do Cliente Horista; ");
-        System.out.println("9. Sair");
+        System.out.println("8. Total arrecadado do cliente horista ");
+        System.out.println("9. Total arrecadado no Mes cliente horista; ");
+        System.out.println("10. Sair");
         System.out.print("Escolha uma opção: ");
     }
 
-    private void registrarCliente() {
-        System.out.println("===== REGISTRO DE CLIENTE =====");
-        System.out.print("Nome do cliente: ");
-        String nome = scanner.nextLine();
-        System.out.print("ID do cliente: ");
-        String id = scanner.nextLine();
-        Cliente cliente = new Cliente(nome, id);
-        estacionamento.addCliente(cliente);
+private void registrarCliente() {
+    System.out.println("===== REGISTRO DE CLIENTE =====");
+    System.out.print("Nome do cliente: ");
+    String nome = scanner.nextLine();
+    System.out.print("ID do cliente: ");
+    String id = scanner.nextLine();
+    System.out.println("Selecione o tipo de cliente:");
+    for (ECliente tipo : ECliente.values()) {
+        System.out.println((tipo.ordinal() + 1) + ". " + tipo.getNome());
     }
+    int escolhaTipo = scanner.nextInt();
+    scanner.nextLine();
+    ECliente tipoCliente = null;
+    if (escolhaTipo > 0 && escolhaTipo <= ECliente.values().length) {
+        tipoCliente = ECliente.values()[escolhaTipo - 1];
+    } 
+
+    Cliente cliente = new Cliente(nome, id, tipoCliente);
+    estacionamento.addCliente(cliente);
+}
 
     private void registrarVeiculo() {
         System.out.println("===== REGISTRO DE VEICULO =====");

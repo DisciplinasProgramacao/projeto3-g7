@@ -1,21 +1,19 @@
 package entities;
-
-import entities.Enums.Turnos;
-
+import entities.Enums.ECliente;
 public class Cliente implements IDataToText {
 
-	private String nome;
-	private String id;
-	private Veiculo[] veiculos = new Veiculo[100];
-	private int qtdVeiculo;
-	private Turnos turno;
+    private String nome;
+    private String id;
+    private Veiculo[] veiculos = new Veiculo[100];
+    private int qtdVeiculo;
+    private ECliente tipo;
 
-	public Cliente(String nome, String id) {
-		this.nome = nome;
-		this.id = id;
-		this.qtdVeiculo = 0;
+    public Cliente(String nome, String id, ECliente tipo) {
+        this.nome = nome;
+        this.id = id;
+        this.qtdVeiculo = 0;
+        this.tipo = tipo;
 	}
-
 	/**
 	 * Classe addVeiculo que adicionará um veiculo ao cliente
 	 * 
@@ -31,26 +29,6 @@ public class Cliente implements IDataToText {
 
 	public String getId() {
 		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public Veiculo[] getVeiculos() {
-		return this.veiculos;
-	}
-
-	public void setVeiculos(Veiculo[] veiculos) {
-		this.veiculos = veiculos;
-	}
-
-	public int getQtdVeiculo() {
-		return this.qtdVeiculo;
-	}
-
-	public void setQtdVeiculo(int qtdVeiculo) {
-		this.qtdVeiculo = qtdVeiculo;
 	}
 
 	/**
@@ -128,6 +106,12 @@ public class Cliente implements IDataToText {
 		return arrecadadoNoMes;
 	}
 
+	/**
+ 	* Gera um histórico detalhado para um cliente, incluindo informações sobre veículos
+ 	* e valores gastos mensalmente e no total.
+	* 
+	* @return Uma string representando o histórico do cliente.
+	*/
 	public String historicoCliente() {
 		StringBuilder historico = new StringBuilder();
 		historico.append("Histórico do Cliente: ").append(nome).append(" (ID: ").append(id).append(")\n");
@@ -160,7 +144,5 @@ public class Cliente implements IDataToText {
 		return resp;
 	}
 
-	public String getTurno() {
-		return turno.getNome();
-	}
+
 }

@@ -1,11 +1,5 @@
 package entities.Enums;
-
-import entities.Data;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.chrono.ChronoLocalDateTime;
 
 public enum Turnos {
 
