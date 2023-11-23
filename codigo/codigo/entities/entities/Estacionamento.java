@@ -35,7 +35,7 @@ public class Estacionamento {
         clientes.put(cliente.getId(), cliente); 
     }
 
-    private void gerarVagas() {
+    private void gerarVagas() { // error pode estar aqui, pois o primeiro carro deverian parar na primeira vaga
         int vagaId = 0;
         for (int i = 0; i < this.quantFileiras; i++) {
             for (int j = 0; j < this.vagasPorFileira; j++) {

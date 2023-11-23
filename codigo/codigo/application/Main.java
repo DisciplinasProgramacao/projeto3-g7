@@ -108,7 +108,6 @@ class MenuHandler {
         System.out.println("===== ESTACIONANDO VEICULO =====");
         System.out.print("Placa do carro: ");
         String placaVeiculo = scanner.nextLine();
-        scanner.nextLine();
         estacionamento.estacionar(placaVeiculo);
         System.out.println("Veiculo estacionado com sucesso!");
     }

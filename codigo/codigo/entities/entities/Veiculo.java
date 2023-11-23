@@ -63,7 +63,7 @@ public class Veiculo implements IDataToText {
 	 * @return O valor pago pelo uso da vaga.
 	 */
 	public double sair() {
-		return usos[indiceDeVaga].sair();
+		return usos[indiceDeVaga -1].sair();
 	}
 
 	/**
