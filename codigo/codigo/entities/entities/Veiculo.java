@@ -15,7 +15,7 @@ public class Veiculo implements IDataToText {
 	private int totalDeUsos = 0; // Total de usos de vagas registrados para o veículo
 	private double arrecadadoNoMes = 0; // Valor arrecadado no mês atual
 	private double totalArrecadado = 0; // Valor total arrecadado pelo veículo
-	private int indiceDeVaga;
+	private int indiceDeVaga = 0;
 	public void setPlaca(String placa) {
 		this.placa = placa;
 	}
@@ -50,7 +50,6 @@ public class Veiculo implements IDataToText {
 	public void estacionar(Vaga vaga) {
 
 		if (vaga.disponivel() == true) {
-			vaga.estacionar();
 			if(vaga.estacionar() == true)
 				usos[indiceDeVaga] = new UsoDeVaga(vaga);
 				indiceDeVaga++;
@@ -63,7 +62,7 @@ public class Veiculo implements IDataToText {
 	 * @return O valor pago pelo uso da vaga.
 	 */
 	public double sair() {
-		return usos[indiceDeVaga -1].sair();
+		return usos[indiceDeVaga - 1].sair();
 	}
 
 	/**
@@ -110,6 +109,15 @@ public class Veiculo implements IDataToText {
 			}
 		}
 		return totalDeUsos;
+	}
+
+	public boolean equals(Veiculo v) {
+		boolean resp = false;
+		if (v.placa.equals(this.placa)) {
+			resp = true;
+			return resp;
+		}
+		return resp;
 	}
 
 	
