@@ -43,8 +43,9 @@ public class UsoTurno extends UsoDeVaga {
             }
         }
         if (turno != null) {
+          //  this.getEntrada().isBefore(turno.getHoraInicio())
             if (tempoPermanenciaMinutos >= turno.getHoraInicio() && tempoPermanenciaMinutos <= turno.getHoraFim()
-                    && cliente.getTurno() == turno.getNome()) {
+                    
                 saiu = true;
                 return valorPago() + turno.getValor();
             } else {
