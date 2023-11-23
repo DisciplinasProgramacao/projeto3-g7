@@ -3,7 +3,7 @@ package entities;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import entities.Enums.Servicos;
-import entities.Enums.Turnos;
+import entities.Enums.ETurnos;
 
 /**
  * A classe UsoTurno representa o uso de uma vaga de estacionamento por um
@@ -18,7 +18,7 @@ public class UsoTurno extends UsoDeVaga {
     private LocalDateTime saida;
     private double valorPago = 0;
     private Servicos servicos;
-    private Turnos turno;
+    private ETurnos turno;
     private Cliente cliente;
     private boolean saiu;
 
