@@ -2,6 +2,8 @@ package entities;
 
 import java.util.LinkedList;
 
+import entities.Enums.ECliente;
+
 /**
  * A classe Veiculo representa um veículo que pode estacionar em vagas de
  * estacionamento.
@@ -16,10 +18,12 @@ public class Veiculo implements IDataToText {
 	private double arrecadadoNoMes = 0; // Valor arrecadado no mês atual
 	private double totalArrecadado = 0; // Valor total arrecadado pelo veículo
 	private int indiceDeVaga = 0;
+	private ECliente eCliente;
+
 	public void setPlaca(String placa) {
 		this.placa = placa;
 	}
-	
+
 	public String getPlaca() {
 		return placa;
 	}
@@ -32,6 +36,9 @@ public class Veiculo implements IDataToText {
 		this.indiceDeVaga = indiceDeVaga;
 	}
 
+	public ECliente geteCliente() {
+		return eCliente;
+	}
 	/**
 	 * Construtor da classe Veiculo.
 	 *
@@ -50,9 +57,27 @@ public class Veiculo implements IDataToText {
 	public void estacionar(Vaga vaga) {
 
 		if (vaga.disponivel() == true) {
-			if(vaga.estacionar() == true)
-				usos[indiceDeVaga] = new UsoDeVaga(vaga);
-				indiceDeVaga++;
+			if (vaga.estacionar() == true)
+				if (eCliente != null && eCliente.getNome() != null) {
+					switch (eCliente.getNome()) {
+						case "Horista":
+							usos[indiceDeVaga] = new UsoHorista(vaga);
+							indiceDeVaga++;
+							break;
+						case "Mensalista":
+							usos[indiceDeVaga] = new UsoMensalista(vaga);
+							indiceDeVaga++;
+							break;
+						case "Turno":
+							usos[indiceDeVaga] = new UsoTurno(vaga);
+							indiceDeVaga++;
+							break;
+						default:
+							break;
+					}
+				} else {
+					throw new IllegalArgumentException("eCliente or eCliente.getNome() cannot be null");
+				}
 		}
 	}
 
@@ -86,15 +111,15 @@ public class Veiculo implements IDataToText {
 	 */
 	public double arrecadadoNoMes(int mes) {
 
-        this.mes = mes;
+		this.mes = mes;
 
-        for (int i = 0; i < indiceDeVaga; i++) {
-            if (usos[indiceDeVaga - 1].ehDoMes(mes)) {
-                arrecadadoNoMes += usos[indiceDeVaga - 1].valorPago();
-            }
-        }
-        return arrecadadoNoMes;
-    }
+		for (int i = 0; i < indiceDeVaga; i++) {
+			if (usos[indiceDeVaga - 1].ehDoMes(mes)) {
+				arrecadadoNoMes += usos[indiceDeVaga - 1].valorPago();
+			}
+		}
+		return arrecadadoNoMes;
+	}
 
 	/**
 	 * Obtém o número total de usos de vagas registrados para o veículo.
@@ -120,19 +145,17 @@ public class Veiculo implements IDataToText {
 		return resp;
 	}
 
-	
-
-
 	LinkedList<Veiculo> veiculos = new LinkedList<>();
+
 	@Override
 	public String dataToText() {
-		double totalArrecadado =  veiculos.stream()
-		.mapToDouble(veiculo -> veiculo.totalArrecadado())
-		.sum();
+		double totalArrecadado = veiculos.stream()
+				.mapToDouble(veiculo -> veiculo.totalArrecadado())
+				.sum();
 
 		double totalDeUsos = veiculos.stream()
-		.mapToDouble(veiculo -> veiculo.totalDeUsos())
-		.sum();
+				.mapToDouble(veiculo -> veiculo.totalDeUsos())
+				.sum();
 
 		StringBuilder string = new StringBuilder();
 		string.append("Placa: ").append(placa).append("\n").append("Total de Usos: ").append(totalDeUsos).append("\n");

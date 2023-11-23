@@ -6,7 +6,7 @@ import java.time.temporal.ChronoUnit;
 import entities.Enums.Servicos;
 import entities.Enums.Turnos;
 
-public class UsoDeVaga {
+public abstract class UsoDeVaga {
 
 	private static final double FRACAO_USO = 0.25;
 	private static final double VALOR_FRACAO = 4.0;
