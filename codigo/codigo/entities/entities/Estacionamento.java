@@ -25,10 +25,7 @@ public class Estacionamento {
     }
 
     public void addVeiculo(Veiculo veiculo, String idCliente) {
-        Cliente cliente = clientes.get(idCliente);
-        if (cliente != null) {
-            cliente.addVeiculo(veiculo);
-        }
+        clientes.get(idCliente).addVeiculo(veiculo);
     }
 
     public void addCliente(Cliente cliente) {

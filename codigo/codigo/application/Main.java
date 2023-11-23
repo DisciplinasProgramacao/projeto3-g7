@@ -1,4 +1,4 @@
-
+package application;
 import java.util.Scanner;
 import entities.*;
 
@@ -85,7 +85,6 @@ class MenuHandler {
     private void registrarCliente() {
         System.out.println("===== REGISTRO DE CLIENTE =====");
         System.out.print("Nome do cliente: ");
-        scanner.nextLine();
         String nome = scanner.nextLine();
         System.out.print("ID do cliente: ");
         String id = scanner.nextLine();
@@ -97,7 +96,6 @@ class MenuHandler {
         System.out.println("===== REGISTRO DE VEICULO =====");
         System.out.print("Placa do Veiculo: ");
         String placa = scanner.nextLine();
-        scanner.nextLine();
         Veiculo veiculo = new Veiculo(placa);
         System.out.print("ID DO CLIENTE: ");
         String idCliente = scanner.nextLine();
@@ -116,8 +114,8 @@ class MenuHandler {
         System.out.println("===== CALCULANDO SAIDA VEICULO =====");
         System.out.println("Digite a placa do carro: ");
         String placaVaga = scanner.nextLine();
-        scanner.nextLine();
         System.out.print("Valor a ser pago: " + estacionamento.sair(placaVaga));
+        System.out.println();
     }
 
     private void exibirTotalArrecadado() {

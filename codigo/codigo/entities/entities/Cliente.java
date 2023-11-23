@@ -62,8 +62,9 @@ public class Cliente implements IDataToText {
 	public Veiculo possuiVeiculo(String placa) {
 		Veiculo busca = new Veiculo(placa);
 		for (int i = 0; i < qtdVeiculo; i++) {
-			if (busca.equals(veiculos[i]))
+			if (busca.equals(veiculos[i])){
 				return veiculos[i];
+			}
 		}
 		return busca;
 	}

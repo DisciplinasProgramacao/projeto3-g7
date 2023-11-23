@@ -21,7 +21,7 @@ public class Vaga {
 		vagaFinal = letraVaga + numero;
 
 		if (vagaFinal != null)
-			disponivel = false;
+			disponivel = true;
 	}
 
 	/**
