@@ -141,6 +141,7 @@ private void registrarCliente() {
         System.out.println("Qual mes voce deseja? ");
         int mes = scanner.nextInt();
         System.out.print("Total arrecadado: " + estacionamento.arrecadacaoNoMes(mes));
+        System.out.println();
     }
 
     private void exibirGastosMedios() {

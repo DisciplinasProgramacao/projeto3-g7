@@ -19,8 +19,6 @@ public class UsoTurno extends UsoDeVaga {
     private double valorPago = 0;
     private Servicos servicos;
     private ETurnos turno;
-    private Cliente cliente;
-    private boolean saiu;
 
     private static final double PRECO_MENSAL = 200.0;
 
@@ -31,7 +29,8 @@ public class UsoTurno extends UsoDeVaga {
      */
     public UsoTurno(Vaga vaga) {
         super(vaga);
-        saiu = false;
+        this.vaga = vaga;
+		this.entrada = LocalDateTime.now();
     }
 
     /**
@@ -39,20 +38,18 @@ public class UsoTurno extends UsoDeVaga {
      * 
      * @return o valor a ser pago pelo uso da vaga
      */
+    @Override
     public double sair() {
         this.saida = LocalDateTime.now();
         int tempoPermanenciaMinutos = (int) entrada.until(saida, ChronoUnit.MINUTES);
         if (servicos != null) {
             if (tempoPermanenciaMinutos >= servicos.getTempo()) {
-                saiu = true;
                 return valorPago() + servicos.getValor();
             }
         }
-        if (this.getEntrada().isBefore(turno.getHoraInicio())) {
-            saiu = true;
+        if (this.entrada.isBefore(turno.getHoraInicio())) {
             return valorPago() + PRECO_MENSAL;
         } else {
-            saiu = true;
             return valorPago();
         }
     }
@@ -64,6 +61,7 @@ public class UsoTurno extends UsoDeVaga {
      * @return true se o uso da vaga ocorreu no mês especificado, false caso
      *         contrário
      */
+    @Override
     public boolean ehDoMes(int mes) {
         return this.entrada.getMonthValue() == mes;
     }
@@ -74,6 +72,7 @@ public class UsoTurno extends UsoDeVaga {
      * @return o valor total pago pelo uso da vaga
      * @throws IllegalArgumentException se a entrada ou saída forem nulas
      */
+    @Override
     public double valorPago() {
         if (entrada == null || saida == null) {
             throw new IllegalArgumentException("Entrada and Saida cannot be null");

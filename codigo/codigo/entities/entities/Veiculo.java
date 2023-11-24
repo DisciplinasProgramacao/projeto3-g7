@@ -20,25 +20,7 @@ public class Veiculo implements IDataToText {
 	private int indiceDeVaga = 0;
 	private ECliente eCliente;
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
 
-	public String getPlaca() {
-		return placa;
-	}
-
-	public int getIndiceDeVaga() {
-		return this.indiceDeVaga;
-	}
-
-	public void setIndiceDeVaga(int indiceDeVaga) {
-		this.indiceDeVaga = indiceDeVaga;
-	}
-
-	public ECliente geteCliente() {
-		return eCliente;
-	}
 	/**
 	 * Construtor da classe Veiculo.
 	 *
@@ -47,6 +29,10 @@ public class Veiculo implements IDataToText {
 	public Veiculo(String placa) {
 		this.placa = placa;
 
+	}
+
+	public void setEcliente(ECliente eCliente){
+		this.eCliente = eCliente;
 	}
 
 	/**
