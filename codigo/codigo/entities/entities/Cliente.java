@@ -184,4 +184,7 @@ public class Cliente implements IDataToText {
 		return resp;
 	}
 
+	public String getTipo(){
+        return tipo.getNome();
+    }
 }

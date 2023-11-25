@@ -1,16 +1,13 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.print.DocFlavor.STRING;
+import java.util.stream.Collectors;
 
 public class Estacionamento {
 
-    private String nome;
+    public String nome;
     private Map<String, Cliente> clientes; 
     private Vaga[] vagas;
     private int quantFileiras;
@@ -77,16 +74,6 @@ public class Estacionamento {
         }
         return totalArrecadado;
     }
-    
-    public double totalArrecadadoHorista() {
-        double totalArrecadadoClienteHorista = 0.0;
-        for (Cliente clienteHorista : clientes.values()) {
-            if (clienteHorista != null) {
-                totalArrecadadoClienteHorista += clienteHorista.arrecadadoTotal();
-            }
-        }
-        return totalArrecadadoClienteHorista;
-    }
 
     public double arrecadacaoNoMes(int mes) {
         double arrecadacaoNoMes = 0.0;
@@ -98,10 +85,10 @@ public class Estacionamento {
         return arrecadacaoNoMes;
     }
 
-        public double arrecadacaoNoMesClienteHorista(int mes) {
+    public double arrecadacaoNoMesClienteHorista(int mes) {
         double arrecadacaoNoMesClienteHorista = 0.0;
         for (Cliente cliente : clientes.values()) {
-            if (cliente != null) {
+            if (cliente.getTipo() == "Horista") {
                 arrecadacaoNoMesClienteHorista += cliente.arrecadadoNoMes(mes);
             }
         }
@@ -130,12 +117,6 @@ public class Estacionamento {
     }
         return texto;
     }
-
-    public boolean validaEstacionamento(Estacionamento estacionamento) {
-        return estacionamento != null;
-
-    }
-
 /**
      
 Retorna os cinco principais clientes que geraram a maior receita em um
@@ -143,33 +124,28 @@ determinado mês.*
 @param mes Número do mês.
 @return Nomes dos cinco principais clientes separados por vírgula.
 */
-  public String top5Clientes(int mes) {
-  List<Cliente> clienteDoMes = new ArrayList<>();
+public String top5Clientes() {
 
-        for (Cliente x : clientes.values()) {
-            if (x.arrecadadoNoMes(mes) > 0) {
-                clienteDoMes.add(x);
-            }
-        }
-        clienteDoMes.sort(new Comparator<Cliente>() {
-            public int compare(Cliente cliente1, Cliente cliente2) {
-                double arrecadacao1 = cliente1.arrecadadoNoMes(mes);
-                double arrecadacao2 = cliente2.arrecadadoNoMes(mes);
+    Map<String, Double> valorGastoPorCliente = clientes.values().stream()
+            .collect(Collectors.toMap(Cliente::getId, Cliente::arrecadadoTotal));
 
-                return Double.compare(arrecadacao2, arrecadacao1);
-            }
-        });
-        int maxClientes = Math.min(5, clienteDoMes.size());
 
-        StringBuilder top5 = new StringBuilder();
+    List<Map.Entry<String, Double>> listaOrdenada = valorGastoPorCliente.entrySet().stream()
+            .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+            .collect(Collectors.toList());
 
-        top5.append("Top 5 clientes do mês " + mes + " :\n");
 
-        for (int i = 0; i < maxClientes; i++) {
-            Cliente cliente = clienteDoMes.get(i);
-            top5.append(cliente + "\n");
-        }
-        return top5.toString();
-    }
+    List<Map.Entry<String, Double>> top5Clientes = listaOrdenada.stream()
+            .limit(5)
+            .collect(Collectors.toList());
+
+    StringBuilder resultado = new StringBuilder();
+    resultado.append("Top 5 Clientes que mais gastaram no estacionamento:\n");
+    top5Clientes.forEach(entry ->
+            resultado.append("Cliente ID: ").append(entry.getKey()).append(", Valor Gasto: R$ ").append(entry.getValue()).append("\n"));
+
+    return resultado.toString();
+}
+
 
 }

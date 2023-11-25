@@ -3,7 +3,7 @@ import java.util.Scanner;
 import entities.*;
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
-
+import entities.Enums.Servicos;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -22,6 +22,7 @@ class MenuHandler {
         this.scanner = scanner;
         this.estacionamento = estacionamento;
     }
+
 
     public void runMenu() {
         boolean sair = false;
@@ -57,14 +58,14 @@ class MenuHandler {
                     totalArrecadadoMesClienteHorista();
                     break;
                 case 9:
-                    exibirTotalArrecadadoClienteHorista();
-                    break;
-                case 10:
                     exibirTop5();
                     break;
-                case 11:
+                case 10:
                     exibirHistoricoCliente();
-                    break;    
+                    break;  
+                case 11:
+                    servicos();
+                    break;  
                 case 12:
                     sair = true;
                     break;
@@ -84,10 +85,10 @@ class MenuHandler {
         System.out.println("5. Total arrecadado do estacionamento");
         System.out.println("6. Total arrecadado do estacionamento em um mes");
         System.out.println("7. Media de gasto do publico");
-        System.out.println("8. Total arrecadado do cliente horista ");
-        System.out.println("9. Total arrecadado no Mes cliente horista; ");
-        System.out.println("10. Exibir Top 5");
-        System.out.println("11. Exibir Historico do Cliente");
+        System.out.println("8. Total arrecadado no Mes cliente horista; ");
+        System.out.println("9. Exibir Top 5");
+        System.out.println("10. Exibir Historico do Cliente");
+        System.out.println("11. Serviços");
         System.out.println("12. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -190,24 +191,9 @@ class MenuHandler {
         System.out.println();
     }
 
-    private void exibirTotalArrecadadoClienteHorista() {
-        System.out.println("===== TOTAL ARRECADADO DO ESTACIONAMENTO =====");
-        double totalArrecadadoClienteHorista = estacionamento.totalArrecadadoHorista();
-        System.out.println("Total arrecadado: " + totalArrecadadoClienteHorista);
-    }
-
-
-    private void exibirTop5() {
+    private void exibirTop5() {   
         System.out.println("===== TOP 5 CLIENTES =====");
-        Estacionamento estacionamento = new Estacionamento ("Estacionamento", 3, 5);
-        if(!estacionamento.validaEstacionamento(estacionamento)){ 
-            System.out.println("Estacionamento nao selecionado.");
-        } else{
-            System.out.println("Qual mes voce deseja? ");
-            int mes = scanner.nextInt();
-            String top5 = estacionamento.top5Clientes(mes);
-            System.out.println(top5);
-        }
+        System.out.println(estacionamento.top5Clientes());
     }
 
     private void exibirHistoricoCliente() {
@@ -216,5 +202,24 @@ class MenuHandler {
         String id = scanner.nextLine();
         System.out.println("Total arrecadado: " + estacionamento.historicoCliente(id));
     }
-    
+    /**
+     * 
+     */
+    private void servicos(){
+        System.out.println("===== SERVICOS =====");
+        System.out.println("Escolha o tipo de serviço:");
+        for (Servicos tipoServico : Servicos.values()) {
+            System.out.println((tipoServico.ordinal() + 1) + ". " + tipoServico.getNome() +
+                    " - Preço: R$" + tipoServico.getValor());
+        }
+        int escolha = scanner.nextInt();
+        scanner.nextLine();
+        if (escolha > 0 && escolha <= Servicos.values().length) {
+            Servicos tipoServicoEscolhido = Servicos.values()[escolha - 1];
+            System.out.println("Você escolheu o serviço: " + tipoServicoEscolhido.getNome() +
+                    " - Preço: R$" + tipoServicoEscolhido.getValor());
+        } else {
+            System.out.println("Escolha inválida.");
+        }
+    }
 }
