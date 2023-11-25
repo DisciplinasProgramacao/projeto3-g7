@@ -1,7 +1,9 @@
 package application;
+
 import java.util.Scanner;
 import entities.*;
 import entities.Enums.ECliente;
+import entities.Enums.ETurnos;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,7 +35,7 @@ class MenuHandler {
             switch (opcao) {
                 case 1:
                     registrarCliente();
-                      break;
+                    break;
                 case 2:
                     registrarVeiculo();
                     break;
@@ -83,26 +85,45 @@ class MenuHandler {
         System.out.print("Escolha uma opção: ");
     }
 
-private void registrarCliente() {
-    System.out.println("===== REGISTRO DE CLIENTE =====");
-    System.out.print("Nome do cliente: ");
-    String nome = scanner.nextLine();
-    System.out.print("ID do cliente: ");
-    String id = scanner.nextLine();
-    System.out.println("Selecione o tipo de cliente:");
-    for (ECliente tipo : ECliente.values()) {
-        System.out.println((tipo.ordinal() + 1) + ". " + tipo.getNome());
-    }
-    int escolhaTipo = scanner.nextInt();
-    scanner.nextLine();
-    ECliente tipoCliente = null;
-    if (escolhaTipo > 0 && escolhaTipo <= ECliente.values().length) {
-        tipoCliente = ECliente.values()[escolhaTipo - 1];
-    } 
+    private void registrarCliente() {
+        System.out.println("===== REGISTRO DE CLIENTE =====");
+        System.out.print("Nome do cliente: ");
+        String nome = scanner.nextLine();
+        System.out.print("ID do cliente: ");
+        String id = scanner.nextLine();
 
-    Cliente cliente = new Cliente(nome, id, tipoCliente);
-    estacionamento.addCliente(cliente);
-}
+        System.out.println("Selecione o tipo de cliente:");
+        for (ECliente tipo : ECliente.values()) {
+            System.out.println((tipo.ordinal() + 1) + ". " + tipo.getNome());
+        }
+        int escolhaTipo = scanner.nextInt();
+        scanner.nextLine();
+        ECliente tipoCliente = null;
+        if (escolhaTipo > 0 && escolhaTipo <= ECliente.values().length) {
+            tipoCliente = ECliente.values()[escolhaTipo - 1];
+        }
+
+        if (tipoCliente == ECliente.TURNO) {
+            System.out.println("Selecione o turno do cliente:");
+            for (ETurnos turno : ETurnos.values()) {
+                System.out.println((turno.ordinal() + 1) + ". " + turno.getNome());
+            }
+            int escolhaTurno = scanner.nextInt();
+            scanner.nextLine();
+            ETurnos turnoCliente = null;
+            if (escolhaTurno > 0 && escolhaTurno <= ETurnos.values().length) {
+                turnoCliente = ETurnos.values()[escolhaTurno - 1];
+            } else {
+                System.out.println("Escolha inválida para o turno. O cliente será registrado sem turno.");
+            }
+
+            Cliente cliente = new Cliente(nome, id, tipoCliente, turnoCliente);
+            estacionamento.addCliente(cliente);
+        } else {
+            Cliente cliente = new Cliente(nome, id, tipoCliente);
+            estacionamento.addCliente(cliente);
+        }
+    }
 
     private void registrarVeiculo() {
         System.out.println("===== REGISTRO DE VEICULO =====");

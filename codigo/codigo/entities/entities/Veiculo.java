@@ -3,6 +3,7 @@ package entities;
 import java.util.LinkedList;
 
 import entities.Enums.ECliente;
+import entities.Enums.ETurnos;
 
 /**
  * A classe Veiculo representa um veículo que pode estacionar em vagas de
@@ -19,7 +20,7 @@ public class Veiculo implements IDataToText {
 	private double totalArrecadado = 0; // Valor total arrecadado pelo veículo
 	private int indiceDeVaga = 0;
 	private ECliente eCliente;
-
+	private ETurnos eTurnos;
 
 	/**
 	 * Construtor da classe Veiculo.
@@ -31,8 +32,12 @@ public class Veiculo implements IDataToText {
 
 	}
 
-	public void setEcliente(ECliente eCliente){
+	public void setEcliente(ECliente eCliente) {
 		this.eCliente = eCliente;
+	}
+
+	public void setETurno(ETurnos turno) {
+		this.eTurnos = turno;
 	}
 
 	/**
@@ -55,7 +60,7 @@ public class Veiculo implements IDataToText {
 							indiceDeVaga++;
 							break;
 						case "Turno":
-							usos[indiceDeVaga] = new UsoTurno(vaga);
+							usos[indiceDeVaga] = new UsoTurno(vaga, eTurnos);
 							indiceDeVaga++;
 							break;
 						default:
@@ -98,7 +103,7 @@ public class Veiculo implements IDataToText {
 	public double arrecadadoNoMes(int mes) {
 		arrecadadoNoMes = 0.0;
 		this.mes = mes;
-		
+
 		for (int i = 0; i < indiceDeVaga; i++) {
 			if (usos[indiceDeVaga - 1].ehDoMes(mes)) {
 				arrecadadoNoMes += usos[indiceDeVaga - 1].valorPago();
@@ -147,4 +152,5 @@ public class Veiculo implements IDataToText {
 		string.append("Placa: ").append(placa).append("\n").append("Total de Usos: ").append(totalDeUsos).append("\n");
 		return string.toString();
 	}
+
 }

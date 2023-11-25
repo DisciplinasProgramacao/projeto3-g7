@@ -19,18 +19,18 @@ public class UsoTurno extends UsoDeVaga {
     private double valorPago = 0;
     private Servicos servicos;
     private ETurnos turno;
-
-    private static final double PRECO_MENSAL = 200.0;
+    private UsoHorista usoHorista;
 
     /**
      * Construtor da classe UsoTurno.
      * 
      * @param vaga a vaga de estacionamento utilizada
      */
-    public UsoTurno(Vaga vaga) {
+    public UsoTurno(Vaga vaga, ETurnos turno) {
         super(vaga);
         this.vaga = vaga;
-		this.entrada = LocalDateTime.now();
+        this.entrada = LocalDateTime.now();
+        this.turno = turno;
     }
 
     /**
@@ -47,11 +47,10 @@ public class UsoTurno extends UsoDeVaga {
                 return valorPago() + servicos.getValor();
             }
         }
-        if (this.entrada.isBefore(turno.getHoraInicio())) {
-            return valorPago() + PRECO_MENSAL;
-        } else {
-            return valorPago();
+        if (this.entrada.isBefore(turno.getHoraInicio()) || this.entrada.isAfter(turno.getHoraFim())) {
+           return valorPago(); // retornar valor de horista
         }
+        return valorPago();
     }
 
     /**
