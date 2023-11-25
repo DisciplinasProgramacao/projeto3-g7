@@ -177,7 +177,7 @@ public class Cliente implements IDataToText {
 
 	public boolean equals(Cliente c) {
 		boolean resp = false;
-		if (c.id == this.id) {
+		if (c.id.equals(this.id)) {
 			resp = true;
 			return resp;
 		}
