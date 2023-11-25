@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import entities.Enums.Servicos;
-import entities.Enums.Turnos;
+import entities.Enums.ETurnos;
 
 public abstract class UsoDeVaga {
 
@@ -16,7 +16,7 @@ public abstract class UsoDeVaga {
 	private LocalDateTime saida;
 	private double valorPago;
 	private Servicos servicos;
-	private Turnos turno;
+	private ETurnos turno;
 
 	public UsoDeVaga(Vaga vaga) {
 		this.vaga = vaga;
