@@ -33,7 +33,7 @@ class MenuHandler {
             switch (opcao) {
                 case 1:
                     registrarCliente();
-                    break;
+                      break;
                 case 2:
                     registrarVeiculo();
                     break;
@@ -154,6 +154,7 @@ private void registrarCliente() {
         System.out.println("Qual mes voce deseja? ");
         int mes = scanner.nextInt();
         System.out.print("Total arrecadado: " + estacionamento.arrecadacaoNoMesClienteHorista(mes));
+        System.out.println();
     }
 
     private void exibirTotalArrecadadoClienteHorista() {

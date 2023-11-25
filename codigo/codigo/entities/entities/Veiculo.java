@@ -82,7 +82,7 @@ public class Veiculo implements IDataToText {
 	 * @return O valor total arrecadado pelo veículo.
 	 */
 	public double totalArrecadado() {
-
+		totalArrecadado = 0.0;
 		for (int i = 0; i < indiceDeVaga; i++) {
 			totalArrecadado += usos[i].valorPago();
 		}
@@ -96,9 +96,9 @@ public class Veiculo implements IDataToText {
 	 * @return O valor arrecadado pelo veículo no mês especificado.
 	 */
 	public double arrecadadoNoMes(int mes) {
-
+		arrecadadoNoMes = 0.0;
 		this.mes = mes;
-
+		
 		for (int i = 0; i < indiceDeVaga; i++) {
 			if (usos[indiceDeVaga - 1].ehDoMes(mes)) {
 				arrecadadoNoMes += usos[indiceDeVaga - 1].valorPago();
