@@ -1,7 +1,12 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.print.DocFlavor.STRING;
 
 public class Estacionamento {
 
@@ -104,38 +109,67 @@ public class Estacionamento {
     }
 
     public double valorMedioPorUso() {
-        int totalDeUsos = 1;
+        int totalDeUsos = 0;
         for (Cliente cliente : clientes.values()) {
             if (cliente != null) {
-                totalDeUsos += cliente.totalDeUsos();
+                totalDeUsos += 1;
             }
         }
         return totalArrecadado() / totalDeUsos;
     }
 
-    /**
-     * Retorna os cinco principais clientes que geraram a maior receita em um
-     * determinado mês.
-     *
-     * @param mes Número do mês.
-     * @return Nomes dos cinco principais clientes separados por vírgula.
-     */
-  //   public String top5Clientes(int mes) {
-  //       Map<Cliente, Double> arrecadacaoPorCliente = new HashMap<>();
-  //
-  //       Collections.sort(clientes.values(), 
-  //                               (c1, c2)-> 
-  //                                   c1.arrecadacaoNoMes(mes)>c2.arrecadadoNoMes(mes)?1:-1
-  //                       );
-//
-//
-  //      for (Cliente cliente : clientes) {
-    //        if (cliente != null) {
-      //          double arrecadacao = cliente.arrecadadoNoMes(mes);
-        //         arrecadacaoPorCliente.put(cliente, arrecadacao);
-          //   }
-         //}
+    public String historicoCliente(String id) {
+        Cliente busca = new Cliente(id,id);
+        String texto = "";
 
-        //}
+        for (Cliente cliente : clientes.values()) {
+            if (busca.equals(cliente)) {
+                texto = cliente.historicoCliente();
+            }
 
     }
+        return texto;
+    }
+
+    public boolean validaEstacionamento(Estacionamento estacionamento) {
+        return estacionamento != null;
+
+    }
+
+/**
+     
+Retorna os cinco principais clientes que geraram a maior receita em um
+determinado mês.*
+@param mes Número do mês.
+@return Nomes dos cinco principais clientes separados por vírgula.
+*/
+  public String top5Clientes(int mes) {
+  List<Cliente> clienteDoMes = new ArrayList<>();
+
+        for (Cliente x : clientes.values()) {
+            if (x.arrecadadoNoMes(mes) > 0) {
+                clienteDoMes.add(x);
+            }
+        }
+        clienteDoMes.sort(new Comparator<Cliente>() {
+            public int compare(Cliente cliente1, Cliente cliente2) {
+                double arrecadacao1 = cliente1.arrecadadoNoMes(mes);
+                double arrecadacao2 = cliente2.arrecadadoNoMes(mes);
+
+                return Double.compare(arrecadacao2, arrecadacao1);
+            }
+        });
+        int maxClientes = Math.min(5, clienteDoMes.size());
+
+        StringBuilder top5 = new StringBuilder();
+
+        top5.append("Top 5 clientes do mês " + mes + " :\n");
+
+        for (int i = 0; i < maxClientes; i++) {
+            Cliente cliente = clienteDoMes.get(i);
+            top5.append(cliente + "\n");
+        }
+        return top5.toString();
+    }
+
+}

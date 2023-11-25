@@ -1,5 +1,4 @@
 package application;
-
 import java.util.Scanner;
 import entities.*;
 import entities.Enums.ECliente;
@@ -61,6 +60,12 @@ class MenuHandler {
                     exibirTotalArrecadadoClienteHorista();
                     break;
                 case 10:
+                    exibirTop5();
+                    break;
+                case 11:
+                    exibirHistoricoCliente();
+                    break;    
+                case 12:
                     sair = true;
                     break;
                 default:
@@ -81,7 +86,9 @@ class MenuHandler {
         System.out.println("7. Media de gasto do publico");
         System.out.println("8. Total arrecadado do cliente horista ");
         System.out.println("9. Total arrecadado no Mes cliente horista; ");
-        System.out.println("10. Sair");
+        System.out.println("10. Exibir Top 5");
+        System.out.println("11. Exibir Historico do Cliente");
+        System.out.println("12. Sair");
         System.out.print("Escolha uma opção: ");
     }
 
@@ -123,6 +130,11 @@ class MenuHandler {
             Cliente cliente = new Cliente(nome, id, tipoCliente);
             estacionamento.addCliente(cliente);
         }
+    }
+
+     public static boolean validaEstacionamento( Estacionamento estacionamento ) {
+        return estacionamento != null;
+        
     }
 
     private void registrarVeiculo() {
@@ -184,15 +196,25 @@ class MenuHandler {
         System.out.println("Total arrecadado: " + totalArrecadadoClienteHorista);
     }
 
-    // Dudão, arruma isso. O método de exibir top 5 não está funcionando. Não pode
-    // ter get tbm, se tiver get, tá errado.
-    // Mas o caminho dele já ta certinho no main, é só arrumar, e tirar o comentário
-    // q ele vai chamar certinho.
-    // private void exibirTop5() {
-    // System.out.println("===== TOP 5 CLIENTES DO ESTACIONAMENTO =====");
-    // List<Cliente> top5 = estacionamento.top5();
-    // for (Cliente cliente : top5) {
-    // System.out.println(cliente.toString());
-    // }
-    // }
+
+    private void exibirTop5() {
+        System.out.println("===== TOP 5 CLIENTES =====");
+        Estacionamento estacionamento = new Estacionamento ("Estacionamento", 3, 5);
+        if(!estacionamento.validaEstacionamento(estacionamento)){ 
+            System.out.println("Estacionamento nao selecionado.");
+        } else{
+            System.out.println("Qual mes voce deseja? ");
+            int mes = scanner.nextInt();
+            String top5 = estacionamento.top5Clientes(mes);
+            System.out.println(top5);
+        }
+    }
+
+    private void exibirHistoricoCliente() {
+        System.out.println("===== HISTORICO DO CLIENTE =====");
+        System.out.println("Qual o id do cliente?");
+        String id = scanner.nextLine();
+        System.out.println("Total arrecadado: " + estacionamento.historicoCliente(id));
+    }
+    
 }
