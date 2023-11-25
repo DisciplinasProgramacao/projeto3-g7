@@ -1,4 +1,6 @@
 package entities;
+
+
 import entities.Enums.ECliente;
 public class Cliente implements IDataToText {
 
@@ -14,6 +16,13 @@ public class Cliente implements IDataToText {
         this.qtdVeiculo = 0;
         this.tipo = tipo;
 	}
+
+    public Cliente(String nome, String id) {
+        this.nome = nome;
+        this.id = id;
+        this.tipo = ECliente.HORISTA;
+        this.qtdVeiculo = 0;
+    }
 	/**
 	 * Classe addVeiculo que adicionará um veiculo ao cliente
 	 * 
@@ -22,6 +31,7 @@ public class Cliente implements IDataToText {
 	 */
 	public void addVeiculo(Veiculo veiculo) {
 		if (qtdVeiculo < veiculos.length) {
+			veiculo.setEcliente(tipo);
 			veiculos[qtdVeiculo] = veiculo;
 			qtdVeiculo++;
 		}
@@ -86,6 +96,9 @@ public class Cliente implements IDataToText {
 	 */
 	public double arrecadadoTotal() {
 		int arrecadadoTotal = 0;
+		if (tipo.equals(ECliente.MENSALISTA)){
+			arrecadadoTotal += tipo.getValor();
+		}
 		for (int i = 0; i < qtdVeiculo; i++) {
 			arrecadadoTotal += veiculos[i].totalArrecadado();
 		}
@@ -100,6 +113,9 @@ public class Cliente implements IDataToText {
 	 */
 	public double arrecadadoNoMes(int mes) {
 		int arrecadadoNoMes = 0;
+		if (tipo.equals(ECliente.MENSALISTA)){
+			arrecadadoNoMes += tipo.getValor();
+		}
 		for (int i = 0; i < qtdVeiculo; i++) {
 			arrecadadoNoMes += veiculos[i].arrecadadoNoMes(mes);
 		}

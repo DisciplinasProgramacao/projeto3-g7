@@ -15,12 +15,12 @@ public class UsoHorista extends UsoDeVaga {
 	private LocalDateTime saida;
 	private double valorPago;
 	private Servicos servicos;
-	private boolean saiu;
 
     public UsoHorista(Vaga vaga) {
         super(vaga);
     }
 
+	@Override
     public double sair() {
 		this.saida = LocalDateTime.now();
 		int tempoPermanenciaMinutos = (int) entrada.until(saida, ChronoUnit.MINUTES);
@@ -32,10 +32,12 @@ public class UsoHorista extends UsoDeVaga {
 		return valorPago();
 	}
 
+	@Override
 	public boolean ehDoMes(int mes) {
 		return this.entrada.getMonthValue() == mes;
 	}
 
+	@Override
 	public double valorPago() {
 		if (entrada == null || saida == null) {
 			throw new IllegalArgumentException("Entrada and Saida cannot be null");

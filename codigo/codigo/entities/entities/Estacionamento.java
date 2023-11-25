@@ -10,8 +10,6 @@ public class Estacionamento {
     private Vaga[] vagas;
     private int quantFileiras;
     private int vagasPorFileira;
-    private int qtdcliente = 0;
-
     private int nFileira;
     private int nVaga;
 
