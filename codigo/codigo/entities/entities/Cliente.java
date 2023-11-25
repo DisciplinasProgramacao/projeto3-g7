@@ -1,28 +1,39 @@
 package entities;
 
-
 import entities.Enums.ECliente;
+import entities.Enums.ETurnos;
+
 public class Cliente implements IDataToText {
 
-    private String nome;
-    private String id;
-    private Veiculo[] veiculos = new Veiculo[100];
-    private int qtdVeiculo;
-    private ECliente tipo;
+	private String nome;
+	private String id;
+	private Veiculo[] veiculos = new Veiculo[100];
+	private int qtdVeiculo;
+	private ECliente tipo;
+	private ETurnos turno;
 
-    public Cliente(String nome, String id, ECliente tipo) {
-        this.nome = nome;
-        this.id = id;
-        this.qtdVeiculo = 0;
-        this.tipo = tipo;
+	public Cliente(String nome, String id, ECliente tipo, ETurnos turno) {
+		this.nome = nome;
+		this.id = id;
+		this.qtdVeiculo = 0;
+		this.tipo = tipo;
+		this.turno = turno;
 	}
 
-    public Cliente(String nome, String id) {
-        this.nome = nome;
-        this.id = id;
-        this.tipo = ECliente.HORISTA;
-        this.qtdVeiculo = 0;
-    }
+	public Cliente(String nome, String id) {
+		this.nome = nome;
+		this.id = id;
+		this.tipo = ECliente.HORISTA;
+		this.qtdVeiculo = 0;
+	}
+
+	public Cliente(String nome, String id, ECliente tipo) {
+		this.nome = nome;
+		this.id = id;
+		this.tipo = tipo;
+		this.qtdVeiculo = 0;
+	}
+
 	/**
 	 * Classe addVeiculo que adicionará um veiculo ao cliente
 	 * 
@@ -32,6 +43,9 @@ public class Cliente implements IDataToText {
 	public void addVeiculo(Veiculo veiculo) {
 		if (qtdVeiculo < veiculos.length) {
 			veiculo.setEcliente(tipo);
+			if (tipo.equals(ECliente.TURNO)) {
+				veiculo.setETurno(turno);
+			}
 			veiculos[qtdVeiculo] = veiculo;
 			qtdVeiculo++;
 		}
@@ -50,11 +64,11 @@ public class Cliente implements IDataToText {
 	public Veiculo possuiVeiculo(String placa) {
 		Veiculo busca = new Veiculo(placa);
 		for (int i = 0; i < qtdVeiculo; i++) {
-			if (busca.equals(veiculos[i])){
+			if (busca.equals(veiculos[i])) {
 				return veiculos[i];
 			}
 		}
-		return busca;
+		return null;
 	}
 
 	/**
@@ -96,12 +110,17 @@ public class Cliente implements IDataToText {
 	 */
 	public double arrecadadoTotal() {
 		int arrecadadoTotal = 0;
-		if (tipo.equals(ECliente.MENSALISTA)){
+		if (tipo.equals(ECliente.MENSALISTA)) {
+			arrecadadoTotal += tipo.getValor();
+		} else if (tipo.equals(ECliente.TURNO)) {
+			arrecadadoTotal += tipo.getValor();
+		} else {
 			arrecadadoTotal += tipo.getValor();
 		}
 		for (int i = 0; i < qtdVeiculo; i++) {
 			arrecadadoTotal += veiculos[i].totalArrecadado();
 		}
+
 		return arrecadadoTotal;
 	}
 
@@ -113,7 +132,11 @@ public class Cliente implements IDataToText {
 	 */
 	public double arrecadadoNoMes(int mes) {
 		int arrecadadoNoMes = 0;
-		if (tipo.equals(ECliente.MENSALISTA)){
+		if (tipo.equals(ECliente.MENSALISTA)) {
+			arrecadadoNoMes += tipo.getValor();
+		} else if (tipo.equals(ECliente.TURNO)) {
+			arrecadadoNoMes += tipo.getValor();
+		} else {
 			arrecadadoNoMes += tipo.getValor();
 		}
 		for (int i = 0; i < qtdVeiculo; i++) {
@@ -123,11 +146,12 @@ public class Cliente implements IDataToText {
 	}
 
 	/**
- 	* Gera um histórico detalhado para um cliente, incluindo informações sobre veículos
- 	* e valores gastos mensalmente e no total.
-	* 
-	* @return Uma string representando o histórico do cliente.
-	*/
+	 * Gera um histórico detalhado para um cliente, incluindo informações sobre
+	 * veículos
+	 * e valores gastos mensalmente e no total.
+	 * 
+	 * @return Uma string representando o histórico do cliente.
+	 */
 	public String historicoCliente() {
 		StringBuilder historico = new StringBuilder();
 		historico.append("Histórico do Cliente: ").append(nome).append(" (ID: ").append(id).append(")\n");
@@ -159,6 +183,5 @@ public class Cliente implements IDataToText {
 		}
 		return resp;
 	}
-
 
 }

@@ -10,7 +10,7 @@ public class UsoMensalista extends UsoDeVaga {
 	private Vaga vaga;
 	private LocalDateTime entrada;
 	private LocalDateTime saida;
-	private double valorPago = 0;
+	private double valorPago = 0.0;
 	private Servicos servicos;
 
     public UsoMensalista(Vaga vaga) {
