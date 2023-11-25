@@ -23,14 +23,29 @@ public class Estacionamento {
         this.vagas = new Vaga[fileiras * vagasPorFila];
         gerarVagas();
     }
+       /**
+     * Adiciona um veículo ao cliente.
+     *
+     * @param veiculo    Veículo a ser adicionado.
+     * @param idCliente  Identificação do cliente.
+     */
 
     public void addVeiculo(Veiculo veiculo, String idCliente) {
         clientes.get(idCliente).addVeiculo(veiculo);
     }
+       /**
+     * Adiciona um cliente ao estacionamento.
+     *
+     * @param cliente Cliente a ser adicionado.
+     */
 
     public void addCliente(Cliente cliente) {
         clientes.put(cliente.getId(), cliente); 
     }
+      /**
+     * Gera as vagas do estacionamento.
+     * Error pode estar aqui, pois o primeiro carro deveria parar na primeira vaga.
+     */
 
     private void gerarVagas() { // error pode estar aqui, pois o primeiro carro deverian parar na primeira vaga
         int vagaId = 0;
@@ -41,7 +56,11 @@ public class Estacionamento {
             }
         }
     }
-
+ /**
+     * Estaciona um veículo.
+     *
+     * @param placa Placa do veículo a ser estacionado.
+     */
     public void estacionar(String placa) {
         for (Cliente cliente : clientes.values()) {
             if (cliente != null && cliente.possuiVeiculo(placa) != null) {
@@ -55,6 +74,12 @@ public class Estacionamento {
             }
         }
     }
+      /**
+     * Remove um veículo estacionado.
+     *
+     * @param placa Placa do veículo a ser removido.
+     * @return Valor arrecadado pelo veículo ao sair.
+     */
 
     public double sair(String placa) {
         for (Cliente cliente : clientes.values()) {
@@ -64,6 +89,11 @@ public class Estacionamento {
         }
         return 0.0;
     }
+     /**
+     * Calcula o total arrecadado no estacionamento.
+     *
+     * @return Valor total arrecadado.
+     */
 
     public double totalArrecadado() {
         double totalArrecadado = 0.0;
@@ -74,6 +104,12 @@ public class Estacionamento {
         }
         return totalArrecadado;
     }
+    /**
+     * Calcula a arrecadação no mês para todos os clientes.
+     *
+     * @param mes Número do mês.
+     * @return Arrecadação total no mês.
+     */
 
     public double arrecadacaoNoMes(int mes) {
         double arrecadacaoNoMes = 0.0;
@@ -84,6 +120,12 @@ public class Estacionamento {
         }
         return arrecadacaoNoMes;
     }
+    /**
+     * Calcula a arrecadação no mês para clientes do tipo horista.
+     *
+     * @param mes Número do mês.
+     * @return Arrecadação total no mês para clientes do tipo horista.
+     */
 
     public double arrecadacaoNoMesClienteHorista(int mes) {
         double arrecadacaoNoMesClienteHorista = 0.0;
@@ -94,7 +136,11 @@ public class Estacionamento {
         }
         return arrecadacaoNoMesClienteHorista;
     }
-
+/**
+     * Calcula o valor médio por uso no estacionamento.
+     *
+     * @return Valor médio por uso.
+     */
     public double valorMedioPorUso() {
         int totalDeUsos = 0;
         for (Cliente cliente : clientes.values()) {
@@ -104,6 +150,12 @@ public class Estacionamento {
         }
         return totalArrecadado() / totalDeUsos;
     }
+     /**
+     * Gera um histórico detalhado para um cliente específico.
+     *
+     * @param id Identificação do cliente.
+     * @return Histórico detalhado do cliente.
+     */
 
     public String historicoCliente(String id) {
         Cliente busca = new Cliente(id,id);
