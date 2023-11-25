@@ -18,7 +18,9 @@ public class UsoHorista extends UsoDeVaga {
 
     public UsoHorista(Vaga vaga) {
         super(vaga);
+		this.entrada = LocalDateTime.now();
     }
+
 
 	@Override
     public double sair() {
