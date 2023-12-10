@@ -8,15 +8,15 @@ import entities.Enums.ETurnos;
 
 public abstract class UsoDeVaga {
 
-	private static final double FRACAO_USO = 0.25;
-	private static final double VALOR_FRACAO = 4.0;
-	private static final double VALOR_MAXIMO = 50.0;
-	private Vaga vaga;
-	private LocalDateTime entrada;
-	private LocalDateTime saida;
-	private double valorPago;
-	private Servicos servicos;
-	private ETurnos turno;
+	protected static final double FRACAO_USO = 0.25;
+	protected static final double VALOR_FRACAO = 4.0;
+	protected static final double VALOR_MAXIMO = 50.0;
+	protected Vaga vaga;
+	protected LocalDateTime entrada;
+	protected LocalDateTime saida;
+	protected double valorPago;
+	protected Servicos servicos;
+	protected ETurnos turno;
 
 	public UsoDeVaga(Vaga vaga) {
 		this.vaga = vaga;

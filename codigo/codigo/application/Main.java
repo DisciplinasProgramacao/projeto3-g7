@@ -202,9 +202,7 @@ class MenuHandler {
         String id = scanner.nextLine();
         System.out.println("Total arrecadado: " + estacionamento.historicoCliente(id));
     }
-    /**
-     * 
-     */
+    
     private void servicos(){
         System.out.println("===== SERVICOS =====");
         System.out.println("Escolha o tipo de serviço:");

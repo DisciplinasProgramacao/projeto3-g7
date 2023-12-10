@@ -31,7 +31,6 @@ public class Veiculo implements IDataToText {
 		this.placa = placa;
 
 	}
-
 	public void setEcliente(ECliente eCliente) {
 		this.eCliente = eCliente;
 	}
