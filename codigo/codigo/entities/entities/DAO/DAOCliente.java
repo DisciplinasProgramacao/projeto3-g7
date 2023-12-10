@@ -7,7 +7,6 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Scanner;
 
-
 import entities.Cliente;
 
 public class DAOCliente implements DAO<Cliente> {
@@ -47,15 +46,15 @@ public class DAOCliente implements DAO<Cliente> {
         arqLeitura = null;
     }
 
-   public Cliente getNext() {
-    //     String[] linha = arqLeitura.nextLine().split(";");
-    //     String tipo = linha[0].toLowerCase();
+    public Cliente getNext() {
+        String[] linha = arqLeitura.nextLine().split(";");
+        String tipo = linha[0].toLowerCase();
 
-    //     if (tipo.equals("cliente")) {
-    //         return new Cliente(linha[0], linha[1]);
-    //     }
-     return null;
- }
+        if (tipo.equals("cliente")) {
+            return new Cliente(linha[0], linha[1]);
+        }
+        return null;
+    }
 
     public void add(Cliente dado) throws IOException {
         arqEscrita.append(dado.dataToText() + "\n");

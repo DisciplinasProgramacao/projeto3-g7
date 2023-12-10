@@ -48,8 +48,6 @@ public class UsoTurno extends UsoDeVaga {
             }
         }
         if (this.entrada.isBefore(turno.getHoraInicio()) || this.entrada.isAfter(turno.getHoraFim())) {
-            usoHorista = new UsoHorista(vaga);
-            usoHorista.sair();
             return usoHorista.valorPago();
         }
         return valorPago();
