@@ -145,6 +145,15 @@ public class Cliente implements IDataToText {
 		return arrecadadoNoMes;
 	}
 
+	
+	public boolean verificarTipo(String tipo){
+		if(tipo == this.tipo.getNome()){
+			return true;
+		} else{
+			return false;
+		}
+	}
+
 	/**
 	 * Gera um histórico detalhado para um cliente, incluindo informações sobre
 	 * veículos
@@ -174,6 +183,7 @@ public class Cliente implements IDataToText {
 	public String dataToText() {
 		return this.nome + ";" + this.qtdVeiculo;
 	}
+	
 
 	public boolean equals(Cliente c) {
 		boolean resp = false;
@@ -183,8 +193,4 @@ public class Cliente implements IDataToText {
 		}
 		return resp;
 	}
-
-	public String getTipo(){
-        return tipo.getNome();
-    }
 }

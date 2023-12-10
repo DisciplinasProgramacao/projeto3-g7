@@ -13,7 +13,6 @@ import entities.Enums.ETurnos;
  * serviços contratados, turno, cliente e status de saída.
  */
 public class UsoTurno extends UsoDeVaga {
-    private Vaga vaga;
     private LocalDateTime entrada;
     private LocalDateTime saida;
     private double valorPago = 0;
