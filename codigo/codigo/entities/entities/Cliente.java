@@ -37,6 +37,24 @@ public class Cliente implements IDataToText {
 		this.qtdVeiculo = 0;
 	}
 
+	public String getId() {
+		return this.id;
+	}
+
+	public void mudarTipo(ECliente novoTipo, ETurnos turno) {
+		this.tipo = novoTipo;
+		if (turno != null){
+			this.turno = turno;
+		}
+		for (Veiculo veiculo : veiculos) {
+			veiculo.setEcliente(novoTipo);
+			if (turno != null){
+			this.turno = turno;
+			veiculo.setETurno(turno);
+		}
+		}
+	}
+
 	/**
 	 * Classe addVeiculo que adicionará um veiculo ao cliente
 	 * 
@@ -51,9 +69,7 @@ public class Cliente implements IDataToText {
 		veiculos.add(veiculo);
 	}
 
-	public String getId() {
-		return this.id;
-	}
+	
 
 	/**
 	 * Classe possuiVeiculo verifica se o o cliente possui o veiculo com certa placa

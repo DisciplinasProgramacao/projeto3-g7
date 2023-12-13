@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
+import entities.Enums.ECliente;
+import entities.Enums.ETurnos;
 import entities.excecoes.VeiculoNaoEncontradoException;
 
 public class Estacionamento {
@@ -193,6 +194,15 @@ public class Estacionamento {
         }
         return "Error";
 
+    }
+
+    public void mudarTipoCliente(String cpf, ECliente tipo, ETurnos turno){
+        Cliente busca = new Cliente(cpf, cpf);
+        for (Cliente cliente : clientes.values()) {
+            if (cliente.equals(busca)) {
+                cliente.mudarTipo(tipo, turno);;
+            }
+        }
     }
 
     /**
