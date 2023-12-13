@@ -46,7 +46,9 @@ public class UsoTurno extends UsoDeVaga {
                 return valorPago() + servicos.getValor();
             }
         }
-        if (this.entrada.isBefore(turno.getHoraInicio()) || this.entrada.isAfter(turno.getHoraFim())) {
+        if (turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
+            usoHorista = new UsoHorista(vaga);
+            usoHorista.sair();
             return usoHorista.valorPago();
         }
         return valorPago();
