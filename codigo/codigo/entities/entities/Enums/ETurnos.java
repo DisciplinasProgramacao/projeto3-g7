@@ -1,34 +1,37 @@
 package entities.Enums;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public enum ETurnos {
 
-    // lDate a = LocalDateTime.of(2012, 6, 30, 12, 00);
-    // LocalDate b = LocalDateTime.of(2012, 7, 1, 12, 00);
-    MANHA("Manha", LocalDateTime.of(2023, 11, 25, 8, 00), LocalDateTime.of(2023, 11, 25, 12, 00)),
-    TARDE("Tarde", LocalDateTime.of(2023, 11, 25, 12, 01), LocalDateTime.of(2023, 11, 25, 18, 00)),
-    NOITE("Noite", LocalDateTime.of(2011, 11, 25, 18, 01), LocalDateTime.of(2023, 11, 25, 23, 59));
+    MANHA("Manha", LocalTime.of(8, 00), LocalTime.of(12, 00)),
+    TARDE("Tarde", LocalTime.of(12, 01), LocalTime.of(18, 00)),
+    NOITE("Noite", LocalTime.of(18, 01), LocalTime.of(23, 59));
 
-    private String nome;
-    private LocalDateTime horaInicio;
-    private LocalDateTime horaFim;
+    private String descricao;
+    private LocalTime inicio;
+    private LocalTime fim;
 
-    ETurnos(String nome, LocalDateTime horaInicio, LocalDateTime horaFim) {
-        this.nome = nome;
-        this.horaInicio = horaInicio;
-        this.horaFim = horaFim;
+    ETurnos(String descricao, LocalTime inicio, LocalTime fim) {
+        this.descricao = descricao;
+        this.inicio = inicio;
+        this.fim = fim;
     }
 
-    public String getNome() {
-        return nome;
+    public boolean isTurno(LocalTime entrada, LocalTime saida) {
+        return (entrada.isBefore(inicio) || saida.isAfter(fim));
     }
 
-    public LocalDateTime getHoraInicio() {
-        return horaInicio;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public LocalDateTime getHoraFim() {
-        return horaFim;
+    public LocalTime getHoraInicio() {
+        return inicio;
     }
+
+    public LocalTime getHoraFim() {
+        return fim;
+    } 
 }
