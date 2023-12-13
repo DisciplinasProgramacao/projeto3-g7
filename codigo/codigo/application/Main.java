@@ -88,7 +88,6 @@ class MenuHandler {
         }
     }
 
-
     private void exibirMenu() {
         System.out.println("===== MENU DO ESTACIONAMENTO =====");
         System.out.println("1. Registrar Cliente");
@@ -165,28 +164,31 @@ class MenuHandler {
     }
 
     private void estacionarCarro() {
-        System.out.println("===== ESTACIONANDO VEICULO =====");
-        System.out.print("Placa do carro: ");
-        String placaVeiculo = scanner.nextLine();
+        try {
+            System.out.println("===== ESTACIONANDO VEICULO =====");
+            System.out.print("Placa do carro: ");
+            String placaVeiculo = scanner.nextLine();
 
-        System.out.println("Deseja algum serviço? (S/N)");
-        String escolha = scanner.nextLine();
-        if (escolha.equalsIgnoreCase("S")) {
-            for (Servicos tipo : Servicos.values()) {
-                System.out.println((tipo.ordinal() + 1) + ". " + tipo.getNome());
+            System.out.println("Deseja algum serviço? (S/N)");
+            String escolha = scanner.nextLine();
+            Servicos tipoServico = null;
+            if (escolha.equalsIgnoreCase("S")) {
+                for (Servicos tipo : Servicos.values()) {
+                    System.out.println((tipo.ordinal() + 1) + ". " + tipo.getNome());
+                }
+                int escolhaServico = scanner.nextInt();
+                scanner.nextLine();
+                if (escolhaServico > 0 && escolhaServico <= Servicos.values().length) {
+                    tipoServico = Servicos.values()[escolhaServico - 1];
+                }
             }
-        }
-        int escolhaServico = scanner.nextInt();
-        Servicos tipoServico = null;
-        scanner.nextLine();
-        if (escolhaServico > 0 && escolhaServico <= Servicos.values().length) {
-            tipoServico = Servicos.values()[escolhaServico - 1];
-
             estacionamento.estacionar(placaVeiculo, tipoServico);
-        } else {
-            estacionamento.estacionar(placaVeiculo);
+            System.out.println("Veiculo estacionado com sucesso!");
+        } catch (VeiculoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        } catch (VeiculoJaEstacionadoException e) {
+            System.out.println(e.getMessage());
         }
-        System.out.println("Veiculo estacionado com sucesso!");
     }
 
     private void calcularValorSaida() {
@@ -262,51 +264,51 @@ class MenuHandler {
     }
 
     private void mudarTipoCliente() {
-    System.out.println("===== MUDANDO TIPO DE CLIENTE =====");
-    System.out.print("Qual cliente você deseja mudar o tipo? Digite o ID ou CPF: ");
-    String id = scanner.nextLine();
+        System.out.println("===== MUDANDO TIPO DE CLIENTE =====");
+        System.out.print("Qual cliente você deseja mudar o tipo? Digite o ID ou CPF: ");
+        String id = scanner.nextLine();
 
-    System.out.println("Selecione o novo tipo de cliente:");
-    for (ECliente tipo : ECliente.values()) {
-        System.out.println((tipo.ordinal() + 1) + ". " + tipo.getNome());
-    }
-    int escolhaTipo = scanner.nextInt();
-    scanner.nextLine();
-    ECliente novoTipoCliente = null;
-    if (escolhaTipo > 0 && escolhaTipo <= ECliente.values().length) {
-        novoTipoCliente = ECliente.values()[escolhaTipo - 1];
-    } else {
-        System.out.println("Escolha inválida para o tipo de cliente. O tipo não será alterado.");
-        return;
-    }
-
-    if (novoTipoCliente == ECliente.TURNO) {
-        System.out.println("Selecione o novo turno do cliente:");
-        for (ETurnos turno : ETurnos.values()) {
-            System.out.println((turno.ordinal() + 1) + ". " + turno.getDescricao());
+        System.out.println("Selecione o novo tipo de cliente:");
+        for (ECliente tipo : ECliente.values()) {
+            System.out.println((tipo.ordinal() + 1) + ". " + tipo.getNome());
         }
-        int escolhaTurno = scanner.nextInt();
+        int escolhaTipo = scanner.nextInt();
         scanner.nextLine();
-        ETurnos novoTurnoCliente = null;
-        if (escolhaTurno > 0 && escolhaTurno <= ETurnos.values().length) {
-            novoTurnoCliente = ETurnos.values()[escolhaTurno - 1];
+        ECliente novoTipoCliente = null;
+        if (escolhaTipo > 0 && escolhaTipo <= ECliente.values().length) {
+            novoTipoCliente = ECliente.values()[escolhaTipo - 1];
         } else {
-            System.out.println("Escolha inválida para o turno. O cliente será mantido sem turno.");
-            novoTipoCliente = ECliente.MENSALISTA;
+            System.out.println("Escolha inválida para o tipo de cliente. O tipo não será alterado.");
+            return;
         }
 
-        estacionamento.mudarTipoCliente(id, novoTipoCliente, novoTurnoCliente);
-    } else {
-        estacionamento.mudarTipoCliente(id, novoTipoCliente, null); 
+        if (novoTipoCliente == ECliente.TURNO) {
+            System.out.println("Selecione o novo turno do cliente:");
+            for (ETurnos turno : ETurnos.values()) {
+                System.out.println((turno.ordinal() + 1) + ". " + turno.getDescricao());
+            }
+            int escolhaTurno = scanner.nextInt();
+            scanner.nextLine();
+            ETurnos novoTurnoCliente = null;
+            if (escolhaTurno > 0 && escolhaTurno <= ETurnos.values().length) {
+                novoTurnoCliente = ETurnos.values()[escolhaTurno - 1];
+            } else {
+                System.out.println("Escolha inválida para o turno. O cliente será mantido sem turno.");
+                novoTipoCliente = ECliente.MENSALISTA;
+            }
+
+            estacionamento.mudarTipoCliente(id, novoTipoCliente, novoTurnoCliente);
+        } else {
+            estacionamento.mudarTipoCliente(id, novoTipoCliente, null);
+        }
     }
-    }   
 
     private void dadosClientesMensalista() {
-    System.out.println("Digite o número do mês para obter os dados dos clientes mensalistas:");
-    int mes = scanner.nextInt();
-    scanner.nextLine(); // Consumir a quebra de linha após a leitura do inteiro
-    
-    String resultado = estacionamento.mesClienteMensalista(mes);
-    System.out.println(resultado);
-}
+        System.out.println("Digite o número do mês para obter os dados dos clientes mensalistas:");
+        int mes = scanner.nextInt();
+        scanner.nextLine(); // Consumir a quebra de linha após a leitura do inteiro
+
+        String resultado = estacionamento.mesClienteMensalista(mes);
+        System.out.println(resultado);
+    }
 }

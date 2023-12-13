@@ -37,12 +37,7 @@ public abstract class UsoDeVaga {
 
 	public double sair() {
 		this.saida = LocalDateTime.now();
-		int tempoPermanenciaMinutos = (int) entrada.until(saida, ChronoUnit.MINUTES);
-		if (servicos != null) {
-			if (tempoPermanenciaMinutos >= servicos.getTempo()) {
-				return valorPago() + servicos.getValor();
-			}
-		}
+
 		return valorPago();
 	}
 

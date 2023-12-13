@@ -67,19 +67,13 @@ public class Estacionamento {
         }
     }
 
-    /**
-     * Estaciona um veículo.
-     *
-     * @param placa Placa do veículo a ser estacionado.
-     */
-    public void estacionar(String placa) {
+    public void estacionar(String placa, Servicos servicos) {
         boolean veiculoEstacionado = false;
-
         for (Cliente cliente : clientes.values()) {
             if (cliente != null && cliente.possuiVeiculo(placa) != null) {
                 for (Vaga vaga : vagas) {
                     if (vaga != null && vaga.disponivel()) {
-                        cliente.possuiVeiculo(placa).estacionar(vaga);
+                        cliente.possuiVeiculo(placa).estacionar(vaga, servicos);
                         veiculoEstacionado = true;
                         break;
                     }
@@ -89,21 +83,6 @@ public class Estacionamento {
         }
         if (!veiculoEstacionado) {
             throw new VeiculoNaoEncontradoException("O veículo com placa " + placa + " não foi encontrado.");
-        }
-
-    }
-
-    public void estacionar(String placa, Servicos servicos) {
-        for (Cliente cliente : clientes.values()) {
-            if (cliente != null && cliente.possuiVeiculo(placa) != null) {
-                for (Vaga vaga : vagas) {
-                    if (vaga != null && vaga.disponivel()) {
-                        cliente.possuiVeiculo(placa).estacionar(vaga, servicos);
-                        break;
-                    }
-                }
-                break;
-            }
         }
 
     }

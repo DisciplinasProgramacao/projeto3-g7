@@ -69,7 +69,6 @@ public class Veiculo implements IDataToText {
 						default:
 							break;
 					}
-					// Atualiza o atributo estacionado para true após estacionar com sucesso
 					estacionado = true;
 				} else {
 					throw new IllegalArgumentException("eCliente or eCliente.getNome() cannot be null");

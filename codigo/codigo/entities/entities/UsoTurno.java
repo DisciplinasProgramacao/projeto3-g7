@@ -49,15 +49,15 @@ public class UsoTurno extends UsoDeVaga {
     public double sair() {
         this.saida = LocalDateTime.now();
         int tempoPermanenciaMinutos = (int) entrada.until(saida, ChronoUnit.MINUTES);
-        if (servicos != null) {
+        if (servicos != null && !turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
             if (tempoPermanenciaMinutos >= servicos.getTempo()) {
-                return valorPago() + servicos.getValor();
+                return valorPago();
             }
         }
         if (turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
 
             usoHorista = new UsoHorista(vaga);
-            valorPago = usoHorista.sair();
+            return valorPago = usoHorista.sair() + servicos.getValor();
         }
         return valorPago();
     }
@@ -86,7 +86,7 @@ public class UsoTurno extends UsoDeVaga {
             throw new IllegalArgumentException("Entrada and Saida cannot be null");
         }
 
-        return valorPago;
+        return valorPago ;
     }
 
     /**

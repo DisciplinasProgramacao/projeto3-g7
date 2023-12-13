@@ -32,7 +32,9 @@ public class UsoMensalista extends UsoDeVaga {
 		if (entrada == null || saida == null) {
 			throw new IllegalArgumentException("Entrada and Saida cannot be null");
 		}
-
+		if (servicos != null) {
+			valorPago =+ servicos.getValor();			
+		}
 		return valorPago;
 	}  
 }
