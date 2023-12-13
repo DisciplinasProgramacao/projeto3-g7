@@ -8,7 +8,6 @@ import entities.Enums.Servicos;
 import entities.excecoes.VeiculoJaEstacionadoException;
 import entities.excecoes.VeiculoNaoEncontradoException;
 
-
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -80,7 +79,7 @@ class MenuHandler {
                     System.out.println("Escolha incorreta. Tente novamente.");
                     break;
             }
-        }   
+        }
     }
 
     private void exibirMenu() {
@@ -122,7 +121,7 @@ class MenuHandler {
         if (tipoCliente == ECliente.TURNO) {
             System.out.println("Selecione o turno do cliente:");
             for (ETurnos turno : ETurnos.values()) {
-                System.out.println((turno.ordinal() + 1) + ". " + turno.getNome());
+                System.out.println((turno.ordinal() + 1) + ". " + turno.getDescricao());
             }
             int escolhaTurno = scanner.nextInt();
             scanner.nextLine();
@@ -235,6 +234,7 @@ class MenuHandler {
             System.out.println("Escolha inválida.");
         }
     }
+
     private void exibirHistoricoVeiculo() {
         System.out.println("===== HISTORICO DO VEICULO =====");
         System.out.println("Qual a placa do veiculo?");
