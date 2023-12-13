@@ -3,8 +3,10 @@ package entities;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+import entities.excecoes.VeiculoNaoEncontradoException;
 
 public class Estacionamento {
 
@@ -67,17 +69,24 @@ public class Estacionamento {
      * @param placa Placa do veículo a ser estacionado.
      */
     public void estacionar(String placa) {
-        for (Cliente cliente : clientes.values()) {
-            if (cliente != null && cliente.possuiVeiculo(placa) != null) {
-                for (Vaga vaga : vagas) {
-                    if (vaga != null && vaga.disponivel()) {
-                        cliente.possuiVeiculo(placa).estacionar(vaga);
-                        break;
-                    }
+        boolean veiculoEstacionado = false;
+
+    for (Cliente cliente : clientes.values()) {
+        if (cliente != null && cliente.possuiVeiculo(placa) != null) {
+            for (Vaga vaga : vagas) {
+                if (vaga != null && vaga.disponivel()) {
+                    cliente.possuiVeiculo(placa).estacionar(vaga);
+                    veiculoEstacionado = true;
+                    break;
                 }
-                break;
             }
+            break;
         }
+    }
+
+    if (!veiculoEstacionado) {
+        throw new VeiculoNaoEncontradoException("O veículo com placa " + placa + " não foi encontrado.");
+    }
     }
 
     /**
@@ -89,7 +98,7 @@ public class Estacionamento {
 
     public double sair(String placa) {
         for (Cliente cliente : clientes.values()) {
-            if (cliente != null && cliente.possuiVeiculo(placa) != null) {
+            if (cliente.possuiVeiculo(placa) != null) {
                 return cliente.possuiVeiculo(placa).sair();
             }
         }
@@ -103,13 +112,10 @@ public class Estacionamento {
      */
 
     public double totalArrecadado() {
-        double totalArrecadado = 0.0;
-        for (Cliente cliente : clientes.values()) {
-            if (cliente != null) {
-                totalArrecadado += cliente.arrecadadoTotal();
-            }
-        }
-        return totalArrecadado;
+        return clientes.values().stream()
+                .filter(Objects::nonNull)
+                .mapToDouble(Cliente::arrecadadoTotal)
+                .sum();
     }
 
     /**
@@ -120,13 +126,10 @@ public class Estacionamento {
      */
 
     public double arrecadacaoNoMes(int mes) {
-        double arrecadacaoNoMes = 0.0;
-        for (Cliente cliente : clientes.values()) {
-            if (cliente != null) {
-                arrecadacaoNoMes += cliente.arrecadadoNoMes(mes);
-            }
-        }
-        return arrecadacaoNoMes;
+        return clientes.values().stream()
+                .filter(Objects::nonNull)
+                .mapToDouble(cliente -> cliente.arrecadadoNoMes(mes))
+                .sum();
     }
 
     /**
@@ -137,13 +140,10 @@ public class Estacionamento {
      */
 
     public double arrecadacaoNoMesClienteHorista(int mes) {
-        double arrecadacaoNoMesClienteHorista = 0.0;
-        for (Cliente cliente : clientes.values()) {
-            if (cliente.verificarTipo("Horista")) {
-                arrecadacaoNoMesClienteHorista += cliente.arrecadadoNoMes(mes);
-            }
-        }
-        return arrecadacaoNoMesClienteHorista;
+        return clientes.values().stream()
+                .filter(cliente -> cliente.verificarTipo("Horista"))
+                .mapToDouble(cliente -> cliente.arrecadadoNoMes(mes))
+                .sum();
     }
 
     /**
@@ -152,13 +152,16 @@ public class Estacionamento {
      * @return Valor médio por uso.
      */
     public double valorMedioPorUso() {
-        int totalDeUsos = 0;
-        for (Cliente cliente : clientes.values()) {
-            if (cliente != null) {
-                totalDeUsos += 1;
-            }
+        long totalClientes = clientes.values().stream()
+                .filter(Objects::nonNull)
+                .count();
+
+        if (totalClientes == 0) {
+            return 0.0;
         }
-        return totalArrecadado() / totalDeUsos;
+
+        double totalArrecadado = totalArrecadado();
+        return totalArrecadado / totalClientes;
     }
 
     /**

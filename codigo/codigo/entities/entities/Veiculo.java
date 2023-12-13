@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
+import entities.excecoes.VeiculoJaEstacionadoException;
 
 /**
  * A classe Veiculo representa um veículo que pode estacionar em vagas de
@@ -18,6 +19,7 @@ public class Veiculo implements IDataToText {
 	private int totalDeUsos = 0; // Total de usos de vagas registrados para o veículo
 	private double arrecadadoNoMes = 0; // Valor arrecadado no mês atual
 	private double totalArrecadado = 0; // Valor total arrecadado pelo veículo
+	private boolean estacionado = false;
 	private int indiceDeVaga = 0;
 	private ECliente eCliente;
 	private ETurnos eTurnos;
@@ -31,6 +33,7 @@ public class Veiculo implements IDataToText {
 		this.placa = placa;
 
 	}
+
 	public void setEcliente(ECliente eCliente) {
 		this.eCliente = eCliente;
 	}
@@ -45,9 +48,12 @@ public class Veiculo implements IDataToText {
 	 * @param vaga A vaga em que o veículo será estacionado.
 	 */
 	public void estacionar(Vaga vaga) {
+		if (estacionado) {
+			throw new VeiculoJaEstacionadoException("O veículo já está estacionado.");
+		}
 
-		if (vaga.disponivel() == true) {
-			if (vaga.estacionar() == true)
+		if (vaga.disponivel()) {
+			if (vaga.estacionar()) {
 				if (eCliente != null && eCliente.getNome() != null) {
 					switch (eCliente.getNome()) {
 						case "Horista":
@@ -65,9 +71,13 @@ public class Veiculo implements IDataToText {
 						default:
 							break;
 					}
+					// Se o veículo foi estacionado com sucesso, atualiza o atributo estacionado
+					// para true
+					estacionado = true;
 				} else {
 					throw new IllegalArgumentException("eCliente or eCliente.getNome() cannot be null");
 				}
+			}
 		}
 	}
 
@@ -77,7 +87,9 @@ public class Veiculo implements IDataToText {
 	 * @return O valor pago pelo uso da vaga.
 	 */
 	public double sair() {
+		estacionado = false;
 		return usos[indiceDeVaga - 1].sair();
+
 	}
 
 	/**
