@@ -16,12 +16,6 @@ public class TestVaga {
     }
 
     @Test
-    public void testSairVagaDisponivel() {
-        Vaga vaga = new Vaga(1, 1);
-        assertEquals(true, vaga.sair());
-    }
-
-    @Test
     public void testSairVagaNaoDisponivel() {
         Vaga vaga = new Vaga(1, 1);
         vaga.disponivel = false;

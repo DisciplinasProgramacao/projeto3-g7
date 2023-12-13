@@ -14,6 +14,10 @@ import entities.excecoes.VeiculoJaEstacionadoException;
  * estacionamento.
  * Cada veículo é identificado por sua placa e pode registrar seu uso de vagas.
  */
+/**
+ * Representa um veículo.
+ * Implementa a interface IDataToText para converter os dados do veículo em texto.
+ */
 public class Veiculo implements IDataToText {
 
 	private String placa; // A placa do veículo
@@ -42,10 +46,14 @@ public class Veiculo implements IDataToText {
 		this.eTurnos = turno;
 	}
 
+	
 	/**
-	 * Estaciona o veículo em uma vaga especificada.
-	 *
-	 * @param vaga A vaga em que o veículo será estacionado.
+	 * Estaciona o veículo em uma vaga, registrando o uso do veículo e os serviços prestados.
+	 * 
+	 * @param vaga A vaga onde o veículo será estacionado.
+	 * @param servicos Os serviços prestados ao veículo.
+	 * @throws VeiculoJaEstacionadoException Se o veículo já estiver estacionado.
+	 * @throws IllegalArgumentException Se o cliente do veículo ou o nome do cliente for nulo.
 	 */
 	public void estacionar(Vaga vaga, Servicos servicos) {
 		if (estacionado) {
@@ -130,6 +138,12 @@ public class Veiculo implements IDataToText {
 		return usos.size();
 	}
 
+	/**
+	 * Retorna o total de usos do veículo no mês especificado.
+	 * 
+	 * @param mes O mês para o qual se deseja obter o total de usos.
+	 * @return O total de usos do veículo no mês especificado.
+	 */
 	public int totalDeUsosNoMes(int mes) {
 		return (int) usos.stream().filter(u -> u.ehDoMes(mes)).count();
 	}
@@ -145,6 +159,11 @@ public class Veiculo implements IDataToText {
 
 	LinkedList<Veiculo> veiculos = new LinkedList<>();
 
+	/**
+	 * Converte os dados do veículo em formato de texto.
+	 * 
+	 * @return uma string contendo o relatório do veículo
+	 */
 	@Override
 	public String dataToText() {
 		double totalArrecadado = totalArrecadado();

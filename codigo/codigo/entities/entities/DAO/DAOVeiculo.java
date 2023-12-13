@@ -10,6 +10,10 @@ import java.util.Scanner;
 
 import entities.Veiculo;
 
+/**
+ * Classe que implementa a interface DAO para a entidade Veiculo.
+ * Essa classe é responsável por realizar operações de leitura e escrita em um arquivo para a entidade Veiculo.
+ */
 public class DAOVeiculo implements DAO<Veiculo> {
 
     private String nomeArq;

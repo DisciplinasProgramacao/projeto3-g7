@@ -5,12 +5,12 @@ import entities.UsoHorista;
 import entities.Vaga;
 import entities.interfaces.UsoDeVagaFactory;
 
+/**
+ * Uma classe de fábrica para criar instâncias de UsoDeVagaHorista.
+ */
+
 public class UsoDeVagaHoristaFactory implements UsoDeVagaFactory {
     @Override
-    /**
-     * Cria um uso de vaga para a vaga passada como parâmetro.
-     * Nesse caso, é uma vaga de Horista
-     */
     public UsoDeVaga criarUsoDeVaga(Vaga vaga) {
         return new UsoHorista(vaga);
     }
