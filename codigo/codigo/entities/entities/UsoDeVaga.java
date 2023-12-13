@@ -7,6 +7,9 @@ import java.util.stream.Stream;
 import entities.Enums.Servicos;
 import entities.Enums.ETurnos;
 
+/**
+ * Classe abstrata que representa o uso de uma vaga de estacionamento.
+ */
 public abstract class UsoDeVaga {
 
 	protected static final double FRACAO_USO = 0.25;
@@ -41,14 +44,34 @@ public abstract class UsoDeVaga {
 		return valorPago();
 	}
 
+	/**
+	 * Verifica se o uso da vaga de estacionamento é de um mês específico.
+	 * 
+	 * @param mes O mês a ser verificado
+	 * @return true se o uso da vaga for do mês especificado, caso contrário, false
+	 */
+
 	public boolean ehDoMes(int mes) {
 		return this.entrada.getMonthValue() == mes;
 	}
-	
-	public int totalDeUsosNoMes(Stream<UsoDeVaga> usos, int mes) {
-        return (int) usos.filter(u -> u.ehDoMes(mes)).count();
-    }
 
+	/**
+	 * Retorna o total de usos de vaga no mês especificado.
+	 *
+	 * @param usos o stream de usos de vaga
+	 * @param mes o mês para o qual se deseja obter o total de usos
+	 * @return o total de usos de vaga no mês especificado
+	 */
+	public int totalDeUsosNoMes(Stream<UsoDeVaga> usos, int mes) {
+		return (int) usos.filter(u -> u.ehDoMes(mes)).count();
+	}
+
+	/**
+	 * Calcula o valor a ser pago pelo uso da vaga de estacionamento.
+	 * 
+	 * @return o valor a ser pago pelo uso da vaga de estacionamento.
+	 * @throws IllegalArgumentException se a entrada ou saída forem nulas.
+	 */
 	public double valorPago() {
 		if (entrada == null || saida == null) {
 			throw new IllegalArgumentException("Entrada and Saida cannot be null");
@@ -59,8 +82,8 @@ public abstract class UsoDeVaga {
 			calcTempo = 1;
 		int quantidadeFracoesTempo = (int) Math.ceil(calcTempo / 15.0);
 		double valorPago = (quantidadeFracoesTempo * VALOR_FRACAO);
-	
-		if(servicos != null)
+
+		if (servicos != null)
 			valorPago += servicos.getValor();
 
 		if (valorPago > VALOR_MAXIMO)
@@ -69,6 +92,12 @@ public abstract class UsoDeVaga {
 		return valorPago;
 	}
 
+	/**
+	 * Contrata um serviço para o uso de vaga.
+	 *
+	 * @param servico O serviço a ser contratado.
+	 * @return O serviço contratado.
+	 */
 	public Servicos contratarServico(Servicos servico) {
 		this.servicos = servico;
 		return servico;

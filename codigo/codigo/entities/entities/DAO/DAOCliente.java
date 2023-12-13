@@ -9,6 +9,10 @@ import java.util.Scanner;
 
 import entities.Cliente;
 
+/**
+ * Classe que implementa a interface DAO para a entidade Cliente.
+ * Essa classe é responsável por realizar operações de leitura e escrita em um arquivo para persistência dos dados dos clientes.
+ */
 public class DAOCliente implements DAO<Cliente> {
 
     private String nomeArq;

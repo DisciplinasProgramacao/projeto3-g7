@@ -14,15 +14,12 @@ public interface UsoDeVagaFactory {
      */
     public UsoDeVaga criarUsoDeVaga(Vaga vaga);
 
-    // Método estático para criar instâncias da fábrica
-
-    // Método estático para criar instâncias da fábrica
+    /**
+     * Método estático para criar instâncias da fábrica.
+     * 
+     * @return Instância da fábrica de uso de vaga horista.
+     */
     static UsoDeVagaFactory criarHoristaFactory() {
         return new UsoDeVagaHoristaFactory();
     }
-
-
-    
 }
-
-

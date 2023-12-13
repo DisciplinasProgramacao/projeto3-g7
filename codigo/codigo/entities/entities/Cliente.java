@@ -7,6 +7,14 @@ import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.Enums.Servicos;
 
+/**
+ * A classe Cliente representa um cliente do sistema.
+ * 
+ * Um cliente possui um nome, um ID, uma lista de veículos, a quantidade de veículos,
+ * um tipo de cliente e um turno de trabalho.
+ * 
+ * A classe Cliente implementa a interface IDataToText.
+ */
 public class Cliente implements IDataToText {
 
 	private String nome;
@@ -51,6 +59,12 @@ public class Cliente implements IDataToText {
 		return this.id;
 	}
 
+	/**
+	 * Altera o tipo do cliente e, opcionalmente, o turno.
+	 * 
+	 * @param novoTipo O novo tipo de cliente.
+	 * @param turno O novo turno do cliente (opcional).
+	 */
 	public void mudarTipo(ECliente novoTipo, ETurnos turno) {
 		this.tipo = novoTipo;
 		if (turno != null) {
@@ -188,6 +202,11 @@ public class Cliente implements IDataToText {
 		return historico.toString();
 	}
 
+	/**
+	 * Converte os dados do cliente em formato de texto.
+	 * 
+	 * @return Os dados do cliente em formato de texto.
+	 */
 	@Override
 	public String dataToText() {
 		return this.nome + ";" + this.qtdVeiculo;

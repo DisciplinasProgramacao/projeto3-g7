@@ -12,6 +12,10 @@ import entities.Enums.ETurnos;
  * entrada e saída, valor pago,
  * serviços contratados, turno, cliente e status de saída.
  */
+/**
+ * Representa o uso de uma vaga de estacionamento por um determinado turno.
+ * Esta classe herda da classe UsoDeVaga.
+ */
 public class UsoTurno extends UsoDeVaga {
     private LocalDateTime entrada;
     private LocalDateTime saida;
@@ -40,10 +44,11 @@ public class UsoTurno extends UsoDeVaga {
         this.servicos = servicos;
     }
 
+   
     /**
-     * Registra a saída do veículo e calcula o valor a ser pago.
+     * Registra a saída do veículo e calcula o valor a ser pago pelo uso da vaga.
      * 
-     * @return o valor a ser pago pelo uso da vaga
+     * @return O valor a ser pago pelo uso da vaga.
      */
     @Override
     public double sair() {
