@@ -5,6 +5,9 @@ import entities.*;
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.Enums.Servicos;
+import entities.excecoes.VeiculoJaEstacionadoException;
+import entities.excecoes.VeiculoNaoEncontradoException;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -77,7 +80,7 @@ class MenuHandler {
                     System.out.println("Escolha incorreta. Tente novamente.");
                     break;
             }
-        }
+        }   
     }
 
     private void exibirMenu() {
@@ -157,8 +160,15 @@ class MenuHandler {
         System.out.println("===== ESTACIONANDO VEICULO =====");
         System.out.print("Placa do carro: ");
         String placaVeiculo = scanner.nextLine();
-        estacionamento.estacionar(placaVeiculo);
-        System.out.println("Veiculo estacionado com sucesso!");
+
+        try {
+            estacionamento.estacionar(placaVeiculo);
+            System.out.println("Veiculo estacionado com sucesso!");
+        } catch (VeiculoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        } catch (VeiculoJaEstacionadoException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void calcularValorSaida() {
@@ -225,7 +235,6 @@ class MenuHandler {
             System.out.println("Escolha inválida.");
         }
     }
-
     private void exibirHistoricoVeiculo() {
         System.out.println("===== HISTORICO DO VEICULO =====");
         System.out.println("Qual a placa do veiculo?");

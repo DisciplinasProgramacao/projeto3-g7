@@ -1,5 +1,8 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 
@@ -7,7 +10,7 @@ public class Cliente implements IDataToText {
 
 	private String nome;
 	private String id;
-	private Veiculo[] veiculos = new Veiculo[100];
+	private List<Veiculo> veiculos = new ArrayList<>();
 	private int qtdVeiculo;
 	private ECliente tipo;
 	private ETurnos turno;
@@ -41,14 +44,11 @@ public class Cliente implements IDataToText {
 	 *                cliente
 	 */
 	public void addVeiculo(Veiculo veiculo) {
-		if (qtdVeiculo < veiculos.length) {
-			veiculo.setEcliente(tipo);
-			if (tipo.equals(ECliente.TURNO)) {
-				veiculo.setETurno(turno);
-			}
-			veiculos[qtdVeiculo] = veiculo;
-			qtdVeiculo++;
+		veiculo.setEcliente(tipo);
+		if (tipo.equals(ECliente.TURNO)) {
+			veiculo.setETurno(turno);
 		}
+		veiculos.add(veiculo);
 	}
 
 	public String getId() {
@@ -63,12 +63,10 @@ public class Cliente implements IDataToText {
 	 */
 	public Veiculo possuiVeiculo(String placa) {
 		Veiculo busca = new Veiculo(placa);
-		for (int i = 0; i < qtdVeiculo; i++) {
-			if (busca.equals(veiculos[i])) {
-				return veiculos[i];
-			}
-		}
-		return null;
+		return veiculos.stream()
+				.filter(v -> v.equals(busca))
+				.findFirst()
+				.orElse(null);
 	}
 
 	/**
@@ -77,11 +75,9 @@ public class Cliente implements IDataToText {
 	 * @return retorna o total de usos
 	 */
 	public int totalDeUsos() {
-		int totalDeUsos = 0;
-		for (int i = 0; i < qtdVeiculo; i++) {
-			totalDeUsos += veiculos[i].totalDeUsos();
-		}
-		return totalDeUsos;
+		return veiculos.stream()
+				.mapToInt(Veiculo::totalDeUsos)
+				.sum();
 	}
 
 	/**
@@ -91,15 +87,12 @@ public class Cliente implements IDataToText {
 	 * @return valor arrecadado por um veiculo
 	 */
 	public double arrecadadoPorVeiculo(String placa) {
-		double valorArrecadado = 0;
 		Veiculo busca = new Veiculo(placa);
-		for (int i = 0; i < qtdVeiculo; i++) {
-			if (busca.equals(veiculos[i])) {
-				valorArrecadado = busca.totalArrecadado();
-			}
-		}
-		return valorArrecadado;
-
+		return veiculos.stream()
+				.filter(v -> v.equals(busca))
+				.mapToDouble(Veiculo::totalArrecadado)
+				.findFirst()
+				.orElse(0.0);
 	}
 
 	/**
@@ -109,17 +102,11 @@ public class Cliente implements IDataToText {
 	 * @return valor arrecadado por todos os veiculos
 	 */
 	public double arrecadadoTotal() {
-		int arrecadadoTotal = 0;
-		if (tipo.equals(ECliente.MENSALISTA)) {
-			arrecadadoTotal += tipo.getValor();
-		} else if (tipo.equals(ECliente.TURNO)) {
-			arrecadadoTotal += tipo.getValor();
-		} else {
-			arrecadadoTotal += tipo.getValor();
-		}
-		for (int i = 0; i < qtdVeiculo; i++) {
-			arrecadadoTotal += veiculos[i].totalArrecadado();
-		}
+		double arrecadadoTotal = tipo.getValor();
+
+		arrecadadoTotal += veiculos.stream()
+				.mapToDouble(Veiculo::totalArrecadado)
+				.sum();
 
 		return arrecadadoTotal;
 	}
@@ -131,27 +118,17 @@ public class Cliente implements IDataToText {
 	 * @return retorna o valor arrecadado no mes
 	 */
 	public double arrecadadoNoMes(int mes) {
-		int arrecadadoNoMes = 0;
-		if (tipo.equals(ECliente.MENSALISTA)) {
-			arrecadadoNoMes += tipo.getValor();
-		} else if (tipo.equals(ECliente.TURNO)) {
-			arrecadadoNoMes += tipo.getValor();
-		} else {
-			arrecadadoNoMes += tipo.getValor();
-		}
-		for (int i = 0; i < qtdVeiculo; i++) {
-			arrecadadoNoMes += veiculos[i].arrecadadoNoMes(mes);
-		}
+		double arrecadadoNoMes = tipo.getValor(); // Adicionando o valor do tipo de cliente
+
+		arrecadadoNoMes += veiculos.stream()
+				.mapToDouble(v -> v.arrecadadoNoMes(mes))
+				.sum();
+
 		return arrecadadoNoMes;
 	}
 
-	
-	public boolean verificarTipo(String tipo){
-		if(tipo == this.tipo.getNome()){
-			return true;
-		} else{
-			return false;
-		}
+	public boolean verificarTipo(String tipo) {
+		return tipo.equals(this.tipo.getNome());
 	}
 
 	/**
@@ -165,17 +142,18 @@ public class Cliente implements IDataToText {
 		StringBuilder historico = new StringBuilder();
 		historico.append("Histórico do Cliente: ").append(nome).append(" (ID: ").append(id).append(")\n");
 		historico.append("Veículos do Cliente e Valores Gastos:\n");
-		for (int i = 0; i < qtdVeiculo; i++) {
-			historico.append("Veículo ").append(i + 1).append(": R$ ").append(veiculos[i].totalArrecadado())
-					.append("\n");
+	
+		for (int i = 0; i < veiculos.size(); i++) {
+			historico.append("Veículo ").append(i + 1).append(": R$ ").append(veiculos.get(i).totalArrecadado()).append("\n");
 		}
+	
 		historico.append("Valor Gasto por Mês:\n");
 		for (int mes = 1; mes <= 12; mes++) {
 			double valorMes = arrecadadoNoMes(mes);
 			historico.append("Mês ").append(mes).append(": R$ ").append(valorMes).append("\n");
 		}
-		double valorTotal = arrecadadoTotal();
-		historico.append("Valor Total Arrecadado: R$ ").append(valorTotal).append("\n");
+	
+		historico.append("Valor Total Arrecadado: R$ ").append(arrecadadoTotal()).append("\n");
 		return historico.toString();
 	}
 
@@ -183,7 +161,6 @@ public class Cliente implements IDataToText {
 	public String dataToText() {
 		return this.nome + ";" + this.qtdVeiculo;
 	}
-	
 
 	public boolean equals(Cliente c) {
 		boolean resp = false;
