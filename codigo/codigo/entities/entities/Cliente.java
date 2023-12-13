@@ -47,6 +47,24 @@ public class Cliente implements IDataToText {
 		this.servicos = servicos;
 	}
 
+	public String getId() {
+		return this.id;
+	}
+
+	public void mudarTipo(ECliente novoTipo, ETurnos turno) {
+		this.tipo = novoTipo;
+		if (turno != null) {
+			this.turno = turno;
+		}
+		for (Veiculo veiculo : veiculos) {
+			veiculo.setEcliente(novoTipo);
+			if (turno != null) {
+				this.turno = turno;
+				veiculo.setETurno(turno);
+			}
+		}
+	}
+
 	/**
 	 * Classe addVeiculo que adicionará um veiculo ao cliente
 	 * 
@@ -59,10 +77,6 @@ public class Cliente implements IDataToText {
 			veiculo.setETurno(turno);
 		}
 		veiculos.add(veiculo);
-	}
-
-	public String getId() {
-		return this.id;
 	}
 
 	/**

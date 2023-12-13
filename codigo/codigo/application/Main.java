@@ -73,6 +73,9 @@ class MenuHandler {
                     servicos();
                     break;
                 case 13:
+                    mudarTipoCliente();
+                    break;
+                case 14:
                     sair = true;
                     break;
                 default:
@@ -96,7 +99,8 @@ class MenuHandler {
         System.out.println("10. Exibir Historico do Cliente");
         System.out.println("11. Exibir Historico do veiculo");
         System.out.println("12. Serviços");
-        System.out.println("13. Sair");
+        System.out.println("13. Mudar tipo do Cliente");
+        System.out.println("14. Sair");
         System.out.print("Escolha uma opção: ");
     }
 
@@ -251,4 +255,44 @@ class MenuHandler {
         String placa = scanner.nextLine();
         System.out.println("Total arrecadado: " + estacionamento.historicoVeiculo(placa));
     }
+
+    private void mudarTipoCliente() {
+    System.out.println("===== MUDANDO TIPO DE CLIENTE =====");
+    System.out.print("Qual cliente você deseja mudar o tipo? Digite o ID ou CPF: ");
+    String id = scanner.nextLine();
+
+    System.out.println("Selecione o novo tipo de cliente:");
+    for (ECliente tipo : ECliente.values()) {
+        System.out.println((tipo.ordinal() + 1) + ". " + tipo.getNome());
+    }
+    int escolhaTipo = scanner.nextInt();
+    scanner.nextLine();
+    ECliente novoTipoCliente = null;
+    if (escolhaTipo > 0 && escolhaTipo <= ECliente.values().length) {
+        novoTipoCliente = ECliente.values()[escolhaTipo - 1];
+    } else {
+        System.out.println("Escolha inválida para o tipo de cliente. O tipo não será alterado.");
+        return;
+    }
+
+    if (novoTipoCliente == ECliente.TURNO) {
+        System.out.println("Selecione o novo turno do cliente:");
+        for (ETurnos turno : ETurnos.values()) {
+            System.out.println((turno.ordinal() + 1) + ". " + turno.getDescricao());
+        }
+        int escolhaTurno = scanner.nextInt();
+        scanner.nextLine();
+        ETurnos novoTurnoCliente = null;
+        if (escolhaTurno > 0 && escolhaTurno <= ETurnos.values().length) {
+            novoTurnoCliente = ETurnos.values()[escolhaTurno - 1];
+        } else {
+            System.out.println("Escolha inválida para o turno. O cliente será mantido sem turno.");
+            novoTipoCliente = ECliente.MENSALISTA;
+        }
+
+        estacionamento.mudarTipoCliente(id, novoTipoCliente, novoTurnoCliente);
+    } else {
+        estacionamento.mudarTipoCliente(id, novoTipoCliente, null); 
+    }
+    }   
 }
