@@ -1,6 +1,8 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
@@ -14,13 +16,8 @@ import entities.excecoes.VeiculoJaEstacionadoException;
 public class Veiculo implements IDataToText {
 
 	private String placa; // A placa do veículo
-	private UsoDeVaga[] usos = new UsoDeVaga[10]; // Array de usos de vagas associado ao veículo
-	private int mes; // Mês atual para cálculos
-	private int totalDeUsos = 1; // Total de usos de vagas registrados para o veículo
-	private double arrecadadoNoMes = 0; // Valor arrecadado no mês atual
-	private double totalArrecadado = 0; // Valor total arrecadado pelo veículo
+	private List<UsoDeVaga> usos = new ArrayList<>(); // Array de usos de vagas associado ao veículo
 	private boolean estacionado = false;
-	private int indiceDeVaga = 0;
 	private ECliente eCliente;
 	private ETurnos eTurnos;
 
@@ -57,22 +54,18 @@ public class Veiculo implements IDataToText {
 				if (eCliente != null && eCliente.getNome() != null) {
 					switch (eCliente.getNome()) {
 						case "Horista":
-							usos[indiceDeVaga] = new UsoHorista(vaga);
-							indiceDeVaga++;
+							usos.add(new UsoHorista(vaga));
 							break;
 						case "Mensalista":
-							usos[indiceDeVaga] = new UsoMensalista(vaga);
-							indiceDeVaga++;
+							usos.add(new UsoMensalista(vaga));
 							break;
 						case "Turno":
-							usos[indiceDeVaga] = new UsoTurno(vaga, eTurnos);
-							indiceDeVaga++;
+							usos.add(new UsoTurno(vaga, eTurnos));
 							break;
 						default:
 							break;
 					}
-					// Se o veículo foi estacionado com sucesso, atualiza o atributo estacionado
-					// para true
+					// Atualiza o atributo estacionado para true após estacionar com sucesso
 					estacionado = true;
 				} else {
 					throw new IllegalArgumentException("eCliente or eCliente.getNome() cannot be null");
@@ -87,13 +80,12 @@ public class Veiculo implements IDataToText {
 	 * @return O valor pago pelo uso da vaga.
 	 */
 	public double sair() {
-
 		estacionado = false;
 
-		if (usos[indiceDeVaga - 1] != null) {
-			return usos[indiceDeVaga - 1].sair();
+		if (!usos.isEmpty()) {
+			return usos.get(usos.size() - 1).sair();
 		} else {
-			throw new NullPointerException("Uso de vaga é nulo");
+			throw new NullPointerException("Não há uso de vaga registrado para saída");
 		}
 	}
 
@@ -103,11 +95,11 @@ public class Veiculo implements IDataToText {
 	 * @return O valor total arrecadado pelo veículo.
 	 */
 	public double totalArrecadado() {
-		totalArrecadado = 0.0;
-		for (int i = 0; i < indiceDeVaga; i++) {
-			totalArrecadado += usos[i].valorPago();
+		double total = 0.0;
+		for (UsoDeVaga uso : usos) {
+			total += uso.valorPago();
 		}
-		return totalArrecadado;
+		return total;
 	}
 
 	/**
@@ -117,12 +109,10 @@ public class Veiculo implements IDataToText {
 	 * @return O valor arrecadado pelo veículo no mês especificado.
 	 */
 	public double arrecadadoNoMes(int mes) {
-		arrecadadoNoMes = 0.0;
-		this.mes = mes;
-
-		for (int i = 0; i < indiceDeVaga; i++) {
-			if (usos[indiceDeVaga - 1].ehDoMes(mes)) {
-				arrecadadoNoMes += usos[indiceDeVaga - 1].valorPago();
+		double arrecadadoNoMes = 0.0;
+		for (UsoDeVaga uso : usos) {
+			if (uso.ehDoMes(mes)) {
+				arrecadadoNoMes += uso.valorPago();
 			}
 		}
 		return arrecadadoNoMes;
@@ -134,13 +124,11 @@ public class Veiculo implements IDataToText {
 	 * @return O número total de usos de vagas registrados para o veículo.
 	 */
 	public int totalDeUsos() {
+		return usos.size();
+	}
 
-		for (int i = 0; i < indiceDeVaga; i++) {
-			if (usos[indiceDeVaga] != null) {
-				totalDeUsos++;
-			}
-		}
-		return totalDeUsos;
+	public int totalDeUsosNoMes(int mes) {
+		return (int) usos.stream().filter(u -> u.ehDoMes(mes)).count();
 	}
 
 	public boolean equals(Veiculo v) {
@@ -165,8 +153,9 @@ public class Veiculo implements IDataToText {
 		relatorio.append("Placa: ").append(placa).append("\n");
 		relatorio.append("Total de Usos: ").append(totalUsos).append("\n");
 		relatorio.append("Total Arrecadado: ").append(totalArrecadado).append("\n");
-		for(int i = 0; i < 12; i++) {
-			relatorio.append("Arrecadado no mês ").append(i+1).append(": ").append(arrecadadoNoMes(i+1)).append("\n");
+		for (int i = 0; i < 12; i++) {
+			relatorio.append("Arrecadado no mês ").append(i + 1).append(": ").append(arrecadadoNoMes(i + 1))
+					.append("\n");
 		}
 		return relatorio.toString();
 	}

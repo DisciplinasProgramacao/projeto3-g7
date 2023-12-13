@@ -76,6 +76,9 @@ class MenuHandler {
                     mudarTipoCliente();
                     break;
                 case 14:
+                    dadosClientesMensalista();
+                    break;
+                case 15:
                     sair = true;
                     break;
                 default:
@@ -84,6 +87,7 @@ class MenuHandler {
             }
         }
     }
+
 
     private void exibirMenu() {
         System.out.println("===== MENU DO ESTACIONAMENTO =====");
@@ -100,7 +104,8 @@ class MenuHandler {
         System.out.println("11. Exibir Historico do veiculo");
         System.out.println("12. Serviços");
         System.out.println("13. Mudar tipo do Cliente");
-        System.out.println("14. Sair");
+        System.out.println("14. Relatorio do Mensalista");
+        System.out.println("15. Sair");
         System.out.print("Escolha uma opção: ");
     }
 
@@ -285,4 +290,13 @@ class MenuHandler {
         estacionamento.mudarTipoCliente(id, novoTipoCliente, null); 
     }
     }   
+
+    private void dadosClientesMensalista() {
+    System.out.println("Digite o número do mês para obter os dados dos clientes mensalistas:");
+    int mes = scanner.nextInt();
+    scanner.nextLine(); // Consumir a quebra de linha após a leitura do inteiro
+    
+    String resultado = estacionamento.mesClienteMensalista(mes);
+    System.out.println(resultado);
+}
 }
