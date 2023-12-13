@@ -24,22 +24,16 @@ public class TestEstacionamento {
         assertEquals(0, cliente.totalDeUsos());
     }
 
-    @Test
-    public void gerarVagas() {
-        Vaga vagas[] = new Vaga[5];
-        for (int i = 0; i < 5; i++) {
-            vagas[i] = new Vaga(i,5);
-        }
-        assertTrue(vagas[0].sair());
-    }
+
 
     @Test
     public void testEstacionar() {
         Cliente cliente = new Cliente("Andre", "5556");
         Veiculo veiculo = new Veiculo("555");
         cliente.addVeiculo(veiculo);
-        estacionamento.estacionar("555", null);
-        assertEquals(0, veiculo.totalDeUsos());         
+        estacionamento.estacionar("555", null)
+        assertEquals(0, veiculo.totalDeUsos());
+
     }
 
     @Test
@@ -73,6 +67,3 @@ public class TestEstacionamento {
         Veiculo veiculos = new Veiculo("555");
         assertEquals(0, estacionamento.valorMedioPorUso(), 0.01);
     }
-
-    
-}

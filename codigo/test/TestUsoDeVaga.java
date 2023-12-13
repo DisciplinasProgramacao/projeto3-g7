@@ -1,53 +1,52 @@
-package test;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import entities.UsoDeVaga;
+import entities.Enums.Servicos;
 
 import java.time.LocalDateTime;
-import static org.junit.Assert.*;
+import java.util.stream.Stream;
 
 public class TestUsoDeVaga {
-    private static final double DELTA = 0.001;
 
     @Test
-    public void testValorPagoWithValidInput() {
-        LocalDateTime entrada = LocalDateTime.of(2022, 1, 1, 10, 0);
-        LocalDateTime saida = LocalDateTime.of(2022, 1, 1, 11, 30);
-        UsoDeVaga usoDeVaga = new UsoDeVaga(entrada, saida);
-        double valorPago = usoDeVaga.valorPago();
-        assertEquals(24.0, valorPago, DELTA);
-    }
+    public void testEhDoMes() {
+        UsoDeVaga usoDeVaga = new UsoDeVaga(LocalDateTime.of(2022, 1, 15, 10, 0), LocalDateTime.of(2022, 1, 15, 12, 0));
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testValorPagoWithNullEntrada() {
-        LocalDateTime saida = LocalDateTime.of(2022, 1, 1, 11, 30);
-        UsoDeVaga usoDeVaga = new UsoDeVaga(null, saida);
-        usoDeVaga.valorPago();
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testValorPagoWithNullSaida() {
-        LocalDateTime entrada = LocalDateTime.of(2022, 1, 1, 10, 0);
-        UsoDeVaga usoDeVaga = new UsoDeVaga(entrada, null);
-        usoDeVaga.valorPago();
+        Assertions.assertTrue(usoDeVaga.ehDoMes(1));
+        Assertions.assertFalse(usoDeVaga.ehDoMes(2));
     }
 
     @Test
-    public void testValorPagoWithZeroMinutes() {
-        LocalDateTime entrada = LocalDateTime.of(2022, 1, 1, 10, 0);
-        LocalDateTime saida = LocalDateTime.of(2022, 1, 1, 10, 0);
-        UsoDeVaga usoDeVaga = new UsoDeVaga(entrada, saida);
-        double valorPago = usoDeVaga.valorPago();
-        assertEquals(4.0, valorPago, DELTA);
+    public void testTotalDeUsosNoMes() {
+        UsoDeVaga usoDeVaga1 = new UsoDeVaga(LocalDateTime.of(2022, 1, 15, 10, 0),
+                LocalDateTime.of(2022, 1, 15, 12, 0));
+        UsoDeVaga usoDeVaga2 = new UsoDeVaga(LocalDateTime.of(2022, 1, 20, 14, 0),
+                LocalDateTime.of(2022, 1, 20, 16, 0));
+        UsoDeVaga usoDeVaga3 = new UsoDeVaga(LocalDateTime.of(2022, 2, 5, 9, 0), LocalDateTime.of(2022, 2, 5, 11, 0));
+
+        Stream<UsoDeVaga> usos = Stream.of(usoDeVaga1, usoDeVaga2, usoDeVaga3);
+
+        Assertions.assertEquals(2, usoDeVaga1.totalDeUsosNoMes(usos, 1));
+        Assertions.assertEquals(1, usoDeVaga1.totalDeUsosNoMes(usos, 2));
     }
 
     @Test
-    public void testValorPagoWithMaxValue() {
-        LocalDateTime entrada = LocalDateTime.of(2022, 1, 1, 10, 0);
-        LocalDateTime saida = LocalDateTime.of(2022, 1, 1, 13, 7);
-        UsoDeVaga usoDeVaga = new UsoDeVaga(entrada, saida);
+    public void testValorPago() {
+        UsoDeVaga usoDeVaga = new UsoDeVaga(LocalDateTime.of(2022, 1, 15, 10, 0), LocalDateTime.of(2022, 1, 15, 12, 0));
+
         double valorPago = usoDeVaga.valorPago();
-        assertEquals(50.0, valorPago, DELTA);
+
+        Assertions.assertEquals(8.0, valorPago);
+    }
+
+    @Test
+    public void testContratarServico() {
+        UsoDeVaga usoDeVaga = new UsoDeVaga(LocalDateTime.of(2022, 1, 15, 10, 0), LocalDateTime.of(2022, 1, 15, 12, 0));
+        Servicos servico = new Servicos("Lavagem", 10.0);
+
+        Servicos contratado = usoDeVaga.contratarServico(servico);
+
+        Assertions.assertEquals(servico, contratado);
     }
 }

@@ -12,6 +12,14 @@ import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.excecoes.VeiculoNaoEncontradoException;
 
+/**
+ * Representa um estacionamento.
+ * 
+ * Um estacionamento possui um nome, uma lista de clientes, um conjunto de vagas e informações sobre a quantidade de fileiras e vagas por fileira.
+ * 
+ * Os clientes podem adicionar veículos ao estacionamento, estacionar seus veículos, sair do estacionamento, consultar o histórico de uso e mudar o tipo de cliente.
+ * O estacionamento também permite calcular a arrecadação total, a arrecadação por mês, a porcentagem de usos de clientes mensalistas, a arrecadação por mês para clientes horistas, o valor médio por uso e os cinco principais clientes que geraram a maior receita em um determinado mês.
+ */
 public class Estacionamento {
 
     public String nome;
@@ -67,6 +75,13 @@ public class Estacionamento {
         }
     }
 
+    /**
+     * Estaciona um veículo no estacionamento.
+     * 
+     * @param placa a placa do veículo a ser estacionado
+     * @param servicos os serviços a serem realizados no veículo
+     * @throws VeiculoNaoEncontradoException se o veículo com a placa especificada não for encontrado
+     */
     public void estacionar(String placa, Servicos servicos) {
         boolean veiculoEstacionado = false;
         for (Cliente cliente : clientes.values()) {
@@ -130,6 +145,13 @@ public class Estacionamento {
                 .sum();
     }
 
+    /**
+     * Retorna uma string contendo o total de usos dos clientes mensalistas no mês especificado
+     * e a porcentagem em relação ao total de usos no mês.
+     * 
+     * @param mes O mês para o qual se deseja obter o total de usos dos clientes mensalistas.
+     * @return Uma string contendo o total de usos dos clientes mensalistas no mês e a porcentagem em relação ao total de usos no mês.
+     */
     public String mesClienteMensalista(int mes) {
         int totalDeUsosMensalistas = clientes.values().stream()
                 .filter(cliente -> cliente.verificarTipo("Mensalista"))
@@ -198,6 +220,12 @@ public class Estacionamento {
         return texto;
     }
 
+    /**
+     * Retorna o histórico de um veículo com base na placa.
+     * 
+     * @param placa a placa do veículo
+     * @return o histórico do veículo em formato de texto ou "Error" se não for encontrado
+     */
     public String historicoVeiculo(String placa) {
         for (Cliente cliente : clientes.values()) {
             if (cliente.possuiVeiculo(placa) != null) {
@@ -208,6 +236,13 @@ public class Estacionamento {
 
     }
 
+    /**
+     * Altera o tipo de cliente e turno de um cliente específico.
+     * 
+     * @param cpf O CPF do cliente a ser modificado.
+     * @param tipo O novo tipo de cliente.
+     * @param turno O novo turno do cliente.
+     */
     public void mudarTipoCliente(String cpf, ECliente tipo, ETurnos turno) {
         Cliente busca = new Cliente(cpf, cpf);
         for (Cliente cliente : clientes.values()) {
