@@ -1,9 +1,11 @@
 package application;
+
 import java.util.Scanner;
 import entities.*;
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.Enums.Servicos;
+
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -22,7 +24,6 @@ class MenuHandler {
         this.scanner = scanner;
         this.estacionamento = estacionamento;
     }
-
 
     public void runMenu() {
         boolean sair = false;
@@ -62,11 +63,14 @@ class MenuHandler {
                     break;
                 case 10:
                     exibirHistoricoCliente();
-                    break;  
+                    break;
                 case 11:
-                    servicos();
-                    break;  
+                    exibirHistoricoVeiculo();
+                    break;
                 case 12:
+                    servicos();
+                    break;
+                case 13:
                     sair = true;
                     break;
                 default:
@@ -88,8 +92,9 @@ class MenuHandler {
         System.out.println("8. Total arrecadado no Mes cliente horista; ");
         System.out.println("9. Exibir Top 5");
         System.out.println("10. Exibir Historico do Cliente");
-        System.out.println("11. Serviços");
-        System.out.println("12. Sair");
+        System.out.println("11. Exibir Historico do veiculo");
+        System.out.println("12. Serviços");
+        System.out.println("13. Sair");
         System.out.print("Escolha uma opção: ");
     }
 
@@ -133,9 +138,9 @@ class MenuHandler {
         }
     }
 
-     public static boolean validaEstacionamento( Estacionamento estacionamento ) {
+    public static boolean validaEstacionamento(Estacionamento estacionamento) {
         return estacionamento != null;
-        
+
     }
 
     private void registrarVeiculo() {
@@ -191,7 +196,7 @@ class MenuHandler {
         System.out.println();
     }
 
-    private void exibirTop5() {   
+    private void exibirTop5() {
         System.out.println("===== TOP 5 CLIENTES =====");
         System.out.println(estacionamento.top5Clientes());
     }
@@ -202,8 +207,8 @@ class MenuHandler {
         String id = scanner.nextLine();
         System.out.println("Total arrecadado: " + estacionamento.historicoCliente(id));
     }
-    
-    private void servicos(){
+
+    private void servicos() {
         System.out.println("===== SERVICOS =====");
         System.out.println("Escolha o tipo de serviço:");
         for (Servicos tipoServico : Servicos.values()) {
@@ -219,5 +224,12 @@ class MenuHandler {
         } else {
             System.out.println("Escolha inválida.");
         }
+    }
+
+    private void exibirHistoricoVeiculo() {
+        System.out.println("===== HISTORICO DO VEICULO =====");
+        System.out.println("Qual a placa do veiculo?");
+        String placa = scanner.nextLine();
+        System.out.println("Total arrecadado: " + estacionamento.historicoVeiculo(placa));
     }
 }

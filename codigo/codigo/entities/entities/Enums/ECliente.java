@@ -1,6 +1,6 @@
 package entities.Enums;
 
-public enum ECliente {
+public enum ECliente  {
 
     HORISTA("Horista", 0, 0.0),
     TURNO("Turno", 200.0, 0),
