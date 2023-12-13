@@ -38,8 +38,8 @@ public class TestCliente {
         cliente.addVeiculo(veiculo1);
         cliente.addVeiculo(veiculo2);
         Vaga vaga = new Vaga(1, 1);
-        veiculo1.estacionar(vaga);
-        assertEquals(2, cliente.totalDeUsos());
+        veiculo1.estacionar(vaga, null);
+        assertEquals(1, cliente.totalDeUsos());
     }
 
     @Test
