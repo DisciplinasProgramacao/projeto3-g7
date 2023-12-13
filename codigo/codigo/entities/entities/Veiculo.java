@@ -15,8 +15,8 @@ public class Veiculo implements IDataToText {
 
 	private String placa; // A placa do veículo
 	private UsoDeVaga[] usos = new UsoDeVaga[10]; // Array de usos de vagas associado ao veículo
-	private int mes = 0; // Mês atual para cálculos
-	private int totalDeUsos = 0; // Total de usos de vagas registrados para o veículo
+	private int mes; // Mês atual para cálculos
+	private int totalDeUsos = 1; // Total de usos de vagas registrados para o veículo
 	private double arrecadadoNoMes = 0; // Valor arrecadado no mês atual
 	private double totalArrecadado = 0; // Valor total arrecadado pelo veículo
 	private boolean estacionado = false;
@@ -87,7 +87,9 @@ public class Veiculo implements IDataToText {
 	 * @return O valor pago pelo uso da vaga.
 	 */
 	public double sair() {
+
 		estacionado = false;
+
 		if (usos[indiceDeVaga - 1] != null) {
 			return usos[indiceDeVaga - 1].sair();
 		} else {
@@ -154,17 +156,19 @@ public class Veiculo implements IDataToText {
 
 	@Override
 	public String dataToText() {
-		double totalArrecadado = veiculos.stream()
-				.mapToDouble(veiculo -> veiculo.totalArrecadado())
-				.sum();
+		double totalArrecadado = totalArrecadado();
+		int totalUsos = totalDeUsos();
 
-		double totalDeUsos = veiculos.stream()
-				.mapToDouble(veiculo -> veiculo.totalDeUsos())
-				.sum();
-
-		StringBuilder string = new StringBuilder();
-		string.append("Placa: ").append(placa).append("\n").append("Total de Usos: ").append(totalDeUsos).append("\n");
-		return string.toString();
+		StringBuilder relatorio = new StringBuilder();
+		relatorio.append("Relatório do Veículo\n");
+		relatorio.append("-------------------\n");
+		relatorio.append("Placa: ").append(placa).append("\n");
+		relatorio.append("Total de Usos: ").append(totalUsos).append("\n");
+		relatorio.append("Total Arrecadado: ").append(totalArrecadado).append("\n");
+		for(int i = 0; i < 12; i++) {
+			relatorio.append("Arrecadado no mês ").append(i+1).append(": ").append(arrecadadoNoMes(i+1)).append("\n");
+		}
+		return relatorio.toString();
 	}
 
 }

@@ -8,6 +8,7 @@ import entities.Enums.Servicos;
 import entities.excecoes.VeiculoJaEstacionadoException;
 import entities.excecoes.VeiculoNaoEncontradoException;
 
+
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -94,8 +95,9 @@ class MenuHandler {
         System.out.println("8. Total arrecadado no Mes cliente horista; ");
         System.out.println("9. Exibir Top 5");
         System.out.println("10. Exibir Historico do Cliente");
-        System.out.println("11. Serviços");
-        System.out.println("12. Sair");
+        System.out.println("11. Exibir Historico do veiculo");
+        System.out.println("12. Serviços");
+        System.out.println("13. Sair");
         System.out.print("Escolha uma opção: ");
     }
 
