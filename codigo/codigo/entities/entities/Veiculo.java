@@ -88,8 +88,11 @@ public class Veiculo implements IDataToText {
 	 */
 	public double sair() {
 		estacionado = false;
-		return usos[indiceDeVaga - 1].sair();
-
+		if (usos[indiceDeVaga - 1] != null) {
+			return usos[indiceDeVaga - 1].sair();
+		} else {
+			throw new NullPointerException("Uso de vaga é nulo");
+		}
 	}
 
 	/**

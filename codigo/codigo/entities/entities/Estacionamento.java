@@ -184,6 +184,16 @@ public class Estacionamento {
         return texto;
     }
 
+    public String historicoVeiculo(String placa) {
+        for (Cliente cliente : clientes.values()) {
+            if (cliente.possuiVeiculo(placa) != null) {
+                return cliente.possuiVeiculo(placa).dataToText();
+            }
+        }
+        return "Error";
+
+    }
+
     /**
      * 
      * Retorna os cinco principais clientes que geraram a maior receita em um

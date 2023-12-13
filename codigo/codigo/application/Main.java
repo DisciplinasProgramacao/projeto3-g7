@@ -67,16 +67,19 @@ class MenuHandler {
                     exibirHistoricoCliente();
                     break;
                 case 11:
-                    servicos();
+                    exibirHistoricoVeiculo();
                     break;
                 case 12:
+                    servicos();
+                    break;
+                case 13:
                     sair = true;
                     break;
                 default:
                     System.out.println("Escolha incorreta. Tente novamente.");
                     break;
             }
-        }
+        }   
     }
 
     private void exibirMenu() {
@@ -229,5 +232,11 @@ class MenuHandler {
         } else {
             System.out.println("Escolha inválida.");
         }
+    }
+    private void exibirHistoricoVeiculo() {
+        System.out.println("===== HISTORICO DO VEICULO =====");
+        System.out.println("Qual a placa do veiculo?");
+        String placa = scanner.nextLine();
+        System.out.println("Total arrecadado: " + estacionamento.historicoVeiculo(placa));
     }
 }
