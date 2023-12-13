@@ -104,6 +104,12 @@ public class Cliente implements IDataToText {
 				.sum();
 	}
 
+	public int totalDeUsosNoMes(int mes) {
+		return veiculos.stream()
+				.mapToInt(veiculo -> veiculo.totalDeUsosNoMes(mes))
+				.sum();
+	}
+
 	/**
 	 * Classe arrecadadoPorVeiculo que retornará o valor arrecadado por um veiculo
 	 * 

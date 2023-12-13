@@ -2,6 +2,7 @@ package entities;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.stream.Stream;
 
 import entities.Enums.Servicos;
 import entities.Enums.ETurnos;
@@ -48,6 +49,10 @@ public abstract class UsoDeVaga {
 	public boolean ehDoMes(int mes) {
 		return this.entrada.getMonthValue() == mes;
 	}
+	
+	public int totalDeUsosNoMes(Stream<UsoDeVaga> usos, int mes) {
+        return (int) usos.filter(u -> u.ehDoMes(mes)).count();
+    }
 
 	public double valorPago() {
 		if (entrada == null || saida == null) {

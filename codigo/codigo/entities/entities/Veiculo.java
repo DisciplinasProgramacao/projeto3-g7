@@ -47,36 +47,6 @@ public class Veiculo implements IDataToText {
 	 *
 	 * @param vaga A vaga em que o veículo será estacionado.
 	 */
-	public void estacionar(Vaga vaga) {
-		if (estacionado) {
-			throw new VeiculoJaEstacionadoException("O veículo já está estacionado.");
-		}
-
-		if (vaga.disponivel()) {
-			if (vaga.estacionar()) {
-				if (eCliente != null && eCliente.getNome() != null) {
-					switch (eCliente.getNome()) {
-						case "Horista":
-							usos.add(new UsoHorista(vaga));
-							break;
-						case "Mensalista":
-							usos.add(new UsoMensalista(vaga));
-							break;
-						case "Turno":
-							usos.add(new UsoTurno(vaga, eTurnos));
-							break;
-						default:
-							break;
-					}
-					// Atualiza o atributo estacionado para true após estacionar com sucesso
-					estacionado = true;
-				} else {
-					throw new IllegalArgumentException("eCliente or eCliente.getNome() cannot be null");
-				}
-			}
-		}
-	}
-
 	public void estacionar(Vaga vaga, Servicos servicos) {
 		if (estacionado) {
 			throw new VeiculoJaEstacionadoException("O veículo já está estacionado.");
@@ -94,6 +64,7 @@ public class Veiculo implements IDataToText {
 							break;
 						case "Turno":
 							usos.add(new UsoTurno(vaga, eTurnos, servicos));
+
 							break;
 						default:
 							break;

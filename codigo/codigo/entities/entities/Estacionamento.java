@@ -151,6 +151,22 @@ public class Estacionamento {
                 .sum();
     }
 
+    public String mesClienteMensalista(int mes) {
+        int totalDeUsosMensalistas = clientes.values().stream()
+                .filter(cliente -> cliente.verificarTipo("Mensalista"))
+                .mapToInt(cliente -> cliente.totalDeUsosNoMes(mes))
+                .sum();
+    
+        int totalDeUsos = clientes.values().stream()
+                .mapToInt(cliente -> cliente.totalDeUsosNoMes(mes))
+                .sum();
+    
+        double porcentagem = ((double) totalDeUsosMensalistas / totalDeUsos) * 100;
+    
+        return "Total de usos dos clientes mensalistas no mês " + mes + ": " + totalDeUsosMensalistas
+                + "\nPorcentagem em relação ao total de usos no mês: " + porcentagem + "%";
+    }
+
     /**
      * Calcula a arrecadação no mês para clientes do tipo horista.
      *
