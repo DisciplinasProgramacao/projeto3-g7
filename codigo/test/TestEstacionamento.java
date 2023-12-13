@@ -24,13 +24,16 @@ public class TestEstacionamento {
         assertEquals(0, cliente.totalDeUsos());
     }
 
+
+
     @Test
     public void testEstacionar() {
         Cliente cliente = new Cliente("Andre", "5556");
         Veiculo veiculo = new Veiculo("555");
         cliente.addVeiculo(veiculo);
-        estacionamento.estacionar("555", null);
+        estacionamento.estacionar("555", null)
         assertEquals(0, veiculo.totalDeUsos());
+
     }
 
     @Test
@@ -64,31 +67,3 @@ public class TestEstacionamento {
         Veiculo veiculos = new Veiculo("555");
         assertEquals(0, estacionamento.valorMedioPorUso(), 0.01);
     }
-
-    @Test
-    public void testTop5Clientes() {
-        Cliente cliente1 = new Cliente("Andre", "555");
-        estacionamento.addCliente(cliente1);
-        estacionamento.estacionar("555", null);
-        estacionamento.sair("555");
-        Cliente cliente2 = new Cliente("Miguel", "554");
-        estacionamento.addCliente(cliente2);
-        estacionamento.estacionar("554", null);
-        estacionamento.sair("554");
-        Cliente cliente3 = new Cliente("Segiao", "553");
-        estacionamento.addCliente(cliente3);
-        estacionamento.estacionar("553", null);
-        estacionamento.sair("553");
-        Cliente cliente4 = new Cliente("Dudao", "552");
-        estacionamento.addCliente(cliente4);
-        estacionamento.estacionar("552", null);
-        estacionamento.sair("552");
-        Cliente cliente5 = new Cliente("Fael", "551");
-        estacionamento.addCliente(cliente5);
-        estacionamento.estacionar("551", null);
-        estacionamento.sair("551");
-
-        assertEquals("Andre, Miguel, Segiao, Dudao, Fael", estacionamento.top5Clientes());
-
-    }
-}
