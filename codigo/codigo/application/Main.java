@@ -169,14 +169,24 @@ class MenuHandler {
         System.out.print("Placa do carro: ");
         String placaVeiculo = scanner.nextLine();
 
-        try {
-            estacionamento.estacionar(placaVeiculo);
-            System.out.println("Veiculo estacionado com sucesso!");
-        } catch (VeiculoNaoEncontradoException e) {
-            System.out.println(e.getMessage());
-        } catch (VeiculoJaEstacionadoException ex) {
-            System.out.println(ex.getMessage());
+        System.out.println("Deseja algum serviço? (S/N)");
+        String escolha = scanner.nextLine();
+        if (escolha.equalsIgnoreCase("S")) {
+            for (Servicos tipo : Servicos.values()) {
+                System.out.println((tipo.ordinal() + 1) + ". " + tipo.getNome());
+            }
         }
+        int escolhaServico = scanner.nextInt();
+        Servicos tipoServico = null;
+        scanner.nextLine();
+        if (escolhaServico > 0 && escolhaServico <= Servicos.values().length) {
+            tipoServico = Servicos.values()[escolhaServico - 1];
+
+            estacionamento.estacionar(placaVeiculo, tipoServico);
+        } else {
+            estacionamento.estacionar(placaVeiculo);
+        }
+        System.out.println("Veiculo estacionado com sucesso!");
     }
 
     private void calcularValorSaida() {

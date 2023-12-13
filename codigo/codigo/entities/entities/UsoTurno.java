@@ -32,6 +32,14 @@ public class UsoTurno extends UsoDeVaga {
         this.turno = turno;
     }
 
+    public UsoTurno(Vaga vaga, ETurnos turno, Servicos servicos) {
+        super(vaga);
+        this.vaga = vaga;
+        this.entrada = LocalDateTime.now();
+        this.turno = turno;
+        this.servicos = servicos;
+    }
+
     /**
      * Registra a saída do veículo e calcula o valor a ser pago.
      * 
@@ -47,9 +55,9 @@ public class UsoTurno extends UsoDeVaga {
             }
         }
         if (turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
+
             usoHorista = new UsoHorista(vaga);
-            usoHorista.sair();
-            return usoHorista.valorPago();
+            valorPago = usoHorista.sair();
         }
         return valorPago();
     }
@@ -86,7 +94,9 @@ public class UsoTurno extends UsoDeVaga {
      * 
      * @param servico o serviço a ser contratado
      */
-    public void contratarServico(Servicos servico) {
+    public Servicos contratarServico(Servicos servico) {
         this.servicos = servico;
+        return servico;
+        
     }
 }

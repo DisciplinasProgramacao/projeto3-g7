@@ -6,6 +6,7 @@ import java.util.List;
 
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
+import entities.Enums.Servicos;
 import entities.excecoes.VeiculoJaEstacionadoException;
 
 /**
@@ -17,7 +18,9 @@ public class Veiculo implements IDataToText {
 
 	private String placa; // A placa do veículo
 	private List<UsoDeVaga> usos = new ArrayList<>(); // Array de usos de vagas associado ao veículo
+
 	private boolean estacionado = false;
+
 	private ECliente eCliente;
 	private ETurnos eTurnos;
 
@@ -44,7 +47,7 @@ public class Veiculo implements IDataToText {
 	 *
 	 * @param vaga A vaga em que o veículo será estacionado.
 	 */
-	public void estacionar(Vaga vaga) {
+	public void estacionar(Vaga vaga, Servicos servicos) {
 		if (estacionado) {
 			throw new VeiculoJaEstacionadoException("O veículo já está estacionado.");
 		}
@@ -54,13 +57,14 @@ public class Veiculo implements IDataToText {
 				if (eCliente != null && eCliente.getNome() != null) {
 					switch (eCliente.getNome()) {
 						case "Horista":
-							usos.add(new UsoHorista(vaga));
+							usos.add(new UsoHorista(vaga, servicos));
 							break;
 						case "Mensalista":
-							usos.add(new UsoMensalista(vaga));
+							usos.add(new UsoMensalista(vaga, servicos));
 							break;
 						case "Turno":
-							usos.add(new UsoTurno(vaga, eTurnos));
+							usos.add(new UsoTurno(vaga, eTurnos, servicos));
+
 							break;
 						default:
 							break;

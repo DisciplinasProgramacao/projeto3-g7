@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import entities.Enums.Servicos;
+
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.excecoes.VeiculoNaoEncontradoException;
@@ -73,22 +75,37 @@ public class Estacionamento {
     public void estacionar(String placa) {
         boolean veiculoEstacionado = false;
 
-    for (Cliente cliente : clientes.values()) {
-        if (cliente != null && cliente.possuiVeiculo(placa) != null) {
-            for (Vaga vaga : vagas) {
-                if (vaga != null && vaga.disponivel()) {
-                    cliente.possuiVeiculo(placa).estacionar(vaga);
-                    veiculoEstacionado = true;
-                    break;
+        for (Cliente cliente : clientes.values()) {
+            if (cliente != null && cliente.possuiVeiculo(placa) != null) {
+                for (Vaga vaga : vagas) {
+                    if (vaga != null && vaga.disponivel()) {
+                        cliente.possuiVeiculo(placa).estacionar(vaga);
+                        veiculoEstacionado = true;
+                        break;
+                    }
                 }
+                break;
             }
-            break;
         }
+        if (!veiculoEstacionado) {
+            throw new VeiculoNaoEncontradoException("O veículo com placa " + placa + " não foi encontrado.");
+        }
+
     }
 
-    if (!veiculoEstacionado) {
-        throw new VeiculoNaoEncontradoException("O veículo com placa " + placa + " não foi encontrado.");
-    }
+    public void estacionar(String placa, Servicos servicos) {
+        for (Cliente cliente : clientes.values()) {
+            if (cliente != null && cliente.possuiVeiculo(placa) != null) {
+                for (Vaga vaga : vagas) {
+                    if (vaga != null && vaga.disponivel()) {
+                        cliente.possuiVeiculo(placa).estacionar(vaga, servicos);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
     }
 
     /**
@@ -212,11 +229,12 @@ public class Estacionamento {
 
     }
 
-    public void mudarTipoCliente(String cpf, ECliente tipo, ETurnos turno){
+    public void mudarTipoCliente(String cpf, ECliente tipo, ETurnos turno) {
         Cliente busca = new Cliente(cpf, cpf);
         for (Cliente cliente : clientes.values()) {
             if (cliente.equals(busca)) {
-                cliente.mudarTipo(tipo, turno);;
+                cliente.mudarTipo(tipo, turno);
+                ;
             }
         }
     }
