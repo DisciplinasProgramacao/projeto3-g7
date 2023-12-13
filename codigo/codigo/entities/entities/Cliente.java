@@ -5,6 +5,7 @@ import java.util.List;
 
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
+import entities.Enums.Servicos;
 
 public class Cliente implements IDataToText {
 
@@ -14,6 +15,7 @@ public class Cliente implements IDataToText {
 	private int qtdVeiculo;
 	private ECliente tipo;
 	private ETurnos turno;
+	private Servicos servicos;
 
 	public Cliente(String nome, String id, ECliente tipo, ETurnos turno) {
 		this.nome = nome;
@@ -37,21 +39,29 @@ public class Cliente implements IDataToText {
 		this.qtdVeiculo = 0;
 	}
 
+	public Cliente(String nome, String id, Servicos servicos) {
+		this.nome = nome;
+		this.id = id;
+		this.tipo = ECliente.HORISTA;
+		this.qtdVeiculo = 0;
+		this.servicos = servicos;
+	}
+
 	public String getId() {
 		return this.id;
 	}
 
 	public void mudarTipo(ECliente novoTipo, ETurnos turno) {
 		this.tipo = novoTipo;
-		if (turno != null){
+		if (turno != null) {
 			this.turno = turno;
 		}
 		for (Veiculo veiculo : veiculos) {
 			veiculo.setEcliente(novoTipo);
-			if (turno != null){
-			this.turno = turno;
-			veiculo.setETurno(turno);
-		}
+			if (turno != null) {
+				this.turno = turno;
+				veiculo.setETurno(turno);
+			}
 		}
 	}
 
@@ -68,8 +78,6 @@ public class Cliente implements IDataToText {
 		}
 		veiculos.add(veiculo);
 	}
-
-	
 
 	/**
 	 * Classe possuiVeiculo verifica se o o cliente possui o veiculo com certa placa
@@ -158,17 +166,18 @@ public class Cliente implements IDataToText {
 		StringBuilder historico = new StringBuilder();
 		historico.append("Histórico do Cliente: ").append(nome).append(" (ID: ").append(id).append(")\n");
 		historico.append("Veículos do Cliente e Valores Gastos:\n");
-	
+
 		for (int i = 0; i < veiculos.size(); i++) {
-			historico.append("Veículo ").append(i + 1).append(": R$ ").append(veiculos.get(i).totalArrecadado()).append("\n");
+			historico.append("Veículo ").append(i + 1).append(": R$ ").append(veiculos.get(i).totalArrecadado())
+					.append("\n");
 		}
-	
+
 		historico.append("Valor Gasto por Mês:\n");
 		for (int mes = 1; mes <= 12; mes++) {
 			double valorMes = arrecadadoNoMes(mes);
 			historico.append("Mês ").append(mes).append(": R$ ").append(valorMes).append("\n");
 		}
-	
+
 		historico.append("Valor Total Arrecadado: R$ ").append(arrecadadoTotal()).append("\n");
 		return historico.toString();
 	}
