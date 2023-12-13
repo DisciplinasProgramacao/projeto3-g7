@@ -2,6 +2,8 @@ package entities;
 
 import java.time.LocalDateTime;
 
+import entities.Enums.Servicos;
+
 public class UsoMensalista extends UsoDeVaga {
 
 	private double valorPago = 0.0;
@@ -10,6 +12,13 @@ public class UsoMensalista extends UsoDeVaga {
 		super(vaga);
 		this.vaga = vaga;
 		this.entrada = LocalDateTime.now();
+    }
+
+	 public UsoMensalista(Vaga vaga, Servicos servicos) {
+		super(vaga);
+		this.vaga = vaga;
+		this.entrada = LocalDateTime.now();
+		this.servicos = servicos;
     }
 
 	 /**

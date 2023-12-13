@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.excecoes.VeiculoJaEstacionadoException;
+import entities.Enums.Servicos;
 
 /**
  * A classe Veiculo representa um veículo que pode estacionar em vagas de
@@ -78,6 +79,32 @@ public class Veiculo implements IDataToText {
 					throw new IllegalArgumentException("eCliente or eCliente.getNome() cannot be null");
 				}
 			}
+		}
+	}
+
+	public void estacionar(Vaga vaga, Servicos servicos) {
+		if (vaga.disponivel() == true) {
+			if (vaga.estacionar() == true)
+				if (eCliente != null && eCliente.getNome() != null) {
+					switch (eCliente.getNome()) {
+						case "Horista":
+							usos[indiceDeVaga] = new UsoHorista(vaga, servicos);
+							indiceDeVaga++;
+							break;
+						case "Mensalista":
+							usos[indiceDeVaga] = new UsoMensalista(vaga, servicos);
+							indiceDeVaga++;
+							break;
+						case "Turno":
+							usos[indiceDeVaga] = new UsoTurno(vaga, eTurnos, servicos);
+							indiceDeVaga++;
+							break;
+						default:
+							break;
+					}
+				} else {
+					throw new IllegalArgumentException("eCliente or eCliente.getNome() cannot be null");
+				}
 		}
 	}
 

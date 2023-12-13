@@ -28,6 +28,12 @@ public abstract class UsoDeVaga {
 		this.saida = saida2;
 	}
 
+	public UsoDeVaga(Vaga vaga, Servicos servicos) {
+		this.vaga = vaga;
+		this.entrada = LocalDateTime.now();
+		this.servicos = servicos;
+	}
+
 	public double sair() {
 		this.saida = LocalDateTime.now();
 		int tempoPermanenciaMinutos = (int) entrada.until(saida, ChronoUnit.MINUTES);
@@ -52,7 +58,10 @@ public abstract class UsoDeVaga {
 		if (calcTempo == 0)
 			calcTempo = 1;
 		int quantidadeFracoesTempo = (int) Math.ceil(calcTempo / 15.0);
-		double valorPago = quantidadeFracoesTempo * VALOR_FRACAO;
+		double valorPago = (quantidadeFracoesTempo * VALOR_FRACAO);
+	
+		if(servicos != null)
+			valorPago += servicos.getValor();
 
 		if (valorPago > VALOR_MAXIMO)
 			valorPago = VALOR_MAXIMO;
@@ -60,7 +69,8 @@ public abstract class UsoDeVaga {
 		return valorPago;
 	}
 
-	public void contratarServico(Servicos servico) {
+	public Servicos contratarServico(Servicos servico) {
 		this.servicos = servico;
+		return servico;
 	}
 }
