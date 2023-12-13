@@ -94,7 +94,9 @@ public class UsoTurno extends UsoDeVaga {
      * 
      * @param servico o serviço a ser contratado
      */
-    public void contratarServico(Servicos servico) {
+    public Servicos contratarServico(Servicos servico) {
         this.servicos = servico;
+        return servico;
+        
     }
 }
