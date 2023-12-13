@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 public class Estacionamento {
 
     public String nome;
@@ -179,6 +178,16 @@ public class Estacionamento {
 
         }
         return texto;
+    }
+
+    public String historicoVeiculo(String placa) {
+        for (Cliente cliente : clientes.values()) {
+            if (cliente.possuiVeiculo(placa) != null) {
+                return cliente.possuiVeiculo(placa).dataToText();
+            }
+        }
+        return "Error";
+
     }
 
     /**
