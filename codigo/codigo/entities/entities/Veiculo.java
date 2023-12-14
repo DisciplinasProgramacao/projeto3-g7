@@ -16,7 +16,8 @@ import entities.excecoes.VeiculoJaEstacionadoException;
  */
 /**
  * Representa um veículo.
- * Implementa a interface IDataToText para converter os dados do veículo em texto.
+ * Implementa a interface IDataToText para converter os dados do veículo em
+ * texto.
  */
 public class Veiculo implements IDataToText {
 
@@ -46,14 +47,15 @@ public class Veiculo implements IDataToText {
 		this.eTurnos = turno;
 	}
 
-	
 	/**
-	 * Estaciona o veículo em uma vaga, registrando o uso do veículo e os serviços prestados.
+	 * Estaciona o veículo em uma vaga, registrando o uso do veículo e os serviços
+	 * prestados.
 	 * 
-	 * @param vaga A vaga onde o veículo será estacionado.
+	 * @param vaga     A vaga onde o veículo será estacionado.
 	 * @param servicos Os serviços prestados ao veículo.
 	 * @throws VeiculoJaEstacionadoException Se o veículo já estiver estacionado.
-	 * @throws IllegalArgumentException Se o cliente do veículo ou o nome do cliente for nulo.
+	 * @throws IllegalArgumentException      Se o cliente do veículo ou o nome do
+	 *                                       cliente for nulo.
 	 */
 	public void estacionar(Vaga vaga, Servicos servicos) {
 		if (estacionado) {
@@ -93,10 +95,15 @@ public class Veiculo implements IDataToText {
 	public double sair() {
 		estacionado = false;
 
-		if (!usos.isEmpty()) {
-			return usos.get(usos.size() - 1).sair();
-		} else {
+		if (usos.isEmpty()) {
 			throw new NullPointerException("Não há uso de vaga registrado para saída");
+
+		} else {
+			try {
+				return usos.get(usos.size() - 1).sair();
+			} catch (IllegalArgumentException e) {
+				return 0;
+			}
 		}
 	}
 

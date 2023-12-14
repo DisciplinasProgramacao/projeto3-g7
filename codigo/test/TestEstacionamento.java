@@ -31,7 +31,7 @@ public class TestEstacionamento {
         Cliente cliente = new Cliente("Andre", "5556");
         Veiculo veiculo = new Veiculo("555");
         cliente.addVeiculo(veiculo);
-        estacionamento.estacionar("555", null)
+        estacionamento.estacionar("555", null);
         assertEquals(0, veiculo.totalDeUsos());
 
     }
@@ -67,3 +67,4 @@ public class TestEstacionamento {
         Veiculo veiculos = new Veiculo("555");
         assertEquals(0, estacionamento.valorMedioPorUso(), 0.01);
     }
+}

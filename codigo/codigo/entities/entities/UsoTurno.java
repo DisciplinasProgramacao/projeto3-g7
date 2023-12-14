@@ -22,7 +22,6 @@ public class UsoTurno extends UsoDeVaga {
     private double valorPago = 0;
     private Servicos servicos;
     private ETurnos turno;
-    private UsoHorista usoHorista;
 
     /**
      * Construtor da classe UsoTurno.
@@ -44,7 +43,6 @@ public class UsoTurno extends UsoDeVaga {
         this.servicos = servicos;
     }
 
-   
     /**
      * Registra a saída do veículo e calcula o valor a ser pago pelo uso da vaga.
      * 
@@ -56,15 +54,15 @@ public class UsoTurno extends UsoDeVaga {
         int tempoPermanenciaMinutos = (int) entrada.until(saida, ChronoUnit.MINUTES);
         if (servicos != null && !turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
             if (tempoPermanenciaMinutos >= servicos.getTempo()) {
-                return valorPago();
+                valorPago();
             }
         }
         if (turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
-
-            usoHorista = new UsoHorista(vaga);
-            return valorPago = usoHorista.sair() + servicos.getValor();
+            valorPago = super.sair();
         }
-        return valorPago();
+        valorPago += servicos.getValor();
+        return valorPago
+        ;
     }
 
     /**
@@ -91,7 +89,7 @@ public class UsoTurno extends UsoDeVaga {
             throw new IllegalArgumentException("Entrada and Saida cannot be null");
         }
 
-        return valorPago ;
+        return valorPago;
     }
 
     /**
@@ -102,6 +100,6 @@ public class UsoTurno extends UsoDeVaga {
     public Servicos contratarServico(Servicos servico) {
         this.servicos = servico;
         return servico;
-        
+
     }
 }
