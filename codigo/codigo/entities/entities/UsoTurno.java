@@ -98,10 +98,22 @@ public class UsoTurno extends UsoDeVaga {
     @Override
     public double valorPago() {
         if (entrada == null || saida == null) {
-            return 0;
-        }
+			return 0;
+		}
 
-        return valorPago;
+		int calcTempo = (int) entrada.until(saida, ChronoUnit.MINUTES);
+		if (calcTempo == 0)
+			calcTempo = 1;
+		int quantidadeFracoesTempo = (int) Math.ceil(calcTempo / 15.0);
+		double valorPago = (quantidadeFracoesTempo * VALOR_FRACAO);
+
+		if (servicos != null)
+			valorPago += servicos.getValor();
+
+		if (valorPago > VALOR_MAXIMO)
+			valorPago = VALOR_MAXIMO;
+
+		return valorPago;
     }
 
     /**

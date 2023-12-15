@@ -1,5 +1,6 @@
 package entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,7 +197,14 @@ public class Cliente implements IDataToText {
 	 * @return retorna o valor arrecadado no mes
 	 */
 	public double arrecadadoNoMes(int mes) {
-		double arrecadadoNoMes = tipo.getValor(); // Adicionando o valor do tipo de cliente
+		double arrecadadoNoMes = 0;
+
+		LocalDate dataAtual = LocalDate.now();
+		int mesAtual = dataAtual.getMonthValue();
+
+		if (mes == mesAtual) {
+			arrecadadoNoMes += tipo.getValor();
+		}
 
 		arrecadadoNoMes += veiculos.stream()
 				.mapToDouble(v -> v.arrecadadoNoMes(mes))

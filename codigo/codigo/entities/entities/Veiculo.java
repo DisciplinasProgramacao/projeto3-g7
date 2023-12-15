@@ -80,6 +80,7 @@ public class Veiculo implements IDataToText {
 							fabrica = new FabricaUsoDeVagaMensalista();
 							break;
 						case "Turno":
+							fabrica = new FabricaUsoDeTurno(eTurnos);
 							break;
 						default:
 							break;
@@ -100,6 +101,7 @@ public class Veiculo implements IDataToText {
 		}
 
 	}
+
 
 	/**
 	 * Registra a saída do veículo da vaga e calcula o valor pago.
@@ -129,7 +131,7 @@ public class Veiculo implements IDataToText {
 	public double totalArrecadado() {
 		double total = 0.0;
 		for (UsoDeVaga uso : usos) {
-			total += uso.valorPago();
+			total += uso.sair();
 		}
 		return total;
 	}

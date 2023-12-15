@@ -10,7 +10,7 @@ public enum ETurnos {
     /**
      * Turno da manhã, das 8:00 às 12:00.
      */
-    MANHA("Manha", LocalTime.of(1, 00), LocalTime.of(12, 00)),
+    MANHA("Manha", LocalTime.of(0, 00), LocalTime.of(12, 00)),
 
     /**
      * Turno da tarde, das 12:01 às 18:00.
