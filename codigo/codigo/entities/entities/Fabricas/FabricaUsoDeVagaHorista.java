@@ -11,26 +11,16 @@ import entities.interfaces.IFabrica;
  * Implementa a interface IFabrica<UsoDeVaga>.
  */
 public class FabricaUsoDeVagaHorista implements IFabrica<UsoDeVaga> {
-    private Vaga vaga;
 
     /**
-     * Cria uma nova instância de UsoDeVagaHorista.
+     * Cria uma nova instância de UsoDeVaga do tipo Mensalista com um serviço
+     * específico.
      * 
-     * @return A nova instância de UsoDeVagaHorista.
+     * @param servico O serviço associado ao UsoDeVaga.
+     * @return A nova instância de UsoDeVaga.
      */
     @Override
-    public UsoDeVaga create() {
-        return new UsoHorista(vaga);
-    }
-
-    /**
-     * Cria uma nova instância de UsoDeVagaHorista com o serviço especificado.
-     * 
-     * @param servico O serviço associado à instância de UsoDeVagaHorista.
-     * @return A nova instância de UsoDeVagaHorista.
-     */
-    @Override
-    public UsoDeVaga create(Servicos servico) {
+    public UsoDeVaga create(Vaga vaga ,Servicos servico) {
         return new UsoHorista(vaga, servico);
     }
 }

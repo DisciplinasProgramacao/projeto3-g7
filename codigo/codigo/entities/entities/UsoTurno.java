@@ -60,7 +60,9 @@ public class UsoTurno extends UsoDeVaga {
         if (turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
             valorPago = super.sair();
         }
-        valorPago += servicos.getValor();
+        if (servicos != null) {
+			valorPago += servicos.getValor();
+		}
         return valorPago
         ;
     }

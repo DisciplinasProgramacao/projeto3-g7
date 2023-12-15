@@ -1,5 +1,6 @@
 package entities.interfaces;
 
+import entities.Vaga;
 import entities.Enums.Servicos;
 
 /**
@@ -8,12 +9,7 @@ import entities.Enums.Servicos;
  * @param <T> o tipo de objeto que a fábrica cria.
  */
 public interface IFabrica<T> {
-    /**
-     * Cria um objeto do tipo T.
-     * 
-     * @return o objeto criado.
-     */
-    public T create();
+    
 
     /**
      * Cria um objeto do tipo T com base no serviço fornecido.
@@ -21,5 +17,9 @@ public interface IFabrica<T> {
      * @param servico o serviço a ser utilizado na criação do objeto.
      * @return o objeto criado.
      */
-    public T create(Servicos servico);
+    public T create(Vaga vaga ,Servicos servico);
+
+    
+
+    
 }

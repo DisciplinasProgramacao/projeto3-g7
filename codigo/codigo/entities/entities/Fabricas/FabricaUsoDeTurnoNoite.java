@@ -13,17 +13,6 @@ import entities.interfaces.IFabrica;
  * com o turno de noite.
  */
 public class FabricaUsoDeTurnoNoite implements IFabrica<UsoDeVaga> {
-    private Vaga vaga;
-
-    /**
-     * Cria uma instância de UsoDeVaga com o turno de noite.
-     * 
-     * @return A instância de UsoDeVaga criada.
-     */
-    @Override
-    public UsoDeVaga create() {
-        return new UsoTurno(vaga, ETurnos.NOITE);
-    }
 
     /**
      * Cria uma instância de UsoDeVaga com o turno de noite e o serviço
@@ -33,7 +22,7 @@ public class FabricaUsoDeTurnoNoite implements IFabrica<UsoDeVaga> {
      * @return A instância de UsoDeVaga criada.
      */
     @Override
-    public UsoDeVaga create(Servicos servico) {
+    public UsoDeVaga create(Vaga vaga,Servicos servico) {
         return new UsoTurno(vaga, ETurnos.NOITE, servico);
     }
 }

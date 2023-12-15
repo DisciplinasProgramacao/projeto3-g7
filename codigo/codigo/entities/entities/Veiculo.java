@@ -7,6 +7,12 @@ import java.util.List;
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.Enums.Servicos;
+import entities.Fabricas.FabricaUsoDeTurnoManha;
+import entities.Fabricas.FabricaUsoDeTurnoNoite;
+import entities.Fabricas.FabricaUsoDeTurnoTarde;
+import entities.Fabricas.FabricaUsoDeVagaHorista;
+import entities.Fabricas.FabricaUsoDeVagaMensalista;
+import entities.interfaces.IFabrica;
 import entities.excecoes.VeiculoJaEstacionadoException;
 
 /**
@@ -47,41 +53,53 @@ public class Veiculo implements IDataToText {
 		this.eTurnos = turno;
 	}
 
-	/**
-	 * Estaciona o veículo em uma vaga, registrando o uso do veículo e os serviços
-	 * prestados.
-	 * 
-	 * @param vaga     A vaga onde o veículo será estacionado.
-	 * @param servicos Os serviços prestados ao veículo.
-	 * @throws VeiculoJaEstacionadoException Se o veículo já estiver estacionado.
-	 * @throws IllegalArgumentException      Se o cliente do veículo ou o nome do
-	 *                                       cliente for nulo.
-	 */
 	public void estacionar(Vaga vaga, Servicos servicos) {
 		if (estacionado) {
 			throw new VeiculoJaEstacionadoException("O veículo já está estacionado.");
 		}
-
+	
 		if (vaga.disponivel()) {
 			if (vaga.estacionar()) {
 				if (eCliente != null && eCliente.getNome() != null) {
+					IFabrica<UsoDeVaga> fabrica = null;
+	
+					// Criação da instância da fábrica baseada no tipo de cliente
 					switch (eCliente.getNome()) {
 						case "Horista":
-							usos.add(new UsoHorista(vaga, servicos));
+							fabrica = new FabricaUsoDeVagaHorista();
 							break;
 						case "Mensalista":
-							usos.add(new UsoMensalista(vaga, servicos));
+							fabrica = new FabricaUsoDeVagaMensalista();
 							break;
-						case "Turno":
-							usos.add(new UsoTurno(vaga, eTurnos, servicos));
-
+							case "Turno":
+							ETurnos turno = eTurnos;
+							switch (turno) {
+								case MANHA:
+									fabrica = new FabricaUsoDeTurnoManha();
+									break;
+								case TARDE:
+									fabrica = new FabricaUsoDeTurnoTarde();
+									break;
+								case NOITE:
+									fabrica = new FabricaUsoDeTurnoNoite();
+									break;
+								default:
+									break;
+							}
 							break;
 						default:
 							break;
 					}
-					estacionado = true;
+	
+					if (fabrica != null) {
+						// Criação da instância de UsoDeVaga utilizando a fábrica e adiciona à lista de usos
+						usos.add(fabrica.create(vaga, servicos));
+						estacionado = true;
+					} else {
+						throw new IllegalArgumentException("Tipo de cliente não reconhecido.");
+					}
 				} else {
-					throw new IllegalArgumentException("eCliente or eCliente.getNome() cannot be null");
+					throw new IllegalArgumentException("eCliente ou eCliente.getNome() não podem ser nulos.");
 				}
 			}
 		}
