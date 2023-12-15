@@ -43,7 +43,7 @@ public class UsoTurno extends UsoDeVaga {
         this.servicos = servicos;
     }
 
-     public UsoTurno(Vaga vaga, Servicos servicos) {
+    public UsoTurno(Vaga vaga, Servicos servicos) {
         super(vaga);
         this.vaga = vaga;
         this.entrada = LocalDateTime.now();
@@ -53,6 +53,7 @@ public class UsoTurno extends UsoDeVaga {
     public ETurnos setTurno(ETurnos turno) {
         return this.turno = turno;
     }
+
     /**
      * Registra a saída do veículo e calcula o valor a ser pago pelo uso da vaga.
      * 
@@ -62,7 +63,7 @@ public class UsoTurno extends UsoDeVaga {
     public double sair() {
         this.saida = LocalDateTime.now();
         int tempoPermanenciaMinutos = (int) entrada.until(saida, ChronoUnit.MINUTES);
-        if (servicos != null && !turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
+        if (!turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
             if (tempoPermanenciaMinutos >= servicos.getTempo()) {
                 valorPago();
             }
@@ -70,11 +71,8 @@ public class UsoTurno extends UsoDeVaga {
         if (turno.isTurno(entrada.toLocalTime(), saida.toLocalTime())) {
             valorPago = super.sair();
         }
-        if (servicos != null) {
-			valorPago += servicos.getValor();
-		}
-        return valorPago
-        ;
+        
+        return valorPago;
     }
 
     /**
@@ -98,22 +96,22 @@ public class UsoTurno extends UsoDeVaga {
     @Override
     public double valorPago() {
         if (entrada == null || saida == null) {
-			return 0;
-		}
+            return 0;
+        }
 
-		int calcTempo = (int) entrada.until(saida, ChronoUnit.MINUTES);
-		if (calcTempo == 0)
-			calcTempo = 1;
-		int quantidadeFracoesTempo = (int) Math.ceil(calcTempo / 15.0);
-		double valorPago = (quantidadeFracoesTempo * VALOR_FRACAO);
+        int calcTempo = (int) entrada.until(saida, ChronoUnit.MINUTES);
+        if (calcTempo == 0)
+            calcTempo = 1;
+        int quantidadeFracoesTempo = (int) Math.ceil(calcTempo / 15.0);
+        double valorPago = (quantidadeFracoesTempo * VALOR_FRACAO);
 
-		if (servicos != null)
-			valorPago += servicos.getValor();
+        if (servicos != null)
+            valorPago += servicos.getValor();
 
-		if (valorPago > VALOR_MAXIMO)
-			valorPago = VALOR_MAXIMO;
+        if (valorPago > VALOR_MAXIMO)
+            valorPago = VALOR_MAXIMO;
 
-		return valorPago;
+        return valorPago;
     }
 
     /**
