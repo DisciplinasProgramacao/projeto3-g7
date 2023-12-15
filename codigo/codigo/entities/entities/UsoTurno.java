@@ -43,6 +43,16 @@ public class UsoTurno extends UsoDeVaga {
         this.servicos = servicos;
     }
 
+     public UsoTurno(Vaga vaga, Servicos servicos) {
+        super(vaga);
+        this.vaga = vaga;
+        this.entrada = LocalDateTime.now();
+        this.servicos = servicos;
+    }
+
+    public ETurnos setTurno(ETurnos turno) {
+        return this.turno = turno;
+    }
     /**
      * Registra a saída do veículo e calcula o valor a ser pago pelo uso da vaga.
      * 

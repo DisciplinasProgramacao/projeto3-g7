@@ -10,7 +10,13 @@ import entities.interfaces.IFabrica;
 /**
  * Classe responsável por criar instâncias de UsoDeVaga para o turno da manhã.
  */
-public class FabricaUsoDeTurnoManha implements IFabrica<UsoDeVaga> {
+public class FabricaUsoDeTurno implements IFabrica<UsoDeVaga> {
+
+    private ETurnos turno;
+
+    public FabricaUsoDeTurno(ETurnos turno) {
+        this.turno = turno;
+    }
 
     /**
      * Cria uma instância de UsoDeVaga para o turno da manhã com um serviço
@@ -21,6 +27,15 @@ public class FabricaUsoDeTurnoManha implements IFabrica<UsoDeVaga> {
      */
     @Override
     public UsoDeVaga create(Vaga vaga, Servicos servico) {
-        return new UsoTurno(vaga, ETurnos.MANHA, servico);
+        UsoTurno usoTurno = new UsoTurno(vaga, this.turno, servico);
+        usoTurno.setTurno(this.turno);
+        return usoTurno;
+    }
+
+    @Override
+    public UsoDeVaga create(Vaga vaga) {
+        UsoTurno usoTurno = new UsoTurno(vaga, this.turno);
+        usoTurno.setTurno(this.turno);
+        return usoTurno;
     }
 }

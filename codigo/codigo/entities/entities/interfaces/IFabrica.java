@@ -19,6 +19,8 @@ public interface IFabrica<T> {
      */
     public T create(Vaga vaga ,Servicos servico);
 
+    public T create(Vaga vaga);
+
     
 
     

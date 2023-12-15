@@ -59,7 +59,7 @@ public abstract class UsoDeVaga {
 	 * Retorna o total de usos de vaga no mês especificado.
 	 *
 	 * @param usos o stream de usos de vaga
-	 * @param mes o mês para o qual se deseja obter o total de usos
+	 * @param mes  o mês para o qual se deseja obter o total de usos
 	 * @return o total de usos de vaga no mês especificado
 	 */
 	public int totalDeUsosNoMes(Stream<UsoDeVaga> usos, int mes) {

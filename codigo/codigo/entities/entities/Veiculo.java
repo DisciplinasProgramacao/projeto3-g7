@@ -6,9 +6,7 @@ import java.util.List;
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.Enums.Servicos;
-import entities.Fabricas.FabricaUsoDeTurnoManha;
-import entities.Fabricas.FabricaUsoDeTurnoNoite;
-import entities.Fabricas.FabricaUsoDeTurnoTarde;
+import entities.Fabricas.FabricaUsoDeTurno;
 import entities.Fabricas.FabricaUsoDeVagaHorista;
 import entities.Fabricas.FabricaUsoDeVagaMensalista;
 import entities.interfaces.IFabrica;
@@ -82,20 +80,6 @@ public class Veiculo implements IDataToText {
 							fabrica = new FabricaUsoDeVagaMensalista();
 							break;
 						case "Turno":
-							ETurnos turno = eTurnos;
-							switch (turno) {
-								case MANHA:
-									fabrica = new FabricaUsoDeTurnoManha();
-									break;
-								case TARDE:
-									fabrica = new FabricaUsoDeTurnoTarde();
-									break;
-								case NOITE:
-									fabrica = new FabricaUsoDeTurnoNoite();
-									break;
-								default:
-									break;
-							}
 							break;
 						default:
 							break;
@@ -114,6 +98,7 @@ public class Veiculo implements IDataToText {
 				}
 			}
 		}
+
 	}
 
 	/**

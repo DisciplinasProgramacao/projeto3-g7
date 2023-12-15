@@ -21,7 +21,12 @@ public class FabricaUsoDeVagaMensalista implements IFabrica<UsoDeVaga> {
      * @return A nova instância de UsoDeVaga.
      */
     @Override
-    public UsoDeVaga create(Vaga vaga ,Servicos servico) {
+    public UsoDeVaga create(Vaga vaga, Servicos servico) {
         return new UsoMensalista(vaga, servico);
+    }
+
+    @Override
+    public UsoDeVaga create(Vaga vaga) {
+        return new UsoMensalista(vaga);
     }
 }
