@@ -6,11 +6,13 @@ import java.util.List;
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.Enums.Servicos;
+import entities.excecoes.VeiculoDuplicadoException;
 
 /**
  * A classe Cliente representa um cliente do sistema.
  * 
- * Um cliente possui um nome, um ID, uma lista de veículos, a quantidade de veículos,
+ * Um cliente possui um nome, um ID, uma lista de veículos, a quantidade de
+ * veículos,
  * um tipo de cliente e um turno de trabalho.
  * 
  * A classe Cliente implementa a interface IDataToText.
@@ -55,6 +57,10 @@ public class Cliente implements IDataToText {
 		this.servicos = servicos;
 	}
 
+	public String getNome() {
+		return this.nome;
+	}
+
 	public String getId() {
 		return this.id;
 	}
@@ -63,7 +69,7 @@ public class Cliente implements IDataToText {
 	 * Altera o tipo do cliente e, opcionalmente, o turno.
 	 * 
 	 * @param novoTipo O novo tipo de cliente.
-	 * @param turno O novo turno do cliente (opcional).
+	 * @param turno    O novo turno do cliente (opcional).
 	 */
 	public void mudarTipo(ECliente novoTipo, ETurnos turno) {
 		this.tipo = novoTipo;
@@ -80,17 +86,38 @@ public class Cliente implements IDataToText {
 	}
 
 	/**
-	 * Classe addVeiculo que adicionará um veiculo ao cliente
-	 * 
-	 * @param veiculo Recebe um veiculo que será adicionado a um dos veiculos do
-	 *                cliente
+	 * Adiciona um veículo ao cliente, verificando se já existe na lista de veículos
+	 * do cliente.
+	 *
+	 * @param veiculo Veículo a ser adicionado ao cliente.
+	 * @throws VeiculoDuplicadoException Se o veículo já existe na lista de veículos
+	 *                                   do cliente.
 	 */
 	public void addVeiculo(Veiculo veiculo) {
+		if (veiculoJaExiste(veiculo)) {
+			throw new VeiculoDuplicadoException("Este veículo já existe.");
+		}
+
 		veiculo.setEcliente(tipo);
 		if (tipo.equals(ECliente.TURNO)) {
 			veiculo.setETurno(turno);
 		}
 		veiculos.add(veiculo);
+	}
+
+	/**
+	 * Verifica se o veículo já existe na lista de veículos do cliente.
+	 *
+	 * @param veiculo Veículo a ser verificado na lista.
+	 * @return true se o veículo já existe na lista, false caso contrário.
+	 */
+	private boolean veiculoJaExiste(Veiculo veiculo) {
+		for (Veiculo v : veiculos) {
+			if (v.equals(veiculo)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -118,6 +145,13 @@ public class Cliente implements IDataToText {
 				.sum();
 	}
 
+	/**
+	 * Calcula o total de usos de todos os veículos no mês especificado.
+	 *
+	 * @param mes Número representando o mês para o qual o total de usos será
+	 *            calculado (1 a 12).
+	 * @return O número total de usos de todos os veículos no mês especificado.
+	 */
 	public int totalDeUsosNoMes(int mes) {
 		return veiculos.stream()
 				.mapToInt(veiculo -> veiculo.totalDeUsosNoMes(mes))
@@ -220,4 +254,5 @@ public class Cliente implements IDataToText {
 		}
 		return resp;
 	}
+
 }

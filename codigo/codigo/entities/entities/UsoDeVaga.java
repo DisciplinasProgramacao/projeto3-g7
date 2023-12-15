@@ -74,7 +74,7 @@ public abstract class UsoDeVaga {
 	 */
 	public double valorPago() {
 		if (entrada == null || saida == null) {
-			throw new IllegalArgumentException("Este veiculo ainda esta estacionado");
+			return 0;
 		}
 
 		int calcTempo = (int) entrada.until(saida, ChronoUnit.MINUTES);

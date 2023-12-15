@@ -30,41 +30,55 @@ public class TestEstacionamento {
     public void testEstacionar() {
         Cliente cliente = new Cliente("Andre", "5556");
         Veiculo veiculo = new Veiculo("555");
-        cliente.addVeiculo(veiculo);
+        estacionamento.addCliente(cliente);
+        estacionamento.addVeiculo(veiculo, "5556");
         estacionamento.estacionar("555", null);
-        assertEquals(0, veiculo.totalDeUsos());
+        estacionamento.sair("555");
+        assertEquals(1, veiculo.totalDeUsos());
 
     }
 
     @Test
     public void sair() {
-        Cliente cliente = new Cliente("Teste", "666");
+        Cliente cliente = new Cliente("Andre", "5556");
         Veiculo veiculo = new Veiculo("555");
         estacionamento.addCliente(cliente);
-        cliente.addVeiculo(veiculo);
+        estacionamento.addVeiculo(veiculo, "5556");
+        estacionamento.estacionar("555", null);
         double valor = estacionamento.sair("555");
-        assertTrue(valor > 0.0);
+        assertEquals(4.0, valor, 0.0);
     }
 
     @Test
     public void totalArrecadado() {
-        Cliente cliente = new Cliente("Teste", "666");
-        Veiculo veiculos = new Veiculo("555");
-        double arrecadado = estacionamento.totalArrecadado();
-        assertEquals(arrecadado, estacionamento.totalArrecadado(), 0.01);
+        Cliente cliente = new Cliente("Andre", "5556");
+        Veiculo veiculo = new Veiculo("555");
+        estacionamento.addCliente(cliente);
+        estacionamento.addVeiculo(veiculo, "5556");
+        estacionamento.estacionar("555", null);
+        estacionamento.sair("555");
+        assertEquals(4.0, estacionamento.totalArrecadado(), 0.01);
     }
 
     @Test
     public void arrecadacaoNoMes() {
-        Cliente cliente = new Cliente("Teste", "666");
-        Veiculo veiculos = new Veiculo("555");
-        assertEquals(0, estacionamento.arrecadacaoNoMes(1), 0.01);
+        Cliente cliente = new Cliente("Andre", "5556");
+        Veiculo veiculo = new Veiculo("555");
+        estacionamento.addCliente(cliente);
+        estacionamento.addVeiculo(veiculo, "5556");
+        estacionamento.estacionar("555", null);
+        estacionamento.sair("555");
+        assertEquals(4.0, estacionamento.arrecadacaoNoMes(12), 0.01);
     }
 
     @Test
     public void valorMedioPorUso() {
-        Cliente cliente = new Cliente("Teste", "666");
-        Veiculo veiculos = new Veiculo("555");
-        assertEquals(0, estacionamento.valorMedioPorUso(), 0.01);
+        Cliente cliente = new Cliente("Andre", "5556");
+        Veiculo veiculo = new Veiculo("555");
+        estacionamento.addCliente(cliente);
+        estacionamento.addVeiculo(veiculo, "5556");
+        estacionamento.estacionar("555", null);
+        estacionamento.sair("555");
+        assertEquals(4.0, estacionamento.valorMedioPorUso(), 0.01);
     }
 }

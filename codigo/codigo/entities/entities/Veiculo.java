@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import entities.Enums.ECliente;
@@ -53,16 +52,27 @@ public class Veiculo implements IDataToText {
 		this.eTurnos = turno;
 	}
 
+	/**
+	 * Estaciona o veículo na vaga especificada, aplicando os serviços
+	 * correspondentes ao tipo de cliente.
+	 * 
+	 * @param vaga     Vaga na qual o veículo será estacionado.
+	 * @param servicos Serviços a serem aplicados ao estacionar o veículo.
+	 * @throws VeiculoJaEstacionadoException Se o veículo já estiver estacionado.
+	 * @throws IllegalArgumentException      Se o tipo de cliente não for
+	 *                                       reconhecido, se eCliente ou
+	 *                                       eCliente.getNome() forem nulos.
+	 */
 	public void estacionar(Vaga vaga, Servicos servicos) {
 		if (estacionado) {
 			throw new VeiculoJaEstacionadoException("O veículo já está estacionado.");
 		}
-	
+
 		if (vaga.disponivel()) {
 			if (vaga.estacionar()) {
 				if (eCliente != null && eCliente.getNome() != null) {
 					IFabrica<UsoDeVaga> fabrica = null;
-	
+
 					// Criação da instância da fábrica baseada no tipo de cliente
 					switch (eCliente.getNome()) {
 						case "Horista":
@@ -71,7 +81,7 @@ public class Veiculo implements IDataToText {
 						case "Mensalista":
 							fabrica = new FabricaUsoDeVagaMensalista();
 							break;
-							case "Turno":
+						case "Turno":
 							ETurnos turno = eTurnos;
 							switch (turno) {
 								case MANHA:
@@ -90,9 +100,10 @@ public class Veiculo implements IDataToText {
 						default:
 							break;
 					}
-	
+
 					if (fabrica != null) {
-						// Criação da instância de UsoDeVaga utilizando a fábrica e adiciona à lista de usos
+						// Criação da instância de UsoDeVaga utilizando a fábrica e adiciona à lista de
+						// usos
 						usos.add(fabrica.create(vaga, servicos));
 						estacionado = true;
 					} else {
@@ -181,8 +192,6 @@ public class Veiculo implements IDataToText {
 		}
 		return resp;
 	}
-
-	LinkedList<Veiculo> veiculos = new LinkedList<>();
 
 	/**
 	 * Converte os dados do veículo em formato de texto.
