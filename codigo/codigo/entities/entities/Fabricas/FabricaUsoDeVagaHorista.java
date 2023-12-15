@@ -23,4 +23,9 @@ public class FabricaUsoDeVagaHorista implements IFabrica<UsoDeVaga> {
     public UsoDeVaga create(Vaga vaga ,Servicos servico) {
         return new UsoHorista(vaga, servico);
     }
+
+    @Override
+    public UsoDeVaga create(Vaga vaga) {
+         return new UsoHorista(vaga);
+    }
 }
