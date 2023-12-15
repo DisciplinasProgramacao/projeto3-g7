@@ -1,10 +1,10 @@
 package entities.Fabricas;
 
 import entities.UsoDeVaga;
-import entities.UsoTurno;
 import entities.Vaga;
 import entities.Enums.ETurnos;
 import entities.Enums.Servicos;
+import entities.UsoTurno;
 import entities.interfaces.IFabrica;
 
 /**
@@ -13,26 +13,15 @@ import entities.interfaces.IFabrica;
  * com turno de tarde.
  */
 public class FabricaUsoDeTurnoTarde implements IFabrica<UsoDeVaga> {
-    private Vaga vaga;
-
     /**
-     * Cria um objeto UsoDeVaga com turno de tarde.
+     * Cria uma nova instância de UsoDeVaga do tipo Mensalista com um serviço
+     * específico.
      * 
-     * @return O objeto UsoDeVaga criado.
+     * @param servico O serviço associado ao UsoDeVaga.
+     * @return A nova instância de UsoDeVaga.
      */
     @Override
-    public UsoDeVaga create() {
-        return new UsoTurno(vaga, ETurnos.TARDE);
-    }
-
-    /**
-     * Cria um objeto UsoDeVaga com turno de tarde e um serviço específico.
-     * 
-     * @param servico O serviço associado ao objeto UsoDeVaga.
-     * @return O objeto UsoDeVaga criado.
-     */
-    @Override
-    public UsoDeVaga create(Servicos servico) {
+    public UsoDeVaga create(Vaga vaga ,Servicos servico) {
         return new UsoTurno(vaga, ETurnos.TARDE, servico);
     }
 }
