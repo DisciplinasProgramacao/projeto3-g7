@@ -5,6 +5,9 @@ import entities.*;
 import entities.Enums.ECliente;
 import entities.Enums.ETurnos;
 import entities.Enums.Servicos;
+import entities.excecoes.ClienteDuplicadoException;
+import entities.excecoes.ClienteNaoEncontradoException;
+import entities.excecoes.VeiculoDuplicadoException;
 import entities.excecoes.VeiculoJaEstacionadoException;
 import entities.excecoes.VeiculoNaoEncontradoException;
 
@@ -26,15 +29,115 @@ class MenuHandler {
         this.estacionamento = gerarDados();
     }
 
-    public Estacionamento gerarDados(){
+    public Estacionamento gerarDados() {
 
         Estacionamento estacionamento1 = new Estacionamento("Estacionamento 1", 3, 5);
         Estacionamento estacionamento2 = new Estacionamento("Estacionamento 2", 2, 8);
         Estacionamento estacionamento3 = new Estacionamento("Estacionamento 3", 5, 3);
 
-        
+        Cliente cliente1 = new Cliente("Cliente1", "1", ECliente.HORISTA);
+        Cliente cliente2 = new Cliente("Cliente2", "2", ECliente.HORISTA);
+        Cliente cliente3 = new Cliente("Cliente3", "3", ECliente.HORISTA);
+        Cliente cliente4 = new Cliente("Cliente4", "4", ECliente.HORISTA);
+        Cliente cliente5 = new Cliente("Cliente5", "5", ECliente.HORISTA);
 
-         System.out.println("Escolha o estacionamento:");
+        Cliente cliente6 = new Cliente("Cliente6", "6", ECliente.TURNO, ETurnos.NOITE);
+        Cliente cliente7 = new Cliente("Cliente7", "7", ECliente.TURNO, ETurnos.MANHA);
+        Cliente cliente8 = new Cliente("Cliente8", "8", ECliente.TURNO, ETurnos.TARDE);
+
+        Cliente cliente9 = new Cliente("Cliente9", "9", ECliente.MENSALISTA);
+        Cliente cliente10 = new Cliente("Cliente10", "10", ECliente.MENSALISTA);
+
+        estacionamento1.addCliente(cliente1);
+        estacionamento1.addCliente(cliente2);
+        estacionamento1.addCliente(cliente3);
+        estacionamento1.addCliente(cliente4);
+        estacionamento2.addCliente(cliente5);
+        estacionamento2.addCliente(cliente6);
+        estacionamento2.addCliente(cliente7);
+        estacionamento3.addCliente(cliente8);
+        estacionamento3.addCliente(cliente9);
+        estacionamento3.addCliente(cliente10);
+
+        Veiculo veiculo1 = new Veiculo("1");
+        Veiculo veiculo2 = new Veiculo("2");
+        Veiculo veiculo3 = new Veiculo("3");
+        Veiculo veiculo4 = new Veiculo("4");
+        Veiculo veiculo5 = new Veiculo("5");
+
+        Veiculo veiculo6 = new Veiculo("6");
+        Veiculo veiculo7 = new Veiculo("7");
+        Veiculo veiculo8 = new Veiculo("8");
+        Veiculo veiculo9 = new Veiculo("9");
+        Veiculo veiculo10 = new Veiculo("10");
+
+        Veiculo veiculo11 = new Veiculo("11");
+        Veiculo veiculo12 = new Veiculo("12");
+        Veiculo veiculo13 = new Veiculo("13");
+        Veiculo veiculo14 = new Veiculo("14");
+        Veiculo veiculo15 = new Veiculo("15");
+
+        estacionamento1.addVeiculo(veiculo1, "1");
+        estacionamento1.estacionar("1", null);
+        estacionamento1.sair("1");
+
+        estacionamento1.addVeiculo(veiculo2, "2");
+        estacionamento1.estacionar("2", Servicos.LAVAGEM);
+        estacionamento1.sair("2");
+
+        estacionamento1.addVeiculo(veiculo3, "3");
+        estacionamento1.estacionar("3", Servicos.MANOBRISTA);
+        estacionamento1.sair("3");
+
+        estacionamento1.addVeiculo(veiculo4, "4");
+        estacionamento1.estacionar("4", Servicos.LAVAGEM);
+        estacionamento1.sair("4");
+
+        estacionamento2.addVeiculo(veiculo5, "5");
+        estacionamento2.estacionar("5", null);
+        estacionamento2.sair("5");
+
+        estacionamento2.addVeiculo(veiculo6, "6");
+        estacionamento2.estacionar("6", Servicos.LAVAGEM);
+        estacionamento2.sair("6");
+
+        estacionamento2.addVeiculo(veiculo7, "7");
+        estacionamento2.estacionar("7", Servicos.MANOBRISTA);
+        estacionamento2.sair("7");
+
+        estacionamento3.addVeiculo(veiculo8, "8");
+        estacionamento3.estacionar("8", Servicos.LAVAGEM);
+        estacionamento3.sair("8");
+
+        estacionamento3.addVeiculo(veiculo9, "9");
+        estacionamento3.estacionar("9", null);
+        estacionamento3.sair("9");
+
+        estacionamento3.addVeiculo(veiculo10, "8");
+        estacionamento3.estacionar("10", Servicos.LAVAGEM);
+        estacionamento3.sair("10");
+
+        estacionamento1.addVeiculo(veiculo11, "2");
+        estacionamento1.estacionar("11", null);
+        estacionamento1.sair("11");
+
+        estacionamento2.addVeiculo(veiculo12, "5");
+        estacionamento2.estacionar("12", Servicos.LAVAGEM);
+        estacionamento2.sair("12");
+
+        estacionamento3.addVeiculo(veiculo13, "9");
+        estacionamento3.estacionar("13", null);
+        estacionamento3.sair("13");
+
+        estacionamento1.addVeiculo(veiculo14, "3");
+        estacionamento1.estacionar("14", Servicos.LAVAGEM);
+        estacionamento1.sair("14");
+
+        estacionamento2.addVeiculo(veiculo15, "5");
+        estacionamento2.estacionar("15", null);
+        estacionamento2.sair("15");
+
+        System.out.println("Escolha o estacionamento:");
         System.out.println("1. Estacionamento 1");
         System.out.println("2. Estacionamento 2");
         System.out.println("3. Estacionamento 3");
@@ -61,9 +164,8 @@ class MenuHandler {
                 break;
         }
 
-       return estacionamentoEscolhido;
+        return estacionamentoEscolhido;
     }
-    
 
     public void runMenu() {
         boolean sair = false;
@@ -71,7 +173,7 @@ class MenuHandler {
         while (!sair) {
             exibirMenu();
             int opcao = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
             switch (opcao) {
                 case 1:
                     registrarCliente();
@@ -163,25 +265,30 @@ class MenuHandler {
             tipoCliente = ECliente.values()[escolhaTipo - 1];
         }
 
-        if (tipoCliente == ECliente.TURNO) {
-            System.out.println("Selecione o turno do cliente:");
-            for (ETurnos turno : ETurnos.values()) {
-                System.out.println((turno.ordinal() + 1) + ". " + turno.getDescricao());
-            }
-            int escolhaTurno = scanner.nextInt();
-            scanner.nextLine();
-            ETurnos turnoCliente = null;
-            if (escolhaTurno > 0 && escolhaTurno <= ETurnos.values().length) {
-                turnoCliente = ETurnos.values()[escolhaTurno - 1];
-            } else {
-                System.out.println("Escolha inválida para o turno. O cliente será registrado sem turno.");
-            }
+        try {
+            if (tipoCliente == ECliente.TURNO) {
+                System.out.println("Selecione o turno do cliente:");
+                for (ETurnos turno : ETurnos.values()) {
+                    System.out.println((turno.ordinal() + 1) + ". " + turno.getDescricao());
+                }
+                int escolhaTurno = scanner.nextInt();
+                scanner.nextLine();
+                ETurnos turnoCliente = null;
+                if (escolhaTurno > 0 && escolhaTurno <= ETurnos.values().length) {
+                    turnoCliente = ETurnos.values()[escolhaTurno - 1];
+                } else {
+                    System.out.println("Escolha inválida para o turno. O cliente será registrado sem turno.");
+                }
 
-            Cliente cliente = new Cliente(nome, id, tipoCliente, turnoCliente);
-            estacionamento.addCliente(cliente);
-        } else {
-            Cliente cliente = new Cliente(nome, id, tipoCliente);
-            estacionamento.addCliente(cliente);
+                Cliente cliente = new Cliente(nome, id, tipoCliente, turnoCliente);
+                estacionamento.addCliente(cliente);
+            } else {
+                Cliente cliente = new Cliente(nome, id, tipoCliente);
+                estacionamento.addCliente(cliente);
+            }
+        } catch (ClienteDuplicadoException e) {
+            System.out.println(e.getMessage());
+
         }
     }
 
@@ -197,7 +304,14 @@ class MenuHandler {
         Veiculo veiculo = new Veiculo(placa);
         System.out.print("ID DO CLIENTE: ");
         String idCliente = scanner.nextLine();
-        estacionamento.addVeiculo(veiculo, idCliente);
+
+        try {
+            estacionamento.addVeiculo(veiculo, idCliente);
+        } catch (VeiculoDuplicadoException e) {
+            System.out.println("Erro ao adicionar veículo: " + e.getMessage());
+        } catch (ClienteNaoEncontradoException e) {
+            System.out.println("Erro ao adicionar veículo: " + e.getMessage());
+        }
     }
 
     private void estacionarCarro() {
@@ -232,7 +346,13 @@ class MenuHandler {
         System.out.println("===== CALCULANDO SAIDA VEICULO =====");
         System.out.println("Digite a placa do carro: ");
         String placaVaga = scanner.nextLine();
-        System.out.print("Valor a ser pago: " + estacionamento.sair(placaVaga));
+
+        try {
+            double valorASerPago = estacionamento.sair(placaVaga);
+            System.out.print("Valor a ser pago: " + valorASerPago);
+        } catch (VeiculoNaoEncontradoException e) {
+            System.out.println("Veículo não encontrado: " + e.getMessage());
+        }
         System.out.println();
     }
 
@@ -269,10 +389,14 @@ class MenuHandler {
     }
 
     private void exibirHistoricoCliente() {
-        System.out.println("===== HISTORICO DO CLIENTE =====");
-        System.out.println("Qual o id do cliente?");
-        String id = scanner.nextLine();
-        System.out.println("Total arrecadado: " + estacionamento.historicoCliente(id));
+        try {
+            System.out.println("===== HISTORICO DO CLIENTE =====");
+            System.out.println("Qual o id do cliente?");
+            String id = scanner.nextLine();
+            System.out.println("Total arrecadado: " + estacionamento.historicoCliente(id));
+        } catch (ClienteNaoEncontradoException e) {
+            System.out.println("Cliente não encontrado: " + e.getMessage());
+        }
     }
 
     private void servicos() {
@@ -294,10 +418,14 @@ class MenuHandler {
     }
 
     private void exibirHistoricoVeiculo() {
-        System.out.println("===== HISTORICO DO VEICULO =====");
-        System.out.println("Qual a placa do veiculo?");
-        String placa = scanner.nextLine();
-        System.out.println("Total arrecadado: " + estacionamento.historicoVeiculo(placa));
+        try {
+            System.out.println("===== HISTORICO DO VEICULO =====");
+            System.out.println("Qual a placa do veiculo?");
+            String placa = scanner.nextLine();
+            System.out.println("Total arrecadado: " + estacionamento.historicoVeiculo(placa));
+        } catch (VeiculoNaoEncontradoException e) {
+            System.out.println("Veículo não encontrado: " + e.getMessage());
+        }
     }
 
     private void mudarTipoCliente() {
@@ -319,24 +447,28 @@ class MenuHandler {
             return;
         }
 
-        if (novoTipoCliente == ECliente.TURNO) {
-            System.out.println("Selecione o novo turno do cliente:");
-            for (ETurnos turno : ETurnos.values()) {
-                System.out.println((turno.ordinal() + 1) + ". " + turno.getDescricao());
-            }
-            int escolhaTurno = scanner.nextInt();
-            scanner.nextLine();
-            ETurnos novoTurnoCliente = null;
-            if (escolhaTurno > 0 && escolhaTurno <= ETurnos.values().length) {
-                novoTurnoCliente = ETurnos.values()[escolhaTurno - 1];
-            } else {
-                System.out.println("Escolha inválida para o turno. O cliente será mantido sem turno.");
-                novoTipoCliente = ECliente.MENSALISTA;
-            }
+        try {
+            if (novoTipoCliente == ECliente.TURNO) {
+                System.out.println("Selecione o novo turno do cliente:");
+                for (ETurnos turno : ETurnos.values()) {
+                    System.out.println((turno.ordinal() + 1) + ". " + turno.getDescricao());
+                }
+                int escolhaTurno = scanner.nextInt();
+                scanner.nextLine();
+                ETurnos novoTurnoCliente = null;
+                if (escolhaTurno > 0 && escolhaTurno <= ETurnos.values().length) {
+                    novoTurnoCliente = ETurnos.values()[escolhaTurno - 1];
+                } else {
+                    System.out.println("Escolha inválida para o turno. O cliente será mantido sem turno.");
+                    novoTipoCliente = ECliente.MENSALISTA;
+                }
 
-            estacionamento.mudarTipoCliente(id, novoTipoCliente, novoTurnoCliente);
-        } else {
-            estacionamento.mudarTipoCliente(id, novoTipoCliente, null);
+                estacionamento.mudarTipoCliente(id, novoTipoCliente, novoTurnoCliente);
+            } else {
+                estacionamento.mudarTipoCliente(id, novoTipoCliente, null);
+            }
+        } catch (ClienteNaoEncontradoException e) {
+            System.out.println(e.getMessage());
         }
     }
 

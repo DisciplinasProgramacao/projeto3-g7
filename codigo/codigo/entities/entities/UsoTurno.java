@@ -98,7 +98,7 @@ public class UsoTurno extends UsoDeVaga {
     @Override
     public double valorPago() {
         if (entrada == null || saida == null) {
-            throw new IllegalArgumentException("Entrada and Saida cannot be null");
+            return 0;
         }
 
         return valorPago;
